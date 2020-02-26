@@ -25,13 +25,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-// Find the `keystore.keystore` and `keystore.properties` files in
+// Find the `keystore.jks` and `keystore.properties` files in
 // Azure DevOps server. The files should be uploaded using
 // the task `Download Secure File`.
 def keyStoreProperties = new Properties()
 def keyStorePropertiesFilePath = System.getenv("AGENT_TEMPDIRECTORY") + "/" + "1BLP Keystore.properties"
 def keyStorePropertiesFile = file(keyStorePropertiesFilePath)
-def keyStoreFilePath = System.getenv("AGENT_TEMPDIRECTORY") + "/" + "1BLP Keystore.keystore"
+def keyStoreFilePath = System.getenv("AGENT_TEMPDIRECTORY") + "/" + "1BLP Keystore.jks"
 def keyStoreFile = file(keyStoreFilePath)
 def canSignWithKeyStore = keyStoreFile.exists() && keyStorePropertiesFile.exists()
 if (canSignWithKeyStore) {
@@ -62,7 +62,6 @@ android {
 
     signingConfigs {
         if(canSignWithKeyStore) {
-            println 'Signing APK using provided keystore.'
             releaseAzure {
                 storeFile keyStoreFile
                 keyAlias keyStoreProperties['keyAlias']
@@ -75,6 +74,7 @@ android {
     buildTypes {
         release {
             if (canSignWithKeyStore) {
+                println 'Signing APK using provided keystore.'
                 signingConfig signingConfigs.releaseAzure
             } else {
                 signingConfig signingConfigs.debug
