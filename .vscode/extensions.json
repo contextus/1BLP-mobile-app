@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "dart-code.flutter",
+        "dart-code.dart-code",
+        "nash.awesome-flutter-snippets",
+        "esskar.vscode-flutter-i18n-json",
+        "jeroen-meijer.pubspec-assist",
+        "gmlewis-vscode.flutter-stylizer",
+        "redhat.vscode-yaml",
+    ]
+}

@@ -1,0 +1,22 @@
+name: one_bataan_league_pass_business
+
+version: 0.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  equatable: ^1.1.0
+
+  one_bataan_league_pass_web_service:
+    path: "../one_bataan_league_pass_web_service"
+  one_bataan_league_pass_data:
+    path: "../one_bataan_league_pass_data"
+  one_bataan_league_pass_common:
+    path: "../one_bataan_league_pass_common"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic: ^1.8.0
+  mockito: ^4.1.1

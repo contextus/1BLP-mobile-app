@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>method</key>
+	<string>enterprise</string>
+	<key>teamID</key>
+	<string>2A26KBG984</string>
+	<key>uploadSymbols</key>
+	<true/>
+    <key>compileBitcode</key>
+    <false/>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>signingCertificate</key>
+	<string>iPhone Distribution: ERNI Consulting AG</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.contextus.one-bataan-league-pass</key>
+		<string>Erni Mobile Generic Distribution</string>
+	</dict>
+</dict>
+</plist>

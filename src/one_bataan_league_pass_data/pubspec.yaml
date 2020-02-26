@@ -1,0 +1,22 @@
+name: one_bataan_league_pass_data
+
+version: 0.0.0+1
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  moor_flutter: ^2.1.0
+
+  one_bataan_league_pass_common:
+    path: "../one_bataan_league_pass_common"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic: ^1.8.0
+  mockito: ^4.1.1
+  moor_ffi: ^0.4.0
+
+  build_runner:
+  moor_generator:

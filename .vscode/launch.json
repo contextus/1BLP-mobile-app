@@ -1,0 +1,30 @@
+{
+    // Update this config as needed.
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DEBUG DEV",
+            "flutterMode": "debug",
+            "program": "src/one_bataan_league_pass/lib/main_debug_dev.dart",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "PROFILE DEV",
+            "flutterMode": "profile",
+            "program": "src/one_bataan_league_pass/lib/main_release_dev.dart",
+            "request": "launch",
+            "type": "dart",
+        },
+        {
+            "name": "RELEASE DEV",
+            "flutterMode": "release",
+            "program": "src/one_bataan_league_pass/lib/main_release_dev.dart",
+            "request": "launch",
+            "type": "dart",
+        }
+    ]
+}

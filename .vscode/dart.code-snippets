@@ -1,0 +1,58 @@
+// Workspace-specific code snippets
+{
+	"View Model Property with Name": {
+		"prefix": "vmpropn",
+		"body": [
+			"$type _$prop;",
+			"$type get $prop => _$prop;",
+			"set $prop($type value) {",
+			"\tif (_$prop != value) {",
+			"\t_$prop = value;",
+			"\tnotifyListeners('${prop}');",
+			"\t}",
+			"}",
+		],
+		"description": "Creates a view model property with a getter/setter. The change notifies any callbacks passing the name of the property."
+	},
+	"Check for null parameter using if": {
+		"prefix": "cnullif",
+		"body": [
+			"if($param == null) throw ArgumentError.notNull('$param');",
+		]
+	},
+	"Check for null parameter using ArugmentError.checkNotNull": {
+		"prefix": "cnull",
+		"body": [
+			"ArgumentError.checkNotNull($param, '$param');",
+		]
+	},
+	"Create a ModelBoundWidget and ModelBoundState": {
+		"prefix": "mbw",
+		"body": [
+			"class $ViewName extends ModelBoundWidget<${ViewModelName}> {",
+			"  ${ViewName}(${ViewModelName} viewModel) : super(viewModel);",
+			"",
+			"  @override",
+			"  _${ViewName}State createState() => _${ViewName}State();",
+			"}",
+			"",
+			"class _${ViewName}State extends ModelBoundState<${ViewName}, ${ViewModelName}> {",
+			"  @override",
+			"  Widget build(BuildContext context) {",
+			"    return ScopedModel<${ViewModelName}>(",
+			"      model: viewModel,",
+			"      child: ScopedModelDescendant<${ViewModelName}>(",
+			"        builder: (context, child, viewModel) {",
+			"          return Scaffold(",
+			"            appBar: AppBar(",
+			"              title: Text('${ViewName}'),",
+			"            ),",
+			"          );",
+			"        },",
+			"      ),",
+			"    );",
+			"  }",
+			"}"
+		]
+	}
+}
