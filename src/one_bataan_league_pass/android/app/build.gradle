@@ -62,6 +62,7 @@ android {
 
     signingConfigs {
         if(canSignWithKeyStore) {
+            println 'Signing APK using provided keystore.'
             releaseAzure {
                 storeFile keyStoreFile
                 keyAlias keyStoreProperties['keyAlias']
