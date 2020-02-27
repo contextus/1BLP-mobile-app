@@ -4,6 +4,7 @@ import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_business/mappers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
 import 'package:one_bataan_league_pass_web_service/web_services.dart';
 import 'package:flutter/widgets.dart';
@@ -14,7 +15,7 @@ class ServiceLocator {
 
   static void registerDependencies() {
     _registerWebServices();
-    _registerDatabase();
+    _registerData();
     _registerMappers();
     _registerManagers();
     _registerUiServices();
@@ -27,11 +28,15 @@ class ServiceLocator {
       ..registerLazySingleton<TodoWebService>(() => TodoWebService(_i.get<HttpHandler>()));
   }
 
-  static void _registerDatabase() {
+  static void _registerData() {
     _i
       ..registerSingleton<QueryExecutorProvider>(FlutterQueryExecutorProvider())
       ..registerSingleton<AppDatabase>(AppDatabase(_i.get<QueryExecutorProvider>()))
       ..registerSingleton<TodoRepository>(TodoRepository(_i.get<AppDatabase>()));
+
+    _i
+      ..registerSingleton<SecureStorageService>(SecureStorageService())
+      ..registerSingleton<SharedPrefsService>(SharedPrefsService());
   }
 
   static void _registerMappers() {
