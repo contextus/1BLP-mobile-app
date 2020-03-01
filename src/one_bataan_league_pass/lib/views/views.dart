@@ -1,2 +1,2 @@
 export 'app_view.dart';
-export 'home_view.dart';
+export 'main_view.dart';

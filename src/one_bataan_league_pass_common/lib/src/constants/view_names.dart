@@ -1,5 +1,4 @@
 class ViewNames {
-  ViewNames._();
-
+  static const mainView = 'mainView';
   static const homeView = 'homeView';
 }

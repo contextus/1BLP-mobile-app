@@ -61,18 +61,13 @@ class ServiceLocator {
 
   static void _registerUi() {
     _i
-      ..registerFactory<AppViewModel>(
-        () => AppViewModel(
-          _i.get<AnalyticsService>(),
-          _i.get<NavigationService>(),
-        ),
-      )
+      ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
+      ..registerFactory<MainViewModel>(() => MainViewModel(_i.get<HomeViewModel>()))
+      ..registerFactory<HomeViewModel>(() => HomeViewModel(_i.get<TodoManager>()));
+
+    _i
       ..registerSingleton<AppView>(AppView(_i.get<AppViewModel>()))
-      ..registerFactory<HomeViewModel>(() => HomeViewModel(_i.get<TodoManager>()))
-      ..registerFactory<Widget>(
-        () => HomeView(_i.get<HomeViewModel>()),
-        instanceName: ViewNames.homeView,
-      );
+      ..registerFactory<Widget>(() => MainView(_i.get<MainViewModel>()), instanceName: ViewNames.mainView);
   }
 
   static T resolve<T>([String name]) {

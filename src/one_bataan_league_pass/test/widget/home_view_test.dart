@@ -29,7 +29,7 @@ void main() {
       streamCtrl = StreamController();
       when(mockTodoManager.todosStream).thenAnswer((_) => streamCtrl.stream);
       viewModel = HomeViewModel(mockTodoManager);
-      widget = HomeView(viewModel);
+      widget = HomeView(viewModel, '', null);
     });
 
     tearDown(() {

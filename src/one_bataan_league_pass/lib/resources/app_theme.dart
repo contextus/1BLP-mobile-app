@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final defaultTheme = ThemeData(
     primarySwatch: MaterialColor(
-      4278335352,
+      4280361248,
       {
-        50: Color(0xffe6f1ff),
-        100: Color(0xffcde3fe),
-        200: Color(0xff9bc7fd),
-        300: Color(0xff69abfc),
-        400: Color(0xff368ffc),
-        500: Color(0xff0473fb),
-        600: Color(0xff035cc9),
-        700: Color(0xff034596),
-        800: Color(0xff022e64),
-        900: Color(0xff011732)
+        50: Color(0xfff2f2f2),
+        100: Color(0xffe6e6e5),
+        200: Color(0xffcdcdcb),
+        300: Color(0xffb4b4b1),
+        400: Color(0xff9b9b97),
+        500: Color(0xff81817e),
+        600: Color(0xff686864),
+        700: Color(0xff4e4e4b),
+        800: Color(0xff343432),
+        900: Color(0xff1a1a19)
       },
     ),
   );
