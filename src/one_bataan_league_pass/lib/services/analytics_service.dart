@@ -7,13 +7,10 @@ import 'package:flutter_appcenter_bundle/flutter_appcenter_bundle.dart';
 class AnalyticsService {
   Future<void> start() {
     return _runIfAnalyticsEnabled(
-      () async {
-        AppCenter.startAsync(
-          appSecretAndroid: AppCenterConstants.androidKey,
-          appSecretIOS: AppCenterConstants.iosKey,
-        );
-        trackEvent('Started analytics', {"Platform": Platform.operatingSystem});
-      },
+      () => AppCenter.startAsync(
+        appSecretAndroid: AppCenterConstants.androidKey,
+        appSecretIOS: AppCenterConstants.iosKey,
+      ),
     );
   }
 
