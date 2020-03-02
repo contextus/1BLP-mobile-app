@@ -16,7 +16,7 @@
 	<string>iPhone Distribution: ERNI Consulting AG</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.contextus.one-bataan-league-pass</key>
+		<key>ch.erni.one-bataan-league-pass</key>
 		<string>Erni Mobile Generic Distribution</string>
 	</dict>
 </dict>
