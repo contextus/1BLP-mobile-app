@@ -83,6 +83,7 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
               );
+              widget.tabs[viewModel.currentPageIndex].viewModel.init(); // TODO: Add Navigation init for tab view models
               debugInfo('Switched to ${widget.tabs[viewModel.currentPageIndex].text}');
             },
           ),
