@@ -6,30 +6,33 @@ class GamesTabViewModel extends ViewModelBase {
   final games = [
     GameModel(
       gameDate: DateTime.now().subtract(Duration(days: 1)),
-      team1: TeamModel('1Bataan Risers'),
-      team2: TeamModel('A Team'),
+      team1: TeamModel(teamName: '1Bataan Risers'),
+      team2: TeamModel(teamName: 'A Team'),
+      team1Score: 80,
+      team2Score: 54,
     ),
     GameModel(
       gameDate: DateTime.now(),
-      team1: TeamModel('1Bataan Risers'),
-      team2: TeamModel('B Team'),
+      team1: TeamModel(teamName: '1Bataan Risers'),
+      team2: TeamModel(teamName: 'B Team'),
       team1Score: 23,
       team2Score: 12,
+      isLive: true,
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 1)),
-      team1: TeamModel('1Bataan Risers'),
-      team2: TeamModel('C Team'),
+      team1: TeamModel(teamName: '1Bataan Risers'),
+      team2: TeamModel(teamName: 'C Team'),
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 2)),
-      team1: TeamModel('1Bataan Risers'),
-      team2: TeamModel('D Team'),
+      team1: TeamModel(teamName: '1Bataan Risers'),
+      team2: TeamModel(teamName: 'D Team'),
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 3)),
-      team1: TeamModel('1Bataan Risers'),
-      team2: TeamModel('E Team'),
+      team1: TeamModel(teamName: '1Bataan Risers'),
+      team2: TeamModel(teamName: 'E Team'),
     ),
   ];
 

@@ -90,6 +90,4 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       ),
     );
   }
-
-  static String _percentageString(double divisor, double dividend) => (divisor / dividend).toString();
 }

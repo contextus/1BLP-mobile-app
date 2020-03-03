@@ -1,5 +1,6 @@
 class TeamModel {
-  TeamModel(this.teamName);
-  
+  TeamModel({this.teamName, this.teamImageUrl});
+
   final String teamName;
+  final String teamImageUrl;
 }

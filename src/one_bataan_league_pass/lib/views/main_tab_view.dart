@@ -21,16 +21,15 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   void initState() {
     super.initState();
     _controller = PageController(initialPage: viewModel.currentPageIndex);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
+    viewModel.addOnModelChanged(_onViewModelChanged);
   }
 
   @override
   Widget build(BuildContext context) {
+    final primaryColorGreen = Color.fromARGB(255, 130, 203, 4);
+    final primaryColorBlue = Color.fromARGB(255, 2, 122, 224);
+    final primaryColorRed = Color.fromARGB(255, 223, 54, 2);
+
     return ScopedModel<MainTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<MainTabViewModel>(
@@ -38,7 +37,19 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text('1Bataan League', style: TextStyle(fontSize: 14)),
+              title: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: '1', style: TextStyle(color: primaryColorBlue)),
+                    TextSpan(text: 'Bataan ', style: TextStyle(color: primaryColorGreen)),
+                    TextSpan(text: 'League', style: TextStyle(color: primaryColorRed)),
+                  ],
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               actions: <Widget>[
                 IconButton(icon: Icon(Icons.account_circle), onPressed: viewModel.onOpenAccount),
               ],
@@ -46,9 +57,10 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
             body: Stack(
               children: <Widget>[
                 PageView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  pageSnapping: false,
                   controller: _controller,
                   itemBuilder: (context, index) => widget.tabs.elementAt(index),
+                  onPageChanged: (i) => viewModel.currentPageIndex = i,
                   itemCount: widget.tabs.length,
                 ),
                 Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar(floating: false)),
@@ -76,16 +88,7 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
           child: GNav(
             selectedIndex: viewModel.currentPageIndex,
             tabs: widget.tabs.map(_buildBottomNavigationBarButton).toList(),
-            onTabChange: (i) {
-              viewModel.currentPageIndex = i;
-              _controller.animateToPage(
-                viewModel.currentPageIndex,
-                duration: Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
-              );
-              widget.tabs[viewModel.currentPageIndex].viewModel.init(); // TODO: Add Navigation init for tab view models
-              debugInfo('Switched to ${widget.tabs[viewModel.currentPageIndex].text}');
-            },
+            onTabChange: (i) => viewModel.currentPageIndex = i,
           ),
         ),
       ),
@@ -121,5 +124,13 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
       iconColor: inactiveColor,
       iconActiveColor: activeColor,
     );
+  }
+
+  void _onViewModelChanged(String propertyName) {
+    _controller.jumpToPage(
+      viewModel.currentPageIndex,
+    );
+    widget.tabs[viewModel.currentPageIndex].viewModel.init(); // TODO: Add Navigation init for tab view models
+    debugInfo('Switched to tab: ${widget.tabs[viewModel.currentPageIndex].text}');
   }
 }

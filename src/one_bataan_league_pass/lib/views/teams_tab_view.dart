@@ -16,8 +16,47 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
       model: viewModel,
       child: ScopedModelDescendant<TeamsTabViewModel>(
         builder: (context, child, viewModel) {
-          return Container(
-            child: Center(child: Text(widget.text)),
+          return ExtendedColumn(
+            spacing: 12,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: ' Search teams',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+                    enabledBorder:
+                        OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    final team = viewModel.teams[index];
+
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 1),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        title: Text(team.teamName, style: TextStyle(fontSize: 14.0)),
+                        leading: CircleAvatar(backgroundImage: NetworkImage(team.teamImageUrl)),
+                        trailing: IconButton(
+                          icon: Icon(Icons.chevron_right),
+                          onPressed: () {},
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: viewModel.teams.length,
+                ),
+              )
+            ],
           );
         },
       ),
