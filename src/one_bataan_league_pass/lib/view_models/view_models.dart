@@ -1,4 +1,9 @@
 export 'view_model_base.dart';
-export 'home_view_model.dart';
 export 'app_view_model.dart';
+export 'main_tab_view_model.dart';
+export 'home_tab_view_model.dart';
+export 'games_tab_view_model.dart';
+export 'standings_tab_view_model.dart';
+export 'teams_tab_view_model.dart';
+export 'players_tab_view_model.dart';
 export 'package:scoped_model/scoped_model.dart';

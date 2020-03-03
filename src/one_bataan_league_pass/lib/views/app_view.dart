@@ -27,7 +27,7 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
         builder: (context, child, viewModel) {
           return MaterialApp(
             title: '1Bataan League Pass',
-            theme: AppTheme.defaultTheme,
+            theme: AppTheme.lightTheme,
             navigatorKey: AppViewKeys.navigator,
             home: SplashWidget(key: AppViewKeys.splashWidget),
             builder: (_, widget) => Navigator(

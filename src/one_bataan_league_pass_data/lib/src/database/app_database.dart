@@ -5,22 +5,10 @@ part 'app_database.g.dart';
 
 // Run `flutter packages pub run build_runner build --delete-conflicting-outputs` in project folder to recreate/update models.
 
-@UseMoor(tables: [Todos])
+@UseMoor(tables: [])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutorProvider databaseProvider) : super(databaseProvider.queryExecutor);
 
   @override
   int get schemaVersion => 1;
-}
-
-@DataClassName('TodoDataObject')
-class Todos extends Table {
-  @override
-  Set<Column> get primaryKey => {id};
-
-  IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get name => text()();
-
-  TextColumn get description => text()();
 }

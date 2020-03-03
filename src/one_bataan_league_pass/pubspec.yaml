@@ -19,12 +19,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
+  google_fonts: ^0.3.9
   get_it: ^3.1.0
   flutter_appcenter_bundle: ^1.1.0+1
   connectivity: ^0.4.6+2
   scoped_model: ^1.0.1
   back_button_interceptor: ^4.2.3
+  google_nav_bar: ^1.0.4
 
   one_bataan_league_pass_web_service:
     path: "../one_bataan_league_pass_web_service"

@@ -1,8 +1,7 @@
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
-import 'package:one_bataan_league_pass_business/managers.dart';
-import 'package:one_bataan_league_pass_business/mappers.dart';
+import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
@@ -24,55 +23,65 @@ class ServiceLocator {
 
   static void _registerWebServices() {
     _i
-      ..registerFactory<HttpHandler>(() => HttpHandler())
-      ..registerLazySingleton<TodoWebService>(() => TodoWebService(_i.get<HttpHandler>()));
+      ..registerFactory<HttpHandler>(() => HttpHandler());
   }
 
   static void _registerData() {
     _i
-      ..registerSingleton<QueryExecutorProvider>(FlutterQueryExecutorProvider())
-      ..registerSingleton<AppDatabase>(AppDatabase(_i.get<QueryExecutorProvider>()))
-      ..registerSingleton<TodoRepository>(TodoRepository(_i.get<AppDatabase>()));
+      ..registerLazySingleton<QueryExecutorProvider>(() => FlutterQueryExecutorProvider())
+      ..registerLazySingleton<AppDatabase>(() => AppDatabase(_i.get<QueryExecutorProvider>()));
 
     _i
-      ..registerSingleton<SecureStorageService>(SecureStorageService())
-      ..registerSingleton<SharedPrefsService>(SharedPrefsService());
+      ..registerLazySingleton<SecureStorageService>(() => SecureStorageService())
+      ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
   }
 
   static void _registerMappers() {
-    _i..registerLazySingleton<TodoMapper>(() => TodoMapper());
+
   }
 
   static void _registerManagers() {
-    _i
-      ..registerLazySingleton<TodoManager>(() => TodoManager(
-            _i.get<TodoMapper>(),
-            _i.get<TodoRepository>(),
-            _i.get<TodoWebService>(),
-          ));
+  
   }
 
   static void _registerUiServices() {
     _i
-      ..registerSingleton<AnalyticsService>(AnalyticsService())
-      ..registerSingleton<NavigationService>(NavigationService())
-      ..registerSingleton<DialogService>(DialogService());
+      ..registerLazySingleton<AnalyticsService>(() => AnalyticsService())
+      ..registerLazySingleton<NavigationService>(() => NavigationService())
+      ..registerLazySingleton<DialogService>(() => DialogService());
   }
 
   static void _registerUi() {
     _i
-      ..registerFactory<AppViewModel>(
-        () => AppViewModel(
-          _i.get<AnalyticsService>(),
-          _i.get<NavigationService>(),
-        ),
-      )
-      ..registerSingleton<AppView>(AppView(_i.get<AppViewModel>()))
-      ..registerFactory<HomeViewModel>(() => HomeViewModel(_i.get<TodoManager>()))
-      ..registerFactory<Widget>(
-        () => HomeView(_i.get<HomeViewModel>()),
-        instanceName: ViewNames.homeView,
-      );
+      ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
+      ..registerFactory<MainTabViewModel>(() => MainTabViewModel())
+      ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(_i.get<NavigationService>(), _i.get<DialogService>()))
+      ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel())
+      ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
+      ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel())
+      ..registerFactory<PlayersTabViewModel>(() => PlayersTabViewModel());
+
+    _i
+      ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
+      ..registerFactory<Widget>(() => HomeTabView(_i.get<HomeTabViewModel>()), instanceName: ViewNames.homeTabView)
+      ..registerFactory<Widget>(() => GamesTabView(_i.get<GamesTabViewModel>()),
+          instanceName: ViewNames.gamesTabView)
+      ..registerFactory<Widget>(() => StandingsTabView(_i.get<StandingsTabViewModel>()),
+          instanceName: ViewNames.standingsTabView)
+      ..registerFactory<Widget>(() => TeamsTabView(_i.get<TeamsTabViewModel>()),
+          instanceName: ViewNames.teamsTabView)
+      ..registerFactory<Widget>(() => PlayersTabView(_i.get<PlayersTabViewModel>()),
+          instanceName: ViewNames.playersTabView)
+      ..registerFactory<Widget>(() {
+        final tabs = [
+          _i.get<Widget>(ViewNames.homeTabView),
+          _i.get<Widget>(ViewNames.gamesTabView),
+          _i.get<Widget>(ViewNames.standingsTabView),
+          _i.get<Widget>(ViewNames.teamsTabView),
+          _i.get<Widget>(ViewNames.playersTabView),
+        ].cast<ModelBoundTabWidget>();
+        return MainTabView(_i.get<MainTabViewModel>(), tabs);
+      }, instanceName: ViewNames.mainTabView);
   }
 
   static T resolve<T>([String name]) {
