@@ -47,7 +47,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
                 )),
                 DataCell(Text('41')),
                 DataCell(Text('18')),
-                DataCell(Text('695')),
+                DataCell(Text('69')),
                 DataCell(Text('10.0')),
               ]),
               DataRow(cells: [
@@ -64,7 +64,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
                 )),
                 DataCell(Text('42')),
                 DataCell(Text('17')),
-                DataCell(Text('712')),
+                DataCell(Text('68')),
                 DataCell(Text('9.0')),
               ]),
               DataRow(cells: [
@@ -90,4 +90,6 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       ),
     );
   }
+
+  static String _percentageString(double divisor, double dividend) => (divisor / dividend).toString();
 }

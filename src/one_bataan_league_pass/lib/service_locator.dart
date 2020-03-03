@@ -22,8 +22,7 @@ class ServiceLocator {
   }
 
   static void _registerWebServices() {
-    _i
-      ..registerFactory<HttpHandler>(() => HttpHandler());
+    _i..registerFactory<HttpHandler>(() => HttpHandler());
   }
 
   static void _registerData() {
@@ -36,13 +35,9 @@ class ServiceLocator {
       ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
   }
 
-  static void _registerMappers() {
+  static void _registerMappers() {}
 
-  }
-
-  static void _registerManagers() {
-  
-  }
+  static void _registerManagers() {}
 
   static void _registerUiServices() {
     _i
@@ -64,12 +59,10 @@ class ServiceLocator {
     _i
       ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
       ..registerFactory<Widget>(() => HomeTabView(_i.get<HomeTabViewModel>()), instanceName: ViewNames.homeTabView)
-      ..registerFactory<Widget>(() => GamesTabView(_i.get<GamesTabViewModel>()),
-          instanceName: ViewNames.gamesTabView)
+      ..registerFactory<Widget>(() => GamesTabView(_i.get<GamesTabViewModel>()), instanceName: ViewNames.gamesTabView)
       ..registerFactory<Widget>(() => StandingsTabView(_i.get<StandingsTabViewModel>()),
           instanceName: ViewNames.standingsTabView)
-      ..registerFactory<Widget>(() => TeamsTabView(_i.get<TeamsTabViewModel>()),
-          instanceName: ViewNames.teamsTabView)
+      ..registerFactory<Widget>(() => TeamsTabView(_i.get<TeamsTabViewModel>()), instanceName: ViewNames.teamsTabView)
       ..registerFactory<Widget>(() => PlayersTabView(_i.get<PlayersTabViewModel>()),
           instanceName: ViewNames.playersTabView)
       ..registerFactory<Widget>(() {
@@ -77,8 +70,8 @@ class ServiceLocator {
           _i.get<Widget>(ViewNames.homeTabView),
           _i.get<Widget>(ViewNames.gamesTabView),
           _i.get<Widget>(ViewNames.standingsTabView),
-          _i.get<Widget>(ViewNames.teamsTabView),
           _i.get<Widget>(ViewNames.playersTabView),
+          _i.get<Widget>(ViewNames.teamsTabView),
         ].cast<ModelBoundTabWidget>();
         return MainTabView(_i.get<MainTabViewModel>(), tabs);
       }, instanceName: ViewNames.mainTabView);
