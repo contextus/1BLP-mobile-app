@@ -82,17 +82,29 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel> {
                               ),
                             ),
 
-                            Text(
-                              '35',
-                              style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.bold),
+                            SizedBox(
+                              width: 40,
+                              child: Text(
+                                '35',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.bold),
+                              ),
                             ),
-                            Text(
-                              'vs',
-                              style: Theme.of(context).textTheme.caption,
+                            SizedBox(
+                              width: 32,
+                              child: Text(
+                                'vs',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.caption,
+                              ),
                             ),
-                            Text(
-                              '22',
-                              style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.bold),
+                            SizedBox(
+                              width: 40,
+                              child: Text(
+                                '22',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.title.copyWith(fontWeight: FontWeight.bold),
+                              ),
                             ),
 
                             // TEAM 2
@@ -125,7 +137,7 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel> {
                             spacing: 4.0,
                             children: [
                               Icon(Icons.share, size: 12.0),
-                              Text('SHARE'),
+                              Text('SHARE', style: Theme.of(context).textTheme.button.copyWith(fontSize: 12)),
                             ],
                           ),
                           onPressed: viewModel.onShareLiveGame,
