@@ -5,27 +5,22 @@ import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
-class MainView extends ModelBoundWidget<MainViewModel> {
-  MainView(MainViewModel viewModel) : super(viewModel);
+class MainTabView extends ModelBoundWidget<MainTabViewModel> {
+  MainTabView(MainTabViewModel viewModel, this.tabs) : super(viewModel);
+
+  final List<ModelBoundTabWidget> tabs;
 
   @override
-  _MainViewState createState() => _MainViewState();
+  _MainTabViewState createState() => _MainTabViewState();
 }
 
-class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
+class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   PageController _controller;
-  List<TabView> _tabs;
 
   @override
   void initState() {
     super.initState();
     _controller = PageController(initialPage: viewModel.currentPageIndex);
-    _tabs = [
-      HomeView(viewModel.homeViewModel, 'Home', Icons.home),
-      HomeView(viewModel.homeViewModel, 'Games', Icons.play_circle_filled),
-      HomeView(viewModel.homeViewModel, 'Standings', Icons.insert_chart),
-      HomeView(viewModel.homeViewModel, 'More', Icons.more_horiz),
-    ];
   }
 
   @override
@@ -36,9 +31,9 @@ class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<MainViewModel>(
+    return ScopedModel<MainTabViewModel>(
       model: viewModel,
-      child: ScopedModelDescendant<MainViewModel>(
+      child: ScopedModelDescendant<MainTabViewModel>(
         builder: (context, child, viewModel) {
           return Scaffold(
             appBar: AppBar(
@@ -53,8 +48,8 @@ class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
                 PageView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   controller: _controller,
-                  itemBuilder: (context, index) => _tabs.elementAt(index),
-                  itemCount: _tabs.length,
+                  itemBuilder: (context, index) => widget.tabs.elementAt(index),
+                  itemCount: widget.tabs.length,
                 ),
                 Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar(floating: false)),
               ],
@@ -80,7 +75,7 @@ class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
           padding: const EdgeInsets.all(8.0),
           child: GNav(
             selectedIndex: viewModel.currentPageIndex,
-            tabs: _tabs.map(_buildBottomNavigationBarButton).toList(),
+            tabs: widget.tabs.map(_buildBottomNavigationBarButton).toList(),
             onTabChange: (i) {
               viewModel.currentPageIndex = i;
               _controller.animateToPage(
@@ -88,7 +83,7 @@ class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
               );
-              debugInfo('Switched to ${_tabs[viewModel.currentPageIndex].text}');
+              debugInfo('Switched to ${widget.tabs[viewModel.currentPageIndex].text}');
             },
           ),
         ),
@@ -96,52 +91,34 @@ class _MainViewState extends ModelBoundState<MainView, MainViewModel> {
     );
   }
 
-  GButton _buildBottomNavigationBarButton(TabView tab) {
-    const padding = EdgeInsets.symmetric(horizontal: 12, vertical: 4);
-    const gap = 30.0;
-    const selectionColor = Colors.black54;
-    const activeColor = Colors.white;
-    const inactiveColor = Colors.white24;
+  GButton _buildBottomNavigationBarButton(ModelBoundTabWidget tab) {
+    final currentTheme = Theme.of(context);
+    Color selectionColor;
+    Color activeColor;
+    Color inactiveColor;
+
+    switch (currentTheme.brightness) {
+      case Brightness.dark:
+        throw UnimplementedError('Dark theme not yet handled.');
+
+      case Brightness.light:
+        selectionColor = Colors.white;
+        activeColor = Color.fromARGB(255, 81, 81, 84);
+        inactiveColor = Color.fromARGB(155, 156, 156, 158);
+        break;
+    }
 
     return GButton(
-      gap: gap,
-      padding: padding,
+      iconSize: 24,
+      gap: 30.0,
+      textStyle: currentTheme.textTheme.caption.apply(color: activeColor),
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       icon: tab.icon,
       color: selectionColor,
       text: tab.text,
       textColor: activeColor,
       iconColor: inactiveColor,
       iconActiveColor: activeColor,
-    );
-  }
-}
-
-abstract class TabView<TViewModel extends ViewModelBase> extends ModelBoundWidget<TViewModel> {
-  TabView(TViewModel viewModel, this.text, this.icon, {Key key}) : super(viewModel, key: key);
-
-  final String text;
-  final IconData icon;
-}
-
-class HomeView extends TabView<HomeViewModel> {
-  HomeView(HomeViewModel viewModel, String text, IconData icon) : super(viewModel, text, icon);
-
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends ModelBoundState<HomeView, HomeViewModel> {
-  @override
-  Widget build(BuildContext context) {
-    return ScopedModel<HomeViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<HomeViewModel>(
-        builder: (context, child, viewModel) {
-          return Container(
-            child: Center(child: Text(widget.text)),
-          );
-        },
-      ),
     );
   }
 }

@@ -1,12 +1,7 @@
-import 'package:one_bataan_league_pass/view_models/view_model_base.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
-class MainViewModel extends ViewModelBase {
-  MainViewModel(this.homeViewModel);
-
-  final HomeViewModel homeViewModel;
-
+class MainTabViewModel extends ViewModelBase {
   int _currentIndex = 0;
   int get currentPageIndex => _currentIndex;
   set currentPageIndex(int value) {
