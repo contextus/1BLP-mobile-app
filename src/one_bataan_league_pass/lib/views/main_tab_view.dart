@@ -45,7 +45,6 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
             body: Stack(
               children: <Widget>[
                 PageView.builder(
-                  pageSnapping: false,
                   controller: _controller,
                   itemBuilder: (context, index) => widget.tabs.elementAt(index),
                   onPageChanged: (i) => viewModel.currentPageIndex = i,
@@ -102,7 +101,7 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
 
     return GButton(
       iconSize: 24,
-      gap: 30.0,
+      gap: 32.0,
       textStyle: currentTheme.textTheme.caption.apply(color: activeColor),
       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
       icon: tab.icon,

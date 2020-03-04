@@ -67,8 +67,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Card(
-              elevation: 1,
-              margin: const EdgeInsets.all(0),
+              margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
                 baseColor: Colors.grey[200],
@@ -81,8 +80,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               ),
             ),
             Card(
-              elevation: 1,
-              margin: const EdgeInsets.all(0),
+              margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
                 baseColor: Colors.grey[200],
@@ -95,8 +93,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               ),
             ),
             Card(
-              elevation: 1,
-              margin: const EdgeInsets.all(0),
+              margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
                 baseColor: Colors.grey[200],
@@ -109,8 +106,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               ),
             ),
             Card(
-              elevation: 1,
-              margin: const EdgeInsets.all(0),
+              margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
                 baseColor: Colors.grey[200],
@@ -157,8 +153,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Card(
-                  elevation: 1,
-                  margin: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.only(bottom: 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
@@ -170,8 +165,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                   ),
                 ),
                 Card(
-                  elevation: 1,
-                  margin: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.only(bottom: 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
@@ -183,8 +177,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                   ),
                 ),
                 Card(
-                  elevation: 1,
-                  margin: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.only(bottom: 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
@@ -196,8 +189,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                   ),
                 ),
                 Card(
-                  elevation: 1,
-                  margin: const EdgeInsets.all(0),
+                  margin: const EdgeInsets.only(bottom: 1),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),

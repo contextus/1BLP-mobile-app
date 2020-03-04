@@ -37,7 +37,7 @@ class UserProfileViewModel extends ViewModelBase {
       nationality: 'Filipino',
       province: 'Metro Manila',
       cityOrMunicipality: 'Quezon City',
-      imageUrl: 'https://www.openhost.co.za/download/bootmin/img/avatar_lg.jpg',
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKM9BUy0eVYn8_C3sg0J40Oa5MlWpFbS83fleauNdF4W5HQQJQ',
     );
   }
 }

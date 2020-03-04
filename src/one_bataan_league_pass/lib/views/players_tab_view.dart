@@ -28,7 +28,7 @@ class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabVie
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: ' Search player',
+                    hintText: 'Search player',
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
                     enabledBorder:
