@@ -5,4 +5,5 @@ class ViewNames {
   static const standingsTabView = 'standingsTabView';
   static const teamsTabView = 'teamsTabView';
   static const playersTabView = 'playersTabView';
+  static const userProfileView = 'userProfileView';
 }

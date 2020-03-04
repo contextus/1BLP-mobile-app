@@ -29,6 +29,8 @@ dependencies:
   back_button_interceptor: ^4.2.3
   google_nav_bar: ^1.0.4
   calendar_strip: ^1.0.6
+  shimmer: ^1.1.0
+  intl: any
 
   one_bataan_league_pass_web_service:
     path: "../one_bataan_league_pass_web_service"

@@ -26,10 +26,6 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColorGreen = Color.fromARGB(255, 130, 203, 4);
-    final primaryColorBlue = Color.fromARGB(255, 2, 122, 224);
-    final primaryColorRed = Color.fromARGB(255, 223, 54, 2);
-
     return ScopedModel<MainTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<MainTabViewModel>(
@@ -37,21 +33,13 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(text: '1', style: TextStyle(color: primaryColorBlue)),
-                    TextSpan(text: 'Bataan ', style: TextStyle(color: primaryColorGreen)),
-                    TextSpan(text: 'League', style: TextStyle(color: primaryColorRed)),
-                  ],
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              title: OneBataanLeagueWidget(),
               actions: <Widget>[
-                IconButton(icon: Icon(Icons.account_circle), onPressed: viewModel.onOpenAccount),
+                IconButton(
+                  icon: Icon(Icons.account_circle),
+                  onPressed: viewModel.onViewUserProfile,
+                  tooltip: 'View your profile',
+                ),
               ],
             ),
             body: Stack(
@@ -107,7 +95,7 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
 
       case Brightness.light:
         selectionColor = Colors.white;
-        activeColor = Color.fromARGB(255, 81, 81, 84);
+        activeColor = Color.fromARGB(255, 81, 81, 84); // TODO: Extract these colors to app theme
         inactiveColor = Color.fromARGB(155, 156, 156, 158);
         break;
     }
