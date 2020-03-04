@@ -26,7 +26,7 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: ' Search teams',
+                    hintText: 'Search teams',
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
                     enabledBorder:
@@ -45,7 +45,7 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                         title: Text(team.teamName, style: TextStyle(fontSize: 14.0)),
-                        leading: CircleAvatar(backgroundImage: NetworkImage(team.teamImageUrl)),
+                        leading: Image.network(team.teamImageUrl, width: 32),
                         trailing: IconButton(
                           icon: Icon(Icons.chevron_right),
                           onPressed: () {},

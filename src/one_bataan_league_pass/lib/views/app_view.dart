@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/keys/keys.dart';
 import 'package:one_bataan_league_pass/resources/app_theme.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
@@ -21,6 +22,8 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return ScopedModel<AppViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<AppViewModel>(

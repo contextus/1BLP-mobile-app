@@ -25,7 +25,7 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
                 color: Colors.white,
                 padding: const EdgeInsets.all(8.0),
                 child: CalendarStrip(
-                  containerHeight: 94.0,
+                  containerHeight: 96.0,
                   onDateSelected: viewModel.onDateSelected,
                   dateTileBuilder: (date, selectedDate, rowIndex, dayName, isDayMarked, isDateOutOfRange) {
                     final defaultDateStyle = TextStyle(
@@ -33,20 +33,33 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
                       color: Color.fromARGB(255, 81, 81, 84),
                     );
                     final selectedDateStyle = defaultDateStyle.copyWith(color: Colors.green);
+                    final dateTimeNow = DateTime.now();
+                    final isSelectedDateToday =
+                        date.month == dateTimeNow.month && date.day == dateTimeNow.day && date.year == dateTimeNow.year;
 
-                    return ExtendedColumn(
-                      spacing: 8.0,
-                      children: <Widget>[
-                        Text(dayName, style: Theme.of(context).textTheme.caption),
-                        Text(
-                          date.day.toString(),
-                          style: date == selectedDate ? selectedDateStyle : defaultDateStyle,
-                        )
-                      ],
+                    return Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: isSelectedDateToday
+                          ? BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(color: Colors.green, style: BorderStyle.solid, width: 1),
+                            )
+                          : null,
+                      child: ExtendedColumn(
+                        spacing: 8.0,
+                        children: <Widget>[
+                          Text(dayName, style: Theme.of(context).textTheme.caption),
+                          Text(
+                            date.day.toString(),
+                            style: date == selectedDate ? selectedDateStyle : defaultDateStyle,
+                          )
+                        ],
+                      ),
                     );
                   },
                   addSwipeGesture: true,
-                  monthNameWidget: (String month) {
+                  monthNameWidget: (month) {
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
@@ -56,7 +69,7 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
                             flex: 3,
                             child: Center(
                               child: Text(
-                                month,
+                                month.toUpperCase(),
                                 style: Theme.of(context).textTheme.body2.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),

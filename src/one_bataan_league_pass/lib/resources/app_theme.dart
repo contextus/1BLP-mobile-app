@@ -22,7 +22,7 @@ class AppTheme {
 
   static final lightTheme = ThemeData(
     primaryColor: Colors.white,
-    scaffoldBackgroundColor: Color(0xFFFAFAFA),
+    scaffoldBackgroundColor: Colors.grey[200],
     textTheme: TextTheme(
       display4: GoogleFonts.sourceSansPro(fontSize: 104, fontWeight: FontWeight.w300, letterSpacing: -1.5),
       display3: GoogleFonts.sourceSansPro(fontSize: 65, fontWeight: FontWeight.w300, letterSpacing: -0.5),

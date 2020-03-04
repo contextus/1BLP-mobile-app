@@ -49,7 +49,8 @@ class ServiceLocator {
   static void _registerUi() {
     _i
       ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
-      ..registerFactory<MainTabViewModel>(() => MainTabViewModel())
+      ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel())
+      ..registerFactory<MainTabViewModel>(() => MainTabViewModel(_i.get<NavigationService>()))
       ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(_i.get<NavigationService>(), _i.get<DialogService>()))
       ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel())
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
@@ -74,7 +75,8 @@ class ServiceLocator {
           _i.get<Widget>(ViewNames.teamsTabView),
         ].cast<ModelBoundTabWidget>();
         return MainTabView(_i.get<MainTabViewModel>(), tabs);
-      }, instanceName: ViewNames.mainTabView);
+      }, instanceName: ViewNames.mainTabView)
+      ..registerFactory<UserProfileView>(() => UserProfileView(_i.get<UserProfileViewModel>()), instanceName: ViewNames.userProfileView);
   }
 
   static T resolve<T>([String name]) {
