@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:one_bataan_league_pass/keys/keys.dart';
+import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class MainTabView extends ModelBoundWidget<MainTabViewModel> {
-  MainTabView(MainTabViewModel viewModel, this.tabs) : super(viewModel);
+  MainTabView(MainTabViewModel viewModel, this.tabs) : super(viewModel, key: MainTabViewKeys.tabNavigator);
 
   final List<ModelBoundTabWidget> tabs;
 
   @override
-  _MainTabViewState createState() => _MainTabViewState();
+  MainTabViewState createState() => MainTabViewState();
 }
 
-class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
+class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   PageController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = PageController(initialPage: viewModel.currentPageIndex);
-    viewModel.addOnModelChanged(_onViewModelChanged);
+    _controller = PageController(initialPage: viewModel.currentTabIndex);
   }
 
   @override
@@ -33,7 +34,7 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: OneBataanLeagueWidget(),
+              title: OneBataanLeagueText(),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.account_circle),
@@ -47,16 +48,21 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
                 PageView.builder(
                   controller: _controller,
                   itemBuilder: (context, index) => widget.tabs.elementAt(index),
-                  onPageChanged: (i) => viewModel.currentPageIndex = i,
+                  onPageChanged: _onNavigateToTab,
                   itemCount: widget.tabs.length,
                 ),
-                Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar(floating: false)),
+                Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar()),
               ],
             ),
           );
         },
       ),
     );
+  }
+
+  void navigateToTab(String tabViewName, [Map<String, Object> parameters]) {
+    final index = widget.tabs.indexWhere((t) => t.tabViewName == tabViewName);
+    _onNavigateToTab(index, parameters);
   }
 
   Widget _buildBottomNavigationBar({bool floating = false}) {
@@ -73,9 +79,9 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GNav(
-            selectedIndex: viewModel.currentPageIndex,
+            selectedIndex: viewModel.currentTabIndex,
             tabs: widget.tabs.map(_buildBottomNavigationBarButton).toList(),
-            onTabChange: (i) => viewModel.currentPageIndex = i,
+            onTabChange: _onNavigateToTab,
           ),
         ),
       ),
@@ -83,41 +89,28 @@ class _MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   }
 
   GButton _buildBottomNavigationBarButton(ModelBoundTabWidget tab) {
-    final currentTheme = Theme.of(context);
-    Color selectionColor;
-    Color activeColor;
-    Color inactiveColor;
-
-    switch (currentTheme.brightness) {
-      case Brightness.dark:
-        throw UnimplementedError('Dark theme not yet handled.');
-
-      case Brightness.light:
-        selectionColor = Colors.white;
-        activeColor = Color.fromARGB(255, 81, 81, 84); // TODO: Extract these colors to app theme
-        inactiveColor = Color.fromARGB(155, 156, 156, 158);
-        break;
-    }
+    final customTheme = Theme.of(context).customTheme();
 
     return GButton(
       iconSize: 24,
       gap: 32.0,
-      textStyle: currentTheme.textTheme.caption.apply(color: activeColor),
+      textStyle: Theme.of(context).textTheme.caption.apply(color: customTheme.activeIconColor),
       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-      icon: tab.icon,
-      color: selectionColor,
-      text: tab.text,
-      textColor: activeColor,
-      iconColor: inactiveColor,
-      iconActiveColor: activeColor,
+      icon: tab.tabButtonIcon,
+      color: Colors.transparent,
+      text: tab.tabButtonText,
+      textColor: customTheme.activeIconColor,
+      iconColor: customTheme.inactiveIconColor,
+      iconActiveColor: customTheme.activeIconColor,
     );
   }
 
-  void _onViewModelChanged(String propertyName) {
-    _controller.jumpToPage(
-      viewModel.currentPageIndex,
-    );
-    widget.tabs[viewModel.currentPageIndex].viewModel.init(); // TODO: Add Navigation init for tab view models
-    debugInfo('Switched to tab: ${widget.tabs[viewModel.currentPageIndex].text}');
+  void _onNavigateToTab(int tabIndex, [Map<String, Object> parameters]) {
+    if (viewModel.currentTabIndex != tabIndex) {
+      setState(() => viewModel.currentTabIndex = tabIndex);
+      _controller.jumpToPage(tabIndex);
+      widget.tabs[tabIndex].viewModel.onTabSelected(parameters);
+      debugInfo('Switched to tab: ${widget.tabs[tabIndex].tabButtonText}');
+    }
   }
 }

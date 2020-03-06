@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OneBataanLeagueWidget extends StatelessWidget {
-  OneBataanLeagueWidget({Key key, this.fontSize = 14.0}) : super(key: key);
+class OneBataanLeagueText extends StatelessWidget {
+  OneBataanLeagueText({Key key, this.fontSize = 14.0}) : super(key: key);
 
   final double fontSize;
 

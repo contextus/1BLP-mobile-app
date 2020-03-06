@@ -4,4 +4,5 @@ export 'model_bound_tab_widget.dart';
 export 'extended_row.dart';
 export 'extended_column.dart';
 export 'loading_indicator.dart';
-export 'one_bataan_league_widget.dart';
+export 'one_bataan_league_text.dart';
+export 'game_card.dart';

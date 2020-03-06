@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:shimmer/shimmer.dart';
 
 class UserProfileView extends ModelBoundWidget<UserProfileViewModel> {
@@ -48,11 +49,11 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
       children: <Widget>[
         Container(
           padding: const EdgeInsets.symmetric(vertical: 32.0),
-          color: Colors.white,
+          color: Theme.of(context).canvasColor,
           child: Center(
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[200],
-              highlightColor: Colors.grey[50],
+              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
+              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
               child: ExtendedColumn(
                 spacing: 12.0,
                 children: <Widget>[
@@ -70,8 +71,8 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[200],
-                highlightColor: Colors.grey[50],
+              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
+              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   title: Container(height: 16, color: Colors.grey[200]),
@@ -83,8 +84,8 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[200],
-                highlightColor: Colors.grey[50],
+              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
+              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   title: Container(height: 16, color: Colors.grey[200]),
@@ -96,8 +97,8 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[200],
-                highlightColor: Colors.grey[50],
+              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
+              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   title: Container(height: 16, color: Colors.grey[200]),
@@ -109,8 +110,8 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[200],
-                highlightColor: Colors.grey[50],
+              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
+              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
                 child: ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   title: Container(height: 16, color: Colors.grey[200]),
@@ -135,7 +136,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
           children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 32.0),
-              color: Colors.white,
+              color: Theme.of(context).canvasColor,
               child: Center(
                 child: ExtendedColumn(
                   spacing: 12.0,
@@ -160,7 +161,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     title: Text('BIRTHDATE', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
                       DateFormat('MMMM dd, y').format(viewModel.userProfile.birthDate),
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),
                 ),
@@ -172,7 +173,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     title: Text('NATIONALITY', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
                       viewModel.userProfile.nationality,
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),
                 ),
@@ -184,7 +185,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     title: Text('PROVINCE', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
                       viewModel.userProfile.province,
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),
                 ),
@@ -196,7 +197,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     title: Text('NATIONALITY', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
                       viewModel.userProfile.cityOrMunicipality,
-                      style: TextStyle(color: Colors.black87),
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),
                 ),

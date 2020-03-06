@@ -1,7 +1,7 @@
 import 'package:one_bataan_league_pass/models/models.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 
-class StandingsTabViewModel extends ViewModelBase {
+class StandingsTabViewModel extends TabViewModelBase {
   final teams = [
     TeamModel(
       teamName: '1Bataan Risers',

@@ -1,4 +1,5 @@
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:flutter/material.dart';
 
 class AppViewKeys {
@@ -7,16 +8,6 @@ class AppViewKeys {
   static final navigator = GlobalKey<NavigatorState>();
 }
 
-class HomeViewKeys {
-  static final view = Key(HomeViewKeyValues.view);
-  static final addTodoBtn = Key(HomeViewKeyValues.addTodoBtn);
-  static final todoListViewLoader = Key(HomeViewKeyValues.todoListViewLoader);
-  static final todoListView = Key(HomeViewKeyValues.todoListView);
-  static final emptyTodoListView = Key(HomeViewKeyValues.emptyTodoListView);
-
-  static const addTodoDialog = Key(HomeViewKeyValues.addTodoDialog);
-  static const addTodoDialogName = Key(HomeViewKeyValues.addTodoDialogName);
-  static const addTodoDialogDesc = Key(HomeViewKeyValues.addTodoDialogDesc);
-  static const addTodoDialogAddBtn = Key(HomeViewKeyValues.addTodoDialogAddBtn);
-  static const addTodoDialogCancelBtn = Key(HomeViewKeyValues.addTodoDialogCancelBtn);
+class MainTabViewKeys {
+  static final tabNavigator = GlobalKey<MainTabViewState>();
 }

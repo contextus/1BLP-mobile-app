@@ -3,7 +3,8 @@ import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 
 class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
-  TeamsTabView(TeamsTabViewModel viewModel) : super(viewModel, 'Teams', Icons.group);
+  TeamsTabView(TeamsTabViewModel viewModel, String tabViewName)
+      : super(viewModel, tabButtonText: 'Teams', tabButtonIcon: Icons.group, tabViewName: tabViewName);
 
   @override
   _TeamsTabViewState createState() => _TeamsTabViewState();
@@ -25,7 +26,7 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
                 child: TextField(
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Theme.of(context).canvasColor,
                     hintText: 'Search teams',
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
@@ -35,31 +36,35 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    final team = viewModel.teams[index];
-
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        title: Text(team.teamName, style: TextStyle(fontSize: 14.0)),
-                        leading: Image.network(team.teamImageUrl, width: 32),
-                        trailing: IconButton(
-                          icon: Icon(Icons.chevron_right),
-                          onPressed: () {},
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: viewModel.teams.length,
-                ),
+                child: _buildTeamsListView(),
               )
             ],
           );
         },
       ),
+    );
+  }
+
+  Widget _buildTeamsListView() {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final team = viewModel.teams[index];
+
+        return Card(
+          margin: const EdgeInsets.only(bottom: 1),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            title: Text(team.teamName),
+            leading: Image.network(team.teamImageUrl, width: 32),
+            trailing: IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {},
+            ),
+          ),
+        );
+      },
+      itemCount: viewModel.teams.length,
     );
   }
 }
