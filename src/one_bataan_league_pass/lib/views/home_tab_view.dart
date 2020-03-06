@@ -10,9 +10,12 @@ class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
   _HomeTabViewState createState() => _HomeTabViewState();
 }
 
-class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel> {
+class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
+    with AutomaticKeepAliveClientMixin<HomeTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<HomeTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<HomeTabViewModel>(
@@ -52,4 +55,7 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

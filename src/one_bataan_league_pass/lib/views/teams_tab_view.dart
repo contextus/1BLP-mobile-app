@@ -10,9 +10,12 @@ class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
   _TeamsTabViewState createState() => _TeamsTabViewState();
 }
 
-class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel> {
+class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel>
+    with AutomaticKeepAliveClientMixin<TeamsTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<TeamsTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<TeamsTabViewModel>(
@@ -67,4 +70,7 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
       itemCount: viewModel.teams.length,
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

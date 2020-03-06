@@ -12,9 +12,12 @@ class GamesTabView extends ModelBoundTabWidget<GamesTabViewModel> {
   _GamesTabViewState createState() => _GamesTabViewState();
 }
 
-class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel> {
+class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel>
+    with AutomaticKeepAliveClientMixin<GamesTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<GamesTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<GamesTabViewModel>(
@@ -142,4 +145,7 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

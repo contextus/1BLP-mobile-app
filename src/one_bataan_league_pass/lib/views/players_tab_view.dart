@@ -12,9 +12,12 @@ class PlayersTabView extends ModelBoundTabWidget<PlayersTabViewModel> {
   _PlayersTabViewState createState() => _PlayersTabViewState();
 }
 
-class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabViewModel> {
+class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabViewModel>
+    with AutomaticKeepAliveClientMixin<PlayersTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<PlayersTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<PlayersTabViewModel>(
@@ -99,4 +102,7 @@ class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabVie
       itemCount: viewModel.players.length,
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

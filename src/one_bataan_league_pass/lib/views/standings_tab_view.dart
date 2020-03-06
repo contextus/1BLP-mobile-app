@@ -10,9 +10,12 @@ class StandingsTabView extends ModelBoundTabWidget<StandingsTabViewModel> {
   _StandingsTabViewState createState() => _StandingsTabViewState();
 }
 
-class _StandingsTabViewState extends ModelBoundState<StandingsTabView, StandingsTabViewModel> {
+class _StandingsTabViewState extends ModelBoundState<StandingsTabView, StandingsTabViewModel>
+    with AutomaticKeepAliveClientMixin<StandingsTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<StandingsTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<StandingsTabViewModel>(
@@ -63,4 +66,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
