@@ -2,7 +2,10 @@ import 'package:one_bataan_league_pass/models/team_model.dart';
 
 class GameModel {
   GameModel({
+    this.gameSeries,
     this.gameDate,
+    this.gameLocation,
+    this.gameVideoUrl,
     this.team1,
     this.team2,
     this.team1Score = 0,
@@ -10,7 +13,10 @@ class GameModel {
     this.isLive = false,
   });
 
+  final String gameSeries;
   final DateTime gameDate;
+  final String gameLocation;
+  final String gameVideoUrl;
   final TeamModel team1;
   final TeamModel team2;
   final int team1Score;

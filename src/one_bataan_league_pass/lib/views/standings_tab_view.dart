@@ -3,15 +3,19 @@ import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 
 class StandingsTabView extends ModelBoundTabWidget<StandingsTabViewModel> {
-  StandingsTabView(StandingsTabViewModel viewModel) : super(viewModel, 'Standings', Icons.insert_chart);
+  StandingsTabView(StandingsTabViewModel viewModel, String tabViewName)
+      : super(viewModel, tabButtonText: 'Standings', tabButtonIcon: Icons.insert_chart, tabViewName: tabViewName);
 
   @override
   _StandingsTabViewState createState() => _StandingsTabViewState();
 }
 
-class _StandingsTabViewState extends ModelBoundState<StandingsTabView, StandingsTabViewModel> {
+class _StandingsTabViewState extends ModelBoundState<StandingsTabView, StandingsTabViewModel>
+    with AutomaticKeepAliveClientMixin<StandingsTabView> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return ScopedModel<StandingsTabViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<StandingsTabViewModel>(
@@ -62,4 +66,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

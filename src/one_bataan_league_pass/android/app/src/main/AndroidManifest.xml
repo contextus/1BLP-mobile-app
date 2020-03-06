@@ -10,6 +10,7 @@
         android:label="1Bataan League Pass" 
         android:allowBackup="false" 
         android:fullBackupContent="false" 
+        android:screenOrientation="portrait" 
         android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" 
             android:launchMode="singleTop" 

@@ -18,3 +18,10 @@ abstract class ViewModelBase extends ListenableModel {
     removeAllOnModelChanged();
   }
 }
+
+abstract class TabViewModelBase extends ViewModelBase {
+  TabViewModelBase([NavigationService navigationService, DialogService dialogService])
+      : super(navigationService, dialogService);
+
+  void onTabSelected([Map<String, Object> parameters]) {}
+}

@@ -10,6 +10,7 @@ class AppViewModel extends ViewModelBase {
 
   @override
   Future<void> init([Map<String, Object> parameters]) async {
+    await Future.delayed(Duration(seconds: 1));
     await _analyticsService.start();
     await _navigationService.pushAndReset(ViewNames.mainTabView);
   }

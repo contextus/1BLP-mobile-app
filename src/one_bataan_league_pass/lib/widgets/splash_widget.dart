@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_bataan_league_pass/widgets/one_bataan_league_text.dart';
 
 class SplashWidget extends StatelessWidget {
   const SplashWidget({Key key}) : super(key: key);
@@ -7,10 +8,7 @@ class SplashWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          'Splash Screen',
-          style: Theme.of(context).textTheme.display1,
-        ),
+        child: OneBataanLeagueText(fontSize: 18),
       ),
     );
   }

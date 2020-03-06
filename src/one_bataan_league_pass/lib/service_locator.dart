@@ -43,29 +43,52 @@ class ServiceLocator {
     _i
       ..registerLazySingleton<AnalyticsService>(() => AnalyticsService())
       ..registerLazySingleton<NavigationService>(() => NavigationService())
-      ..registerLazySingleton<DialogService>(() => DialogService());
+      ..registerLazySingleton<DialogService>(() => DialogService())
+      ..registerLazySingleton<SharingService>(() => SharingService());
   }
 
   static void _registerUi() {
+    // Register view models
     _i
       ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
       ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel())
       ..registerFactory<MainTabViewModel>(() => MainTabViewModel(_i.get<NavigationService>()))
-      ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(_i.get<NavigationService>(), _i.get<DialogService>()))
-      ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel())
+      ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(
+            _i.get<NavigationService>(),
+            _i.get<DialogService>(),
+            _i.get<SharingService>(),
+          ))
+      ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel(_i.get<NavigationService>()))
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
       ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel())
       ..registerFactory<PlayersTabViewModel>(() => PlayersTabViewModel());
 
+    // Register views
     _i
       ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
-      ..registerFactory<Widget>(() => HomeTabView(_i.get<HomeTabViewModel>()), instanceName: ViewNames.homeTabView)
-      ..registerFactory<Widget>(() => GamesTabView(_i.get<GamesTabViewModel>()), instanceName: ViewNames.gamesTabView)
-      ..registerFactory<Widget>(() => StandingsTabView(_i.get<StandingsTabViewModel>()),
-          instanceName: ViewNames.standingsTabView)
-      ..registerFactory<Widget>(() => TeamsTabView(_i.get<TeamsTabViewModel>()), instanceName: ViewNames.teamsTabView)
-      ..registerFactory<Widget>(() => PlayersTabView(_i.get<PlayersTabViewModel>()),
-          instanceName: ViewNames.playersTabView)
+      ..registerFactory<Widget>(
+        () => HomeTabView(_i.get<HomeTabViewModel>(), ViewNames.homeTabView),
+        instanceName: ViewNames.homeTabView,
+      )
+      ..registerFactory<Widget>(
+        () => GamesTabView(_i.get<GamesTabViewModel>(), ViewNames.gamesTabView),
+        instanceName: ViewNames.gamesTabView,
+      )
+      ..registerFactory<Widget>(
+        () => StandingsTabView(_i.get<StandingsTabViewModel>(), ViewNames.standingsTabView),
+        instanceName: ViewNames.standingsTabView,
+      )
+      ..registerFactory<Widget>(
+        () => TeamsTabView(
+          _i.get<TeamsTabViewModel>(),
+          ViewNames.teamsTabView,
+        ),
+        instanceName: ViewNames.teamsTabView,
+      )
+      ..registerFactory<Widget>(
+        () => PlayersTabView(_i.get<PlayersTabViewModel>(), ViewNames.playersTabView),
+        instanceName: ViewNames.playersTabView,
+      )
       ..registerFactory<Widget>(() {
         final tabs = [
           _i.get<Widget>(ViewNames.homeTabView),
@@ -76,7 +99,8 @@ class ServiceLocator {
         ].cast<ModelBoundTabWidget>();
         return MainTabView(_i.get<MainTabViewModel>(), tabs);
       }, instanceName: ViewNames.mainTabView)
-      ..registerFactory<UserProfileView>(() => UserProfileView(_i.get<UserProfileViewModel>()), instanceName: ViewNames.userProfileView);
+      ..registerFactory<UserProfileView>(() => UserProfileView(_i.get<UserProfileViewModel>()),
+          instanceName: ViewNames.userProfileView);
   }
 
   static T resolve<T>([String name]) {

@@ -1,38 +1,92 @@
 import 'package:one_bataan_league_pass/models/game_model.dart';
 import 'package:one_bataan_league_pass/models/team_model.dart';
+import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 
-class GamesTabViewModel extends ViewModelBase {
+class GamesTabViewModel extends TabViewModelBase {
+  GamesTabViewModel(NavigationService navigationService) : super(navigationService);
+
   final games = [
     GameModel(
       gameDate: DateTime.now().subtract(Duration(days: 1)),
-      team1: TeamModel(teamName: '1Bataan Risers'),
-      team2: TeamModel(teamName: 'A Team'),
+      gameLocation: 'Mariveles, Bataan',
+      gameSeries: 'Playoffs Quarter Finals',
+      team1: TeamModel(
+        teamName: '1Bataan Risers',
+        teamImageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+      ),
+      team2: TeamModel(
+        teamName: 'A Team',
+        teamImageUrl:
+            'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+      ),
       team1Score: 80,
       team2Score: 54,
     ),
     GameModel(
       gameDate: DateTime.now(),
-      team1: TeamModel(teamName: '1Bataan Risers'),
-      team2: TeamModel(teamName: 'B Team'),
+      gameLocation: 'Mariveles, Bataan',
+      gameSeries: 'Playoffs Quarter Finals',
+      team1: TeamModel(
+        teamName: '1Bataan Risers',
+        teamImageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+      ),
+      team2: TeamModel(
+        teamName: 'B Team',
+        teamImageUrl:
+            'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+      ),
       team1Score: 23,
       team2Score: 12,
       isLive: true,
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 1)),
-      team1: TeamModel(teamName: '1Bataan Risers'),
-      team2: TeamModel(teamName: 'C Team'),
+      gameLocation: 'Mariveles, Bataan',
+      gameSeries: 'Playoffs Quarter Finals',
+      team1: TeamModel(
+        teamName: '1Bataan Risers',
+        teamImageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+      ),
+      team2: TeamModel(
+        teamName: 'C Team',
+        teamImageUrl:
+            'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+      ),
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 2)),
-      team1: TeamModel(teamName: '1Bataan Risers'),
-      team2: TeamModel(teamName: 'D Team'),
+      gameLocation: 'Mariveles, Bataan',
+      gameSeries: 'Playoffs Quarter Finals',
+      team1: TeamModel(
+        teamName: '1Bataan Risers',
+        teamImageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+      ),
+      team2: TeamModel(
+        teamName: 'D Team',
+        teamImageUrl:
+            'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+      ),
     ),
     GameModel(
       gameDate: DateTime.now().add(Duration(days: 3)),
-      team1: TeamModel(teamName: '1Bataan Risers'),
-      team2: TeamModel(teamName: 'E Team'),
+      gameLocation: 'Mariveles, Bataan',
+      gameSeries: 'Playoffs Quarter Finals',
+      team1: TeamModel(
+        teamName: '1Bataan Risers',
+        teamImageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+      ),
+      team2: TeamModel(
+        teamName: 'E Team',
+        teamImageUrl:
+            'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+      ),
     ),
   ];
 
@@ -46,8 +100,6 @@ class GamesTabViewModel extends ViewModelBase {
   }
 
   void onDateSelected(DateTime selectedDate) {
-    print('Selected $selectedDate');
-
     selectedGames = games.where((g) {
       return g.gameDate.month == selectedDate.month &&
           g.gameDate.day == selectedDate.day &&
@@ -55,8 +107,10 @@ class GamesTabViewModel extends ViewModelBase {
     }).toList();
   }
 
+  void onWatchLive() => navigationService.goToTab(ViewNames.homeTabView);
+
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void onTabSelected([Map<String, Object> parameters]) {
     onDateSelected(DateTime.now());
   }
 }
