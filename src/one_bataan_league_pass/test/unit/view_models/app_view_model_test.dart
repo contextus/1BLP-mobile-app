@@ -21,7 +21,7 @@ void main() {
 
       // Assert
       verify(mockAnalytics.start()).called(1);
-      verify(mockNavigation.pushAndReset(ViewNames.homeTabView)).called(1);
+      verify(mockNavigation.pushToNewRoot(ViewNames.homeTabView)).called(1);
     });
   });
 }
