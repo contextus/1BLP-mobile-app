@@ -90,14 +90,9 @@ class GamesTabViewModel extends TabViewModelBase {
     ),
   ];
 
-  List<GameModel> _selectedGames = [];
-  List<GameModel> get selectedGames => _selectedGames;
-  set selectedGames(List<GameModel> value) {
-    if (_selectedGames != value) {
-      _selectedGames = value;
-      notifyListeners();
-    }
-  }
+  List<GameModel> selectedGames = [];
+
+  DateTime currentlySelectedDate = DateTime.now();
 
   void onDateSelected(DateTime selectedDate) {
     selectedGames = games.where((g) {
@@ -105,12 +100,15 @@ class GamesTabViewModel extends TabViewModelBase {
           g.gameDate.day == selectedDate.day &&
           g.gameDate.year == selectedDate.year;
     }).toList();
+    currentlySelectedDate = selectedDate;
+
+    notifyListeners();
   }
 
   void onWatchLive() => navigationService.goToTab(ViewNames.homeTabView);
 
   @override
   void onTabSelected([Map<String, Object> parameters]) {
-    onDateSelected(DateTime.now());
+    onDateSelected(currentlySelectedDate);
   }
 }

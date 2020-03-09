@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/keys/keys.dart';
 import 'package:one_bataan_league_pass/resources/app_theme.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
-import 'package:one_bataan_league_pass/widgets/dialog_manager_widget.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +16,12 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
   @override
   void initState() {
     super.initState();
-    viewModel.init();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    widget.viewModel.init();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
     return ScopedModel<AppViewModel>(
       model: viewModel,
       child: ScopedModelDescendant<AppViewModel>(
@@ -35,11 +33,6 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
             theme: AppTheme.materialLightTheme,
             darkTheme: AppTheme.materialDarkTheme,
             home: SplashWidget(key: AppViewKeys.splashWidget),
-            builder: (context, widget) => Navigator(
-              onGenerateRoute: (context) => MaterialPageRoute(
-                builder: (context) => DialogManagerWidget(child: widget),
-              ),
-            ),
           );
         },
       ),

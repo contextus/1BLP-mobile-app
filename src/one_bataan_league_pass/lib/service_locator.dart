@@ -66,26 +66,23 @@ class ServiceLocator {
     // Register views
     _i
       ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
-      ..registerFactory<Widget>(
+      ..registerFactory(
         () => HomeTabView(_i.get<HomeTabViewModel>(), ViewNames.homeTabView),
         instanceName: ViewNames.homeTabView,
       )
-      ..registerFactory<Widget>(
+      ..registerFactory(
         () => GamesTabView(_i.get<GamesTabViewModel>(), ViewNames.gamesTabView),
         instanceName: ViewNames.gamesTabView,
       )
-      ..registerFactory<Widget>(
+      ..registerFactory(
         () => StandingsTabView(_i.get<StandingsTabViewModel>(), ViewNames.standingsTabView),
         instanceName: ViewNames.standingsTabView,
       )
-      ..registerFactory<Widget>(
-        () => TeamsTabView(
-          _i.get<TeamsTabViewModel>(),
-          ViewNames.teamsTabView,
-        ),
+      ..registerFactory(
+        () => TeamsTabView(_i.get<TeamsTabViewModel>(), ViewNames.teamsTabView),
         instanceName: ViewNames.teamsTabView,
       )
-      ..registerFactory<Widget>(
+      ..registerFactory(
         () => PlayersTabView(_i.get<PlayersTabViewModel>(), ViewNames.playersTabView),
         instanceName: ViewNames.playersTabView,
       )
@@ -99,8 +96,10 @@ class ServiceLocator {
         ].cast<ModelBoundTabWidget>();
         return MainTabView(_i.get<MainTabViewModel>(), tabs);
       }, instanceName: ViewNames.mainTabView)
-      ..registerFactory<UserProfileView>(() => UserProfileView(_i.get<UserProfileViewModel>()),
-          instanceName: ViewNames.userProfileView);
+      ..registerFactory<UserProfileView>(
+        () => UserProfileView(_i.get<UserProfileViewModel>()),
+        instanceName: ViewNames.userProfileView,
+      );
   }
 
   static T resolve<T>([String name]) {
