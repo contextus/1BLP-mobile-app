@@ -21,15 +21,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
           return Scaffold(
             appBar: AppBar(
               title: Text('User Profile'),
-              actions: viewModel.userProfile != null
-                  ? [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () =>
-                            AppViewModel.instance.isDarkModeEnabled = !AppViewModel.instance.isDarkModeEnabled,
-                      )
-                    ]
-                  : [],
+              actions: viewModel.userProfile != null ? [IconButton(icon: Icon(Icons.edit), onPressed: () {})] : [],
             ),
             body: FutureBuilder(
               future: viewModel.getUserProfileTask,

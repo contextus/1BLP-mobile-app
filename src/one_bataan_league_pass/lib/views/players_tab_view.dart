@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class PlayersTabView extends ModelBoundTabWidget<PlayersTabViewModel> {
   PlayersTabView(PlayersTabViewModel viewModel, String tabViewName)
@@ -58,7 +59,38 @@ class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabVie
                   ),
                 ),
               ),
-              Expanded(child: _buildPlayersListView()),
+              FutureBuilder<List<PlayerEntity>>(
+                future: viewModel.getPlayersTask,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 1),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        title: LoadingContainer(),
+                        subtitle: LoadingContainer(height: 16),
+                        leading: LoadingContainer(child: CircleAvatar()),
+                        trailing: LoadingContainer(width: 40, height: 40),
+                      ),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text('Failed to retrieve players'),
+                      ),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+                    return Expanded(
+                      child: snapshot.data.isNotEmpty
+                          ? _buildPlayersListView(snapshot.data)
+                          : Center(child: Text('No players found')),
+                    );
+                  }
+
+                  throw UnimplementedError('Unhandled $snapshot state');
+                },
+              )
             ],
           );
         },
@@ -66,40 +98,43 @@ class _PlayersTabViewState extends ModelBoundState<PlayersTabView, PlayersTabVie
     );
   }
 
-  Widget _buildPlayersListView() {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final player = viewModel.players[index];
+  Widget _buildPlayersListView(List<PlayerEntity> players) {
+    return RefreshIndicator(
+      onRefresh: () async => viewModel.refetchPlayers(),
+      child: ListView.builder(
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          final player = players[index];
 
-        return AnimationConfiguration.staggeredList(
-          position: index,
-          child: SlideAnimation(
-            child: Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                title: Text(player.playerName, style: TextStyle(fontSize: 14.0)),
-                subtitle: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(text: player.playerTeam.teamNameAcronym),
-                      TextSpan(text: '    |    '),
-                      TextSpan(text: '#${player.playerNumber}'),
-                      TextSpan(text: '    |    '),
-                      TextSpan(text: player.formattedPositions),
-                    ],
-                    style: Theme.of(context).textTheme.caption,
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            child: SlideAnimation(
+              child: Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  title: Text(player.playerName, style: TextStyle(fontSize: 14.0)),
+                  subtitle: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text: player.playerTeam.teamNameAcronym),
+                        TextSpan(text: '    |    '),
+                        TextSpan(text: '#${player.playerNumber}'),
+                        TextSpan(text: '    |    '),
+                        TextSpan(text: player.formattedPositions),
+                      ],
+                      style: Theme.of(context).textTheme.caption,
+                    ),
                   ),
+                  leading: CircleAvatar(backgroundImage: NetworkImage(player.playerImageUrl)),
+                  trailing: Image.network(player.playerTeam.teamImageUrl, width: 40),
                 ),
-                leading: CircleAvatar(backgroundImage: NetworkImage(player.playerImageUrl)),
-                trailing: Image.network(player.playerTeam.teamImageUrl, width: 40),
               ),
             ),
-          ),
-        );
-      },
-      itemCount: viewModel.players.length,
+          );
+        },
+      ),
     );
   }
 

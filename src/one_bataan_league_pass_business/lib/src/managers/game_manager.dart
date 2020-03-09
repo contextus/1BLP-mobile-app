@@ -4,7 +4,7 @@ import 'package:one_bataan_league_pass_common/utils.dart';
 
 class GameManager {
   Future<GameEntity> getLiveGame() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     return GameEntity(
       gameSeries: 'Playoffs Quarter Finals',
@@ -111,7 +111,7 @@ class GameManager {
       )
     ];
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     return mockGames.where((g) => g.gameDate.isOnTheSameDay(selectedDate)).toList();
   }

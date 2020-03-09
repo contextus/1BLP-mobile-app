@@ -1,7 +1,8 @@
-import 'package:one_bataan_league_pass/models/models.dart';
+import 'team_entity.dart';
+import 'entity_base.dart';
 
-class PlayerModel {
-  PlayerModel({
+class PlayerEntity extends EntityBase {
+  PlayerEntity({
     this.playerName,
     this.playerNumber,
     this.playerTeam,
@@ -11,10 +12,11 @@ class PlayerModel {
 
   final String playerName;
   final String playerNumber;
-  final TeamModel playerTeam;
+  final TeamEntity playerTeam;
   final String playerImageUrl;
   final List<String> positions;
 
+  // TODO: Move to UI
   String get formattedPositions {
     String formattedPositions = '';
 
