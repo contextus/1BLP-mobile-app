@@ -1,7 +1,9 @@
-import 'package:one_bataan_league_pass/models/team_model.dart';
+import 'package:one_bataan_league_pass_business/src/entities/entity_base.dart';
+import 'package:one_bataan_league_pass_business/src/entities/team_entity.dart';
+import 'package:one_bataan_league_pass_common/utils.dart';
 
-class GameModel {
-  GameModel({
+class GameEntity extends EntityBase {
+  GameEntity({
     this.gameSeries,
     this.gameDate,
     this.gameLocation,
@@ -17,21 +19,15 @@ class GameModel {
   final DateTime gameDate;
   final String gameLocation;
   final String gameVideoUrl;
-  final TeamModel team1;
-  final TeamModel team2;
+  final TeamEntity team1;
+  final TeamEntity team2;
   final int team1Score;
   final int team2Score;
   final bool isLive;
 
-  bool get isGameToday {
-    final dateTimeNow = DateTime.now();
-    final dateNow = DateTime(dateTimeNow.year, dateTimeNow.month, dateTimeNow.day);
-    final gameDate = DateTime(this.gameDate.year, this.gameDate.month, this.gameDate.day);
+  bool isGameToday() => gameDate.isOnTheSameDay(DateTime.now());
 
-    return dateNow.difference(gameDate).inDays == 0;
-  }
-
-  bool get isGameUpcoming => !isGameFinished && !isGameToday;
+  bool get isGameUpcoming => !isGameFinished && !isGameToday();
 
   bool get isGameFinished {
     final dateTimeNow = DateTime.now();

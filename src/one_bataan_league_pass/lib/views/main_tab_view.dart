@@ -22,6 +22,7 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   @override
   void initState() {
     super.initState();
+    widget.tabs.forEach((t) => t.viewModel.init());
     _controller = PageController(initialPage: viewModel.currentTabIndex);
   }
 

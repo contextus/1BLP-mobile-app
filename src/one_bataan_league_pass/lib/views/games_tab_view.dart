@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class GamesTabView extends ModelBoundTabWidget<GamesTabViewModel> {
   GamesTabView(GamesTabViewModel viewModel, String tabViewName)
@@ -103,9 +104,28 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
               ),
 
               // Games list
-              viewModel.selectedGames.isNotEmpty
-                  ? _buildGamesListView()
-                  : Expanded(child: Center(child: Text('No games for this date'))),
+              FutureBuilder<List<GameEntity>>(
+                future: viewModel.getGamesForDateTask,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return GameCardSkeleton();
+                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+                    return Expanded(
+                      child: snapshot.data.isNotEmpty
+                          ? _buildGamesListView(snapshot.data)
+                          : Center(child: Text('No games for this date')),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text('Could not retrieve games.'),
+                      ),
+                    );
+                  }
+
+                  throw UnimplementedError('Unhandled $snapshot state');
+                },
+              ),
             ],
           );
         },
@@ -113,36 +133,38 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
     );
   }
 
-  Widget _buildGamesListView() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: viewModel.selectedGames.length,
-      itemBuilder: (context, index) {
-        final game = viewModel.selectedGames[index];
-        List<GameCardAction> actions = [];
+  Widget _buildGamesListView(List<GameEntity> games) {
+    return RefreshIndicator(
+      onRefresh: () async => viewModel.refetchGamesForCurrentDate(),
+      child: ListView.builder(
+        itemCount: games.length,
+        itemBuilder: (context, index) {
+          final game = games[index];
+          List<GameCardAction> actions = [];
 
-        if (game.isGameToday) {
-          actions = [
-            GameCardAction(
-              'WATCH LIVE',
-              icon: Icons.play_arrow,
-              action: viewModel.onWatchLive,
-            ),
-          ];
-        }
+          if (game.isGameToday()) {
+            actions = [
+              GameCardAction(
+                'WATCH LIVE',
+                icon: Icons.play_arrow,
+                action: viewModel.onWatchLive,
+              ),
+            ];
+          }
 
-        if (game.isGameFinished) {
-          actions = [
-            GameCardAction(
-              'WATCH REPLAY',
-              icon: Icons.replay,
-              action: () {},
-            )
-          ];
-        }
+          if (game.isGameFinished) {
+            actions = [
+              GameCardAction(
+                'WATCH REPLAY',
+                icon: Icons.replay,
+                action: () {},
+              )
+            ];
+          }
 
-        return GameCard(game: game, actions: actions);
-      },
+          return GameCard(game: game, actions: actions);
+        },
+      ),
     );
   }
 

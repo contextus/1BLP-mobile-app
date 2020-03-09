@@ -29,7 +29,7 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
           return MaterialApp(
             title: '1Bataan League Pass',
             navigatorKey: AppViewKeys.navigator,
-            themeMode: ThemeMode.light,
+            themeMode: viewModel.isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
             theme: AppTheme.materialLightTheme,
             darkTheme: AppTheme.materialDarkTheme,
             home: SplashWidget(key: AppViewKeys.splashWidget),

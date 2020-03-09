@@ -1,35 +1,40 @@
-import 'package:one_bataan_league_pass/models/models.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_business/managers.dart';
+import 'package:one_bataan_league_pass_common/logging.dart';
 
 class HomeTabViewModel extends TabViewModelBase {
   HomeTabViewModel(
     NavigationService navigationService,
     DialogService dialogService,
+    this._gameManager,
     this._sharingService,
   ) : super(navigationService, dialogService);
 
+  final GameManager _gameManager;
   final SharingService _sharingService;
 
-  final game = GameModel(
-    gameSeries: 'Playoffs Quarter Finals',
-    gameDate: DateTime.now(),
-    gameLocation: 'Mariveles, Bataan',
-    gameVideoUrl: 'https://sample.com',
-    isLive: true,
-    team1: TeamModel(
-      teamName: '1Bataan Risers',
-      teamImageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
-    ),
-    team1Score: 35,
-    team2: TeamModel(
-      teamName: 'A Team',
-      teamImageUrl:
-          'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
-    ),
-    team2Score: 22,
-  );
+  GameEntity game;
 
-  Future<void> onShareLiveGame() => _sharingService.share('Watch this game ${game.gameVideoUrl}');
+  Future<GameEntity> _getLiveGameTask;
+  Future<GameEntity> get getLiveGameTask => _getLiveGameTask ??= _onGetLiveGame();
+
+  Future<void> shareLiveGame() => _sharingService.share('Watch this game ${game.gameVideoUrl}');
+
+  void refetchLiveGame() {
+    _getLiveGameTask = _onGetLiveGame();
+    notifyListeners();
+  }
+
+  Future<GameEntity> _onGetLiveGame() async {
+    debugInfo('Getting live game...');
+
+    try {
+      return game = await _gameManager.getLiveGame();
+    } on Exception catch (e) {
+      debugError('Failed to get current live game', e);
+      rethrow;
+    }
+  }
 }

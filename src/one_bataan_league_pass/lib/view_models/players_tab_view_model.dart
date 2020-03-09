@@ -66,6 +66,6 @@ class PlayersTabViewModel extends TabViewModelBase {
         break;
     }
 
-    notifyListeners('selectedChoiceIndex');
+    notifyListeners();
   }
 }

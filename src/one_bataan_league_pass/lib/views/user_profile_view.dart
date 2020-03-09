@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
-import 'package:shimmer/shimmer.dart';
 
 class UserProfileView extends ModelBoundWidget<UserProfileViewModel> {
   UserProfileView(UserProfileViewModel viewModel) : super(viewModel);
@@ -22,7 +21,15 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
           return Scaffold(
             appBar: AppBar(
               title: Text('User Profile'),
-              actions: viewModel.userProfile != null ? [IconButton(icon: Icon(Icons.edit), onPressed: () {})] : [],
+              actions: viewModel.userProfile != null
+                  ? [
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () =>
+                            AppViewModel.instance.isDarkModeEnabled = !AppViewModel.instance.isDarkModeEnabled,
+                      )
+                    ]
+                  : [],
             ),
             body: FutureBuilder(
               future: viewModel.getUserProfileTask,
@@ -51,16 +58,12 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
           padding: const EdgeInsets.symmetric(vertical: 32.0),
           color: Theme.of(context).canvasColor,
           child: Center(
-            child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-              child: ExtendedColumn(
-                spacing: 12.0,
-                children: <Widget>[
-                  CircleAvatar(radius: 56),
-                  Container(width: 128, height: 16, color: Colors.grey[200]),
-                ],
-              ),
+            child: ExtendedColumn(
+              spacing: 12.0,
+              children: <Widget>[
+                LoadingContainer(child: CircleAvatar(radius: 56)),
+                LoadingContainer(width: 128, height: 16),
+              ],
             ),
           ),
         ),
@@ -70,53 +73,37 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
             Card(
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
-                ),
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                title: LoadingContainer(height: 16),
+                subtitle: LoadingContainer(height: 16),
               ),
             ),
             Card(
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
-                ),
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                title: LoadingContainer(height: 16),
+                subtitle: LoadingContainer(height: 16),
               ),
             ),
             Card(
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
-                ),
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                title: LoadingContainer(height: 16),
+                subtitle: LoadingContainer(height: 16),
               ),
             ),
             Card(
               margin: const EdgeInsets.only(bottom: 1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
-                ),
+              child: const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                title: LoadingContainer(height: 16),
+                subtitle: LoadingContainer(height: 16),
               ),
             ),
           ],

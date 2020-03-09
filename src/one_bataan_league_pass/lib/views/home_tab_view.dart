@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
   HomeTabView(HomeTabViewModel viewModel, String tabViewName)
@@ -39,16 +40,44 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
                   ),
                 ),
               ),
-              GameCard(
-                game: viewModel.game,
-                actions: [
-                  GameCardAction(
-                    'SHARE',
-                    icon: Icons.share,
-                    action: viewModel.onShareLiveGame,
-                  )
-                ],
-              ),
+              FutureBuilder<GameEntity>(
+                future: viewModel.getLiveGameTask,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return GameCardSkeleton();
+                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+                    return GameCard(
+                      game: snapshot.data,
+                      actions: [
+                        GameCardAction(
+                          'SHARE',
+                          icon: Icons.share,
+                          action: viewModel.shareLiveGame,
+                        )
+                      ],
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text('Could not retrieve the current live game.'),
+                      ),
+                    );
+                  }
+
+                  throw UnimplementedError('Unhandled $snapshot state');
+                },
+              )
+
+              // GameCard(
+              //   game: viewModel.game,
+              //   actions: [
+              //     GameCardAction(
+              //       'SHARE',
+              //       icon: Icons.share,
+              //       action: viewModel.onShareLiveGame,
+              //     )
+              //   ],
+              // ),
             ],
           );
         },

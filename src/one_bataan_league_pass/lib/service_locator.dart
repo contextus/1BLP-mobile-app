@@ -2,6 +2,7 @@ import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
@@ -37,7 +38,9 @@ class ServiceLocator {
 
   static void _registerMappers() {}
 
-  static void _registerManagers() {}
+  static void _registerManagers() {
+    _i.registerLazySingleton<GameManager>(() => GameManager());
+  }
 
   static void _registerUiServices() {
     _i
@@ -56,9 +59,10 @@ class ServiceLocator {
       ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(
             _i.get<NavigationService>(),
             _i.get<DialogService>(),
+            _i.get<GameManager>(),
             _i.get<SharingService>(),
           ))
-      ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel(_i.get<NavigationService>()))
+      ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel(_i.get<NavigationService>(), _i.get<GameManager>()))
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
       ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel())
       ..registerFactory<PlayersTabViewModel>(() => PlayersTabViewModel());

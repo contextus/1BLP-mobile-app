@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:one_bataan_league_pass/models/game_model.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class GameCard extends StatelessWidget {
   GameCard({Key key, @required this.game, this.actions = const []}) : super(key: key);
 
-  final GameModel game;
+  final GameEntity game;
   final List<GameCardAction> actions;
 
   @override
@@ -129,6 +129,48 @@ class GameCard extends StatelessWidget {
                   ),
                 );
               }).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GameCardSkeleton extends StatelessWidget {
+  const GameCardSkeleton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            ExtendedColumn(
+              spacing: 8.0,
+              children: const <Widget>[
+                LoadingContainer(height: 28, width: 156),
+                LoadingContainer(height: 16, width: 156),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: ExtendedRow(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 24,
+                children: const <Widget>[
+                  LoadingContainer(width: 80, height: 80),
+                  LoadingContainer(width: 40, height: 40),
+                  LoadingContainer(width: 32, height: 32),
+                  LoadingContainer(width: 40, height: 40),
+                  LoadingContainer(width: 80, height: 80),
+                ],
+              ),
             ),
           ],
         ),
