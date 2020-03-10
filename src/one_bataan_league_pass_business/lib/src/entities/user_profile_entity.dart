@@ -1,10 +1,13 @@
-class UserProfileModel {
-  UserProfileModel({
+class UserProfileEntity {
+  UserProfileEntity({
     this.name,
     this.birthDate,
     this.nationality,
     this.province,
     this.cityOrMunicipality,
+    this.zipCode,
+    this.barangayDistrict,
+    this.street,
     this.imageUrl,
   });
 
@@ -13,5 +16,8 @@ class UserProfileModel {
   final String nationality;
   final String province;
   final String cityOrMunicipality;
+  final String street;
+  final String barangayDistrict;
+  final String zipCode;
   final String imageUrl;
 }

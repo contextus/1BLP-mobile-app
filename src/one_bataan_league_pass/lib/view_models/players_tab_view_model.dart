@@ -4,7 +4,9 @@ import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class PlayersTabViewModel extends TabViewModelBase {
-  PlayersTabViewModel(this._playerManager);
+  PlayersTabViewModel(this._playerManager) {
+    getPlayers = _onGetPlayers();
+  }
 
   final PlayerManager _playerManager;
 
@@ -14,9 +16,7 @@ class PlayersTabViewModel extends TabViewModelBase {
 
   List<PlayerEntity> players;
 
-  Future<List<PlayerEntity>> _getPlayersTask;
-
-  Future<List<PlayerEntity>> get getPlayersTask => _getPlayersTask ??= _onGetPlayers();
+  Future<List<PlayerEntity>> getPlayers;
 
   void onSelectedChoiceIndexChanged(int index) {
     selectedChoiceIndex = index;
@@ -42,13 +42,18 @@ class PlayersTabViewModel extends TabViewModelBase {
   }
 
   void refetchPlayers() {
-    _getPlayersTask = _onGetPlayers();
+    getPlayers = _onGetPlayers();
     notifyListeners();
   }
 
   Future<List<PlayerEntity>> _onGetPlayers() async {
     debugInfo('Getting players...');
 
-    return players = await _playerManager.getPlayers();
+    try {
+      return players = await _playerManager.getPlayers();
+    } on Exception catch (e) {
+      debugError('Failed to retrieve players', e);
+      rethrow;
+    }
   }
 }

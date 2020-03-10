@@ -105,7 +105,7 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
 
               // Games list
               FutureBuilder<List<GameEntity>>(
-                future: viewModel.getGamesForDateTask,
+                future: viewModel.getGamesForDate,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return GameCardSkeleton();

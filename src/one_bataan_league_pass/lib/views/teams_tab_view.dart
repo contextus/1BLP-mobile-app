@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
   TeamsTabView(TeamsTabViewModel viewModel, String tabViewName)
@@ -38,8 +39,25 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
                   ),
                 ),
               ),
-              Expanded(
-                child: _buildTeamsListView(),
+              FutureBuilder<List<TeamEntity>>(
+                future: viewModel.getTeams,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return _buildTeamLoadingCard();
+                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text('Could not retrieve teams'),
+                      ),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+                    return Expanded(
+                      child: _buildTeamsListView(snapshot.data),
+                    );
+                  }
+
+                  throw UnimplementedError('Unhandled $snapshot state');
+                },
               )
             ],
           );
@@ -48,26 +66,41 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
     );
   }
 
-  Widget _buildTeamsListView() {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final team = viewModel.teams[index];
+  Widget _buildTeamsListView(List<TeamEntity> teams) {
+    return RefreshIndicator(
+      onRefresh: () async => viewModel.refetchTeams(),
+      child: ListView.builder(
+        itemCount: teams.length,
+        itemBuilder: (context, index) => _buildTeamCard(teams[index]),
+      ),
+    );
+  }
 
-        return Card(
-          margin: const EdgeInsets.only(bottom: 1),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            title: Text(team.teamName),
-            leading: Image.network(team.teamImageUrl, width: 32),
-            trailing: IconButton(
-              icon: Icon(Icons.chevron_right),
-              onPressed: () {},
-            ),
-          ),
-        );
-      },
-      itemCount: viewModel.teams.length,
+  Widget _buildTeamCard(TeamEntity team) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 1),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        title: Text(team.teamName),
+        leading: Image.network(team.teamImageUrl, width: 32),
+        trailing: IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () {},
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTeamLoadingCard() {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 1),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      child: const ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        title: LoadingContainer(),
+        leading: LoadingContainer(child: CircleAvatar()),
+      ),
     );
   }
 

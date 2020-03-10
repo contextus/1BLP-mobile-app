@@ -40,8 +40,10 @@ class ServiceLocator {
 
   static void _registerManagers() {
     _i
+      ..registerLazySingleton<UserProfileManager>(() => UserProfileManager())
       ..registerLazySingleton<GameManager>(() => GameManager())
-      ..registerLazySingleton<PlayerManager>(() => PlayerManager());
+      ..registerLazySingleton<PlayerManager>(() => PlayerManager())
+      ..registerLazySingleton<TeamManager>(() => TeamManager());
   }
 
   static void _registerUiServices() {
@@ -56,7 +58,7 @@ class ServiceLocator {
     // Register view models
     _i
       ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
-      ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel())
+      ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel(_i.get<UserProfileManager>()))
       ..registerFactory<MainTabViewModel>(() => MainTabViewModel(_i.get<NavigationService>()))
       ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(
             _i.get<NavigationService>(),
@@ -66,7 +68,7 @@ class ServiceLocator {
           ))
       ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel(_i.get<NavigationService>(), _i.get<GameManager>()))
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
-      ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel())
+      ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel(_i.get<TeamManager>()))
       ..registerFactory<PlayersTabViewModel>(() => PlayersTabViewModel(_i.get<PlayerManager>()));
 
     // Register views

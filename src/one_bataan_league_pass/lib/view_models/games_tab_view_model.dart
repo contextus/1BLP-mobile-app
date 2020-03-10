@@ -7,7 +7,9 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class GamesTabViewModel extends TabViewModelBase {
-  GamesTabViewModel(NavigationService navigationService, this._gameManager) : super(navigationService);
+  GamesTabViewModel(NavigationService navigationService, this._gameManager) : super(navigationService) {
+    getGamesForDate = _onGetGamesForDate(_currentlySelectedDate);
+  }
 
   final GameManager _gameManager;
 
@@ -15,12 +17,10 @@ class GamesTabViewModel extends TabViewModelBase {
 
   DateTime _currentlySelectedDate = DateTime.now();
 
-  Future<List<GameEntity>> _getGamesForDateTask;
-  Future<List<GameEntity>> get getGamesForDateTask =>
-      _getGamesForDateTask ??= _onGetGamesForDate(_currentlySelectedDate);
+  Future<List<GameEntity>> getGamesForDate;
 
   void refetchGamesForCurrentDate() {
-    _getGamesForDateTask = _onGetGamesForDate(_currentlySelectedDate);
+    getGamesForDate = _onGetGamesForDate(_currentlySelectedDate);
     notifyListeners();
   }
 
