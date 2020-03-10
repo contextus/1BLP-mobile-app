@@ -31,6 +31,13 @@ class GamesTabViewModel extends TabViewModelBase {
 
   void onWatchLive() => navigationService.goToTab(ViewNames.homeTabView);
 
+  void onWatchReplay(GameEntity gameToWatch) {
+    navigationService.push(
+      ViewNames.watchReplayView,
+      {NavigationParameterConstants.selectedGameToWatch: gameToWatch},
+    );
+  }
+
   Future<List<GameEntity>> _onGetGamesForDate(DateTime selectedDate) async {
     debugInfo('Getting games for ${DateFormat("MMM dd, yyyy").format(selectedDate)}');
 

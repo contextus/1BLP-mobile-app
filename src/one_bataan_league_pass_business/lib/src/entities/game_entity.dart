@@ -25,9 +25,9 @@ class GameEntity extends EntityBase {
   final int team2Score;
   final bool isLive;
 
-  bool isGameToday() => gameDate.isOnTheSameDay(DateTime.now());
+  bool get isGameToday => gameDate.isOnTheSameDay(DateTime.now());
 
-  bool get isGameUpcoming => !isGameFinished && !isGameToday();
+  bool get isGameUpcoming => !isGameFinished && !isGameToday;
 
   bool get isGameFinished {
     final dateTimeNow = DateTime.now();

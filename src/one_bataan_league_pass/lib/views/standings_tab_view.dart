@@ -21,6 +21,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       child: ScopedModelDescendant<StandingsTabViewModel>(
         builder: (context, child, viewModel) {
           return Container(
+            color: Theme.of(context).canvasColor,
             child: DataTable(
               columnSpacing: 12.0,
               columns: [

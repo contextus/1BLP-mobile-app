@@ -23,5 +23,35 @@ abstract class TabViewModelBase extends ViewModelBase {
   TabViewModelBase([NavigationService navigationService, DialogService dialogService])
       : super(navigationService, dialogService);
 
-  void onTabSelected([Map<String, Object> parameters]) {}
+  final _onTabSelectedCallbacks = Set<void Function(Map<String, Object>)>();
+  final _onTabUnselectedCallbacks = Set<VoidCallback>();
+  final _onNavigatedFromCallbacks = Set<VoidCallback>();
+
+  void addOnTabSelected(void Function(Map<String, Object>) callback) => _onTabSelectedCallbacks.add(callback);
+
+  void addOnTabUnselected(VoidCallback callback) => _onTabUnselectedCallbacks.add(callback);
+
+  void addOnNavigatedFrom(VoidCallback callback) => _onNavigatedFromCallbacks.add(callback);
+
+  @mustCallSuper
+  void onTabSelected([Map<String, Object> parameters]) {
+    _onTabSelectedCallbacks.forEach((c) => c(parameters));
+  }
+
+  @mustCallSuper
+  void onTabUnselected() {
+    _onTabUnselectedCallbacks.forEach((c) => c());
+  }
+
+  @mustCallSuper
+  void onNavigatedFrom() {
+    _onNavigatedFromCallbacks.forEach((c) => c());
+  }
+
+  @override
+  void dispose() {
+    _onTabUnselectedCallbacks.clear();
+    _onNavigatedFromCallbacks.clear();
+    super.dispose();
+  }
 }

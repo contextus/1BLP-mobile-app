@@ -10,20 +10,21 @@ class HomeTabViewModel extends TabViewModelBase {
     DialogService dialogService,
     this._gameManager,
     this._sharingService,
-  ) : super(navigationService, dialogService);
+  ) : super(navigationService, dialogService) {
+    getLiveGame = _onGetLiveGame();
+  }
 
   final GameManager _gameManager;
   final SharingService _sharingService;
 
   GameEntity game;
 
-  Future<GameEntity> _getLiveGameTask;
-  Future<GameEntity> get getLiveGameTask => _getLiveGameTask ??= _onGetLiveGame();
+  Future<GameEntity> getLiveGame;
 
   Future<void> shareLiveGame() => _sharingService.share('Watch this game ${game.gameVideoUrl}');
 
   void refetchLiveGame() {
-    _getLiveGameTask = _onGetLiveGame();
+    getLiveGame = _onGetLiveGame();
     notifyListeners();
   }
 

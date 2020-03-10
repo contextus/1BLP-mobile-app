@@ -23,7 +23,15 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
   void initState() {
     super.initState();
     widget.tabs.forEach((t) => t.viewModel.init());
+    viewModel.addOnNavigatedFrom(_navigatedFrom);
     _controller = PageController(initialPage: viewModel.currentTabIndex);
+  }
+
+  @override
+  void dispose() {
+    widget.tabs.forEach((t) => t.viewModel.dispose());
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,11 +54,14 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
             ),
             body: Stack(
               children: <Widget>[
-                PageView.builder(
-                  controller: _controller,
-                  itemBuilder: (context, index) => widget.tabs.elementAt(index),
-                  onPageChanged: _onNavigateToTab,
-                  itemCount: widget.tabs.length,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 56),
+                  child: PageView.builder(
+                    controller: _controller,
+                    itemBuilder: (context, index) => widget.tabs.elementAt(index),
+                    onPageChanged: _onNavigateToTab,
+                    itemCount: widget.tabs.length,
+                  ),
                 ),
                 Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar()),
               ],
@@ -66,8 +77,14 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
     _onNavigateToTab(index, parameters);
   }
 
+  void _navigatedFrom() {
+    final currentViewModel = widget.tabs[viewModel.currentTabIndex].viewModel;
+    currentViewModel.onNavigatedFrom();
+  }
+
   Widget _buildBottomNavigationBar({bool floating = false}) {
     return AnimatedContainer(
+      height: 56,
       transform: Matrix4.translation(Vector3(0, 0, 0)),
       margin: EdgeInsets.all(floating ? 8.0 : 0.0),
       duration: Duration(milliseconds: 500),
@@ -108,9 +125,14 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> {
 
   void _onNavigateToTab(int tabIndex, [Map<String, Object> parameters]) {
     if (viewModel.currentTabIndex != tabIndex) {
+      widget.tabs[viewModel.currentTabIndex].viewModel.onTabUnselected();
+
       setState(() => viewModel.currentTabIndex = tabIndex);
+
       _controller.jumpToPage(tabIndex);
+
       widget.tabs[tabIndex].viewModel.onTabSelected(parameters);
+
       debugInfo('Switched to tab: ${widget.tabs[tabIndex].tabButtonText}');
     }
   }

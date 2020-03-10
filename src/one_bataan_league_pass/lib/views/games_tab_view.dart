@@ -136,36 +136,38 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
   Widget _buildGamesListView(List<GameEntity> games) {
     return RefreshIndicator(
       onRefresh: () async => viewModel.refetchGamesForCurrentDate(),
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: games.length,
-        itemBuilder: (context, index) {
-          final game = games[index];
-          List<GameCardAction> actions = [];
-
-          if (game.isGameToday()) {
-            actions = [
-              GameCardAction(
-                'WATCH LIVE',
-                icon: Icons.play_arrow,
-                action: viewModel.onWatchLive,
-              ),
-            ];
-          }
-
-          if (game.isGameFinished) {
-            actions = [
-              GameCardAction(
-                'WATCH REPLAY',
-                icon: Icons.replay,
-                action: () {},
-              )
-            ];
-          }
-
-          return GameCard(game: game, actions: actions);
-        },
+        separatorBuilder: (context, index) => SizedBox(height: 1),
+        itemBuilder: (context, index) => _buildGameCard(games[index]),
       ),
     );
+  }
+
+  Widget _buildGameCard(GameEntity game) {
+    List<GameCardAction> actions = [];
+
+    if (game.isGameToday && game.isLive) {
+      actions = [
+        GameCardAction(
+          'WATCH LIVE',
+          icon: Icons.play_arrow,
+          action: viewModel.onWatchLive,
+        )
+      ];
+    }
+
+    if (game.isGameFinished) {
+      actions = [
+        GameCardAction(
+          'WATCH REPLAY',
+          icon: Icons.replay,
+          action: () => viewModel.onWatchReplay(game),
+        )
+      ];
+    }
+
+    return GameCard(game: game, actions: actions);
   }
 
   @override

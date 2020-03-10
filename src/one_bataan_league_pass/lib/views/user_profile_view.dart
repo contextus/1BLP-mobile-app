@@ -49,93 +49,95 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
   }
 
   Widget _buildUserProfileLoadingWidget() {
-    return ExtendedColumn(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 8,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          color: Theme.of(context).canvasColor,
-          child: Center(
-            child: ExtendedColumn(
-              spacing: 12.0,
-              children: <Widget>[
-                LoadingContainer(child: CircleAvatar(radius: 56)),
-                LoadingContainer(width: 128, height: 16),
-              ],
+    return SingleChildScrollView(
+      child: ExtendedColumn(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        spacing: 8,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            color: Theme.of(context).canvasColor,
+            child: Center(
+              child: ExtendedColumn(
+                spacing: 12.0,
+                children: <Widget>[
+                  LoadingContainer(child: CircleAvatar(radius: 56)),
+                  LoadingContainer(width: 128, height: 16),
+                ],
+              ),
             ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                title: LoadingContainer(height: 16),
-                subtitle: LoadingContainer(height: 16),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 

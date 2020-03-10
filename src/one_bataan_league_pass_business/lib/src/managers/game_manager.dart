@@ -30,9 +30,11 @@ class GameManager {
   Future<List<GameEntity>> getGames(DateTime selectedDate) async {
     final mockGames = [
       GameEntity(
+        
         gameDate: DateTime.now().subtract(Duration(days: 1)),
         gameLocation: 'Mariveles, Bataan',
         gameSeries: 'Playoffs Quarter Finals',
+        gameVideoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
         team1: TeamEntity(
           teamName: '1Bataan Risers',
           teamImageUrl:
@@ -45,6 +47,24 @@ class GameManager {
         ),
         team1Score: 80,
         team2Score: 54,
+      ),
+      GameEntity(
+        gameDate: DateTime.now().subtract(Duration(days: 1)),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        gameVideoUrl: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+        team1Score: 75,
+        team2Score: 59,
       ),
       GameEntity(
         gameDate: DateTime.now(),
@@ -65,6 +85,38 @@ class GameManager {
         isLive: true,
       ),
       GameEntity(
+        gameDate: DateTime.now(),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+        isLive: false,
+      ),
+      GameEntity(
+        gameDate: DateTime.now(),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other A Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+        isLive: false,
+      ),
+      GameEntity(
         gameDate: DateTime.now().add(Duration(days: 1)),
         gameLocation: 'Mariveles, Bataan',
         gameSeries: 'Playoffs Quarter Finals',
@@ -80,6 +132,36 @@ class GameManager {
         ),
       ),
       GameEntity(
+        gameDate: DateTime.now().add(Duration(days: 1)),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+      ),
+      GameEntity(
+        gameDate: DateTime.now().add(Duration(days: 1)),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other C Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+      ),
+      GameEntity(
         gameDate: DateTime.now().add(Duration(days: 2)),
         gameLocation: 'Mariveles, Bataan',
         gameSeries: 'Playoffs Quarter Finals',
@@ -90,6 +172,36 @@ class GameManager {
         ),
         team2: TeamEntity(
           teamName: 'D Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+      ),
+      GameEntity(
+        gameDate: DateTime.now().add(Duration(days: 2)),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other Team',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
+        ),
+      ),
+      GameEntity(
+        gameDate: DateTime.now().add(Duration(days: 2)),
+        gameLocation: 'Mariveles, Bataan',
+        gameSeries: 'Playoffs Quarter Finals',
+        team1: TeamEntity(
+          teamName: '1Bataan Risers',
+          teamImageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
+        ),
+        team2: TeamEntity(
+          teamName: 'Other D Team',
           teamImageUrl:
               'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
         ),
