@@ -1,30 +1,26 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:video_player/video_player.dart';
 
 class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
-  HomeTabView(HomeTabViewModel viewModel, String tabViewName)
-      : super(viewModel, tabButtonText: 'Home', tabButtonIcon: Icons.home, tabViewName: tabViewName);
+  HomeTabView(HomeTabViewModel viewModel) : super(viewModel, TabData('Home', Icons.home, ViewNames.homeTabView));
 
   @override
   _HomeTabViewState createState() => _HomeTabViewState();
 }
 
-class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
-    with AutomaticKeepAliveClientMixin<HomeTabView> {
-  VideoPlayerController _videoPlayerController;
+class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel> {
   ChewieController _chewieController;
-  Chewie _player;
+  VideoPlayerController _videoPlayerController;
 
   @override
   void initState() {
     super.initState();
-
-    viewModel.addOnTabUnselected(pauseVideo);
-    viewModel.addOnNavigatedFrom(pauseVideo);
   }
 
   @override
@@ -34,8 +30,10 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
     super.dispose();
   }
 
-  void pauseVideo() {
-    _chewieController?.pause();
+  @override
+  void onTabNavigatedFrom() {
+    super.onTabNavigatedFrom();
+    _pauseVideo();
   }
 
   @override
@@ -69,13 +67,17 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
     );
   }
 
+  void _pauseVideo() {
+    _chewieController?.pause();
+  }
+
   Widget _buildLoadingBody() {
     return ExtendedColumn(
       spacing: 8.0,
       children: <Widget>[
         AspectRatio(
           aspectRatio: 16 / 9,
-          child: LoadingContainer(),
+          child: const LoadingContainer(),
         ),
         GameCardSkeleton(),
       ],
@@ -83,21 +85,23 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
   }
 
   Widget _buildBody(GameEntity game) {
+    _videoPlayerController ??=
+        VideoPlayerController.asset('assets/1bl_video.mp4'); // TODO: Change this to [game.gameVideoUrl].
+    _chewieController ??= ChewieController(
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: 16 / 9,
+      autoInitialize: true,
+      autoPlay: true,
+      isLive: true,
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
+    );
+
     return ExtendedColumn(
       spacing: 8.0,
       children: <Widget>[
         AspectRatio(
           aspectRatio: 16 / 9,
-          child: _player ??= Chewie(
-            controller: _chewieController ??= ChewieController(
-              videoPlayerController: _videoPlayerController ??=
-                  VideoPlayerController.asset('assets/1bl_video.mp4'), // TODO: Change this to [game.gameVideoUrl].
-              aspectRatio: 16 / 9,
-              autoInitialize: true,
-              autoPlay: true,
-              isLive: true,
-            ),
-          ),
+          child: Chewie(controller: _chewieController),
         ),
         GameCard(
           game: game,
@@ -112,7 +116,4 @@ class _HomeTabViewState extends ModelBoundState<HomeTabView, HomeTabViewModel>
       ],
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

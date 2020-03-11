@@ -4,17 +4,17 @@ import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 
 class GamesTabView extends ModelBoundTabWidget<GamesTabViewModel> {
-  GamesTabView(GamesTabViewModel viewModel, String tabViewName)
-      : super(viewModel, tabButtonText: 'Games', tabButtonIcon: Icons.date_range, tabViewName: tabViewName);
+  GamesTabView(GamesTabViewModel viewModel)
+      : super(viewModel, TabData('Games', Icons.date_range, ViewNames.gamesTabView));
 
   @override
   _GamesTabViewState createState() => _GamesTabViewState();
 }
 
-class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel>
-    with AutomaticKeepAliveClientMixin<GamesTabView> {
+class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewModel> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -169,7 +169,4 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
 
     return GameCard(game: game, actions: actions);
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

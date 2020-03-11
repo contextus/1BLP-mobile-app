@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:video_player/video_player.dart';
@@ -25,6 +26,7 @@ class _WatchReplayViewState extends ModelBoundState<WatchReplayView, WatchReplay
       aspectRatio: 16 / 9,
       autoInitialize: true,
       autoPlay: true,
+      deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
     );
   }
 

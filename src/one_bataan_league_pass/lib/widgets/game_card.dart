@@ -122,7 +122,7 @@ class GameCard extends StatelessWidget {
                             Icon(a.icon, size: 12.0),
                             Text(
                               a.text,
-                              style: Theme.of(context).textTheme.button.copyWith(fontSize: 12),
+                              style: Theme.of(context).textTheme.button,
                             ),
                           ],
                         ),

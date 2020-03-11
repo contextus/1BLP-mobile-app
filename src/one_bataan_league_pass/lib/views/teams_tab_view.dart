@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 
 class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
-  TeamsTabView(TeamsTabViewModel viewModel, String tabViewName)
-      : super(viewModel, tabButtonText: 'Teams', tabButtonIcon: Icons.group, tabViewName: tabViewName);
+  TeamsTabView(TeamsTabViewModel viewModel) : super(viewModel, TabData('Teams', Icons.group, ViewNames.teamsTabView));
 
   @override
   _TeamsTabViewState createState() => _TeamsTabViewState();
 }
 
-class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel>
-    with AutomaticKeepAliveClientMixin<TeamsTabView> {
+class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewModel> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -103,7 +102,4 @@ class _TeamsTabViewState extends ModelBoundState<TeamsTabView, TeamsTabViewModel
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

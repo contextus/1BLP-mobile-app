@@ -1,7 +1,6 @@
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
-import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
@@ -75,36 +74,10 @@ class ServiceLocator {
     // Register views
     _i
       ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
-      ..registerFactory(
-        () => HomeTabView(_i.get<HomeTabViewModel>(), ViewNames.homeTabView),
-        instanceName: ViewNames.homeTabView,
+      ..registerFactory<Widget>(
+        () => MainTabView(_i.get<MainTabViewModel>()),
+        instanceName: ViewNames.mainTabView,
       )
-      ..registerFactory(
-        () => GamesTabView(_i.get<GamesTabViewModel>(), ViewNames.gamesTabView),
-        instanceName: ViewNames.gamesTabView,
-      )
-      ..registerFactory(
-        () => StandingsTabView(_i.get<StandingsTabViewModel>(), ViewNames.standingsTabView),
-        instanceName: ViewNames.standingsTabView,
-      )
-      ..registerFactory(
-        () => TeamsTabView(_i.get<TeamsTabViewModel>(), ViewNames.teamsTabView),
-        instanceName: ViewNames.teamsTabView,
-      )
-      ..registerFactory(
-        () => PlayersTabView(_i.get<PlayersTabViewModel>(), ViewNames.playersTabView),
-        instanceName: ViewNames.playersTabView,
-      )
-      ..registerFactory<Widget>(() {
-        final tabs = [
-          _i.get<Widget>(ViewNames.homeTabView),
-          _i.get<Widget>(ViewNames.gamesTabView),
-          _i.get<Widget>(ViewNames.standingsTabView),
-          _i.get<Widget>(ViewNames.playersTabView),
-          _i.get<Widget>(ViewNames.teamsTabView),
-        ].cast<ModelBoundTabWidget>();
-        return MainTabView(_i.get<MainTabViewModel>(), tabs);
-      }, instanceName: ViewNames.mainTabView)
       ..registerFactory<UserProfileView>(
         () => UserProfileView(_i.get<UserProfileViewModel>()),
         instanceName: ViewNames.userProfileView,

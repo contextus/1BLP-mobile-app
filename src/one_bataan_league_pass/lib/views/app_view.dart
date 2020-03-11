@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 class AppView extends ModelBoundWidget<AppViewModel> {
   AppView(AppViewModel viewModel) : super(viewModel, key: AppViewKeys.view);
 
+  static final routeObserver = RouteObserver<PageRoute>();
+
   @override
   _AppViewState createState() => _AppViewState();
 }
@@ -29,6 +31,7 @@ class _AppViewState extends ModelBoundState<AppView, AppViewModel> {
           return MaterialApp(
             title: '1Bataan League Pass',
             navigatorKey: AppViewKeys.navigator,
+            navigatorObservers: [AppView.routeObserver],
             themeMode: ThemeMode.light,
             theme: AppTheme.materialLightTheme,
             darkTheme: AppTheme.materialDarkTheme,
