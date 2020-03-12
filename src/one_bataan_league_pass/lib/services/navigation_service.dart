@@ -5,6 +5,10 @@ import 'package:one_bataan_league_pass/widgets/model_bound_widget.dart';
 import 'package:flutter/material.dart';
 
 class NavigationService {
+  NavigationService(this._serviceLocator);
+
+  final ServiceLocator _serviceLocator;
+
   void goToTab(String tabViewName, [Map<String, Object> parameters]) => _tabNavigator.navigateToTab(tabViewName);
 
   void pop<T extends Object>([T result]) => _navigator.pop(result);
@@ -62,8 +66,8 @@ class NavigationService {
 
   MainTabViewState get _tabNavigator => MainTabViewKeys.tabNavigator.currentState;
 
-  static Widget _getViewAndInitParam(String name, [Map<String, Object> parameters]) {
-    final view = ServiceLocator.resolve<Widget>(name);
+  Widget _getViewAndInitParam(String name, [Map<String, Object> parameters]) {
+    final view = _serviceLocator.resolve<Widget>(name);
 
     if (view is ModelBoundWidget) view.viewModel.init(parameters);
 

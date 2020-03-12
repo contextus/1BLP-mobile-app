@@ -29,7 +29,7 @@ class GamesTabViewModel extends TabViewModelBase {
     refetchGamesForCurrentDate();
   }
 
-  void onWatchLive() => navigationService.goToTab(ViewNames.homeTabView);
+  void onWatchLive(GameEntity gameToWatch) => navigationService.goToTab(ViewNames.homeTabView);
 
   void onWatchReplay(GameEntity gameToWatch) {
     navigationService.push(

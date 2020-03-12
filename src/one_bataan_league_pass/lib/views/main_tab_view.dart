@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:one_bataan_league_pass/keys/keys.dart';
-import 'package:one_bataan_league_pass/service_locator.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
@@ -26,11 +25,11 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
   void initState() {
     super.initState();
     _tabs = [
-      HomeTabView(ServiceLocator.resolve<HomeTabViewModel>()),
-      GamesTabView(ServiceLocator.resolve<GamesTabViewModel>()),
-      StandingsTabView(ServiceLocator.resolve<StandingsTabViewModel>()),
-      PlayersTabView(ServiceLocator.resolve<PlayersTabViewModel>()),
-      TeamsTabView(ServiceLocator.resolve<TeamsTabViewModel>()),
+      HomeTabView(viewModel.homeTabViewModel),
+      GamesTabView(viewModel.gamesTabViewModel),
+      StandingsTabView(viewModel.standingsTabViewModel),
+      PlayersTabView(viewModel.playersTabViewModel),
+      TeamsTabView(viewModel.teamsTabViewModel),
     ];
     _controller = PageController(initialPage: viewModel.currentTabIndex);
   }
@@ -50,7 +49,6 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
 
   @override
   void didPushNext() {
-    print('didPushNext');
     _navigatedFrom();
   }
 

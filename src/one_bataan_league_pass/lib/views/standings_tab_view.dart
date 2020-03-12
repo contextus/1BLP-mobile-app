@@ -5,7 +5,7 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 
 class StandingsTabView extends ModelBoundTabWidget<StandingsTabViewModel> {
   StandingsTabView(StandingsTabViewModel viewModel)
-      : super(viewModel, TabData('Standings', Icons.insert_chart, ViewNames.standingsTabView));
+      : super(viewModel, const TabData('Standings', Icons.insert_chart, ViewNames.standingsTabView));
 
   @override
   _StandingsTabViewState createState() => _StandingsTabViewState();

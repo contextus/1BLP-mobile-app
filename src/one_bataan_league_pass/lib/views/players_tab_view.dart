@@ -6,7 +6,7 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 
 class PlayersTabView extends ModelBoundTabWidget<PlayersTabViewModel> {
   PlayersTabView(PlayersTabViewModel viewModel)
-      : super(viewModel, TabData('Players', Icons.person, ViewNames.playersTabView));
+      : super(viewModel, const TabData('Players', Icons.person, ViewNames.playersTabView));
 
   @override
   _PlayersTabViewState createState() => _PlayersTabViewState();
@@ -28,6 +28,7 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
                 child: TextField(
+                  onChanged: viewModel.onSearchKeywordChanged,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).canvasColor,
@@ -44,16 +45,16 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
                 child: Container(
                   color: Theme.of(context).canvasColor,
                   child: ToggleButtons(
-                    children: viewModel.choices.map((c) {
+                    children: viewModel.searchCriterias.map((c) {
                       return SizedBox(
                         width: (MediaQuery.of(context).size.width - 36) / 3, // Hack to fill width
                         child: Text(c, textAlign: TextAlign.center),
                       );
                     }).toList(),
-                    isSelected: viewModel.choices
-                        .map((c) => viewModel.selectedChoiceIndex == viewModel.choices.indexOf(c))
+                    isSelected: viewModel.searchCriterias
+                        .map((c) => viewModel.selectedCriteriaIndex == viewModel.searchCriterias.indexOf(c))
                         .toList(),
-                    onPressed: viewModel.onSelectedChoiceIndexChanged,
+                    onPressed: viewModel.onSelectedSearchCriteriaChanged,
                   ),
                 ),
               ),
@@ -89,34 +90,39 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
   Widget _buildPlayersListView(List<PlayerEntity> players) {
     return RefreshIndicator(
       onRefresh: () async => viewModel.refetchPlayers(),
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: players.length,
         itemBuilder: (context, index) => _buildPlayerCard(players[index]),
+        separatorBuilder: (context, _snapshot) => SizedBox(height: 1),
       ),
     );
   }
 
   Widget _buildPlayerCard(PlayerEntity player) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        title: Text(player.playerName, style: TextStyle(fontSize: 14.0)),
-        subtitle: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(text: player.playerTeam.teamNameAcronym),
-              TextSpan(text: '    |    '),
-              TextSpan(text: '#${player.playerNumber}'),
-              TextSpan(text: '    |    '),
-              TextSpan(text: player.formattedPositions),
-            ],
-            style: Theme.of(context).textTheme.caption,
+    return Hero(
+      tag: player.id,
+      child: Card(
+        margin: const EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        child: ListTile(
+          title: Text(player.playerName, style: TextStyle(fontSize: 14.0)),
+          subtitle: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(text: player.playerTeam.teamNameAcronym),
+                TextSpan(text: '    |    '),
+                TextSpan(text: '#${player.playerNumber}'),
+                TextSpan(text: '    |    '),
+                TextSpan(text: player.formattedPositions),
+              ],
+              style: Theme.of(context).textTheme.caption,
+            ),
           ),
+          leading: CircleAvatar(
+              backgroundImage: NetworkImage(player.playerAvatarImageUrl), backgroundColor: Colors.transparent),
+          trailing: Image.network(player.playerTeam.teamImageUrl, width: 40),
+          onTap: () => viewModel.onViewPlayerProfile(player),
         ),
-        leading: CircleAvatar(backgroundImage: NetworkImage(player.playerImageUrl)),
-        trailing: Image.network(player.playerTeam.teamImageUrl, width: 40),
       ),
     );
   }
@@ -126,11 +132,10 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
       margin: const EdgeInsets.only(bottom: 1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: const ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        title: LoadingContainer(),
-        subtitle: LoadingContainer(height: 16),
+        title: LoadingContainer(height: 12),
+        subtitle: LoadingContainer(height: 12),
         leading: LoadingContainer(child: CircleAvatar()),
-        trailing: LoadingContainer(width: 40, height: 40),
+        trailing: LoadingContainer(child: CircleAvatar()),
       ),
     );
   }

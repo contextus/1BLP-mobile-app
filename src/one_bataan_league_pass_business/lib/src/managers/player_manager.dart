@@ -15,33 +15,50 @@ class PlayerManager {
           teamImageUrl:
               'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
         ),
+        playerAvatarImageUrl:
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         playerImageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSAH12GEw7txHp8_ptb9oKFrBVdd3rwydr4QivK5j3mr8TlMA6V',
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         positions: ['C'],
+        ppg: 12.2,
+        apg: 6.4,
+        rpg: 5.3,
       ),
       PlayerEntity(
-        playerName: 'Juan Dela Cruz',
+        playerName: 'Mark Smith',
         playerNumber: '18',
         playerTeam: TeamEntity(
-          teamName: 'Barangay Ginebra San Miguel',
-          teamNameAcronym: 'BGSM',
-          teamImageUrl: 'https://dashboard.pba.ph/assets/logo/GIN_web.png',
+          teamName: 'A Team',
+          teamNameAcronym: 'AT',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
         ),
+        playerAvatarImageUrl:
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         playerImageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSc6bQQyf3SA05K66hZfUbd8zTjDuU76IlKawa1U5hquyfoXAca',
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         positions: ['G'],
+        ppg: 12.2,
+        apg: 6.4,
+        rpg: 5.3,
       ),
       PlayerEntity(
-        playerName: 'Jose Makabayan',
+        playerName: 'Jake Cruz',
         playerNumber: '23',
         playerTeam: TeamEntity(
-          teamName: 'Alska Aces',
-          teamNameAcronym: 'AA',
-          teamImageUrl: 'https://dashboard.pba.ph/assets/logo/ALA_web.png',
+          teamName: 'B Team',
+          teamNameAcronym: 'BT',
+          teamImageUrl:
+              'https://placeit-assets1.s3-accelerate.amazonaws.com/custom-pages/make-a-basketball-logo-v2/sports-logo-template-for-a-basketball-tournament-2703e-1024x1024.png',
         ),
+        playerAvatarImageUrl:
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         playerImageUrl:
-            'https://www.proballers.com/media/cache/resize_300/ul/player/backup/24548-1-5db4c950184820190127-kings-v-clippers-081.jpg',
+            'https://www.interperformances.com/timthumb/timthumb.php?src=files/players/1557310079_adam_presutti.png&h=400&w=370&q=100&a=t&zc=1',
         positions: ['C', 'F'],
+        ppg: 12.2,
+        apg: 6.4,
+        rpg: 5.3,
       ),
     ];
   }

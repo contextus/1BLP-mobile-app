@@ -8,7 +8,7 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:video_player/video_player.dart';
 
 class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
-  HomeTabView(HomeTabViewModel viewModel) : super(viewModel, TabData('Home', Icons.home, ViewNames.homeTabView));
+  HomeTabView(HomeTabViewModel viewModel) : super(viewModel, const TabData('Home', Icons.home, ViewNames.homeTabView));
 
   @override
   _HomeTabViewState createState() => _HomeTabViewState();
@@ -17,11 +17,6 @@ class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
 class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel> {
   ChewieController _chewieController;
   VideoPlayerController _videoPlayerController;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -104,12 +99,12 @@ class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel
           child: Chewie(controller: _chewieController),
         ),
         GameCard(
-          game: game,
-          actions: [
-            GameCardAction(
+          game,
+          buttons: [
+            GameCardButtonData(
               'SHARE',
-              icon: Icons.share,
-              action: viewModel.shareLiveGame,
+              Icons.share,
+              viewModel.shareLiveGame,
             )
           ],
         ),

@@ -1,19 +1,26 @@
-import 'package:flutter/foundation.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
 class MainTabViewModel extends ViewModelBase {
-  MainTabViewModel(NavigationService navigationService) : super(navigationService);
+  MainTabViewModel(
+    NavigationService navigationService,
+    this.homeTabViewModel,
+    this.gamesTabViewModel,
+    this.standingsTabViewModel,
+    this.playersTabViewModel,
+    this.teamsTabViewModel,
+  ) : super(navigationService);
 
-  VoidCallback _navigatedFromCallback;
+  final HomeTabViewModel homeTabViewModel;
+  final GamesTabViewModel gamesTabViewModel;
+  final StandingsTabViewModel standingsTabViewModel;
+  final PlayersTabViewModel playersTabViewModel;
+  final TeamsTabViewModel teamsTabViewModel;
 
   int currentTabIndex = 0;
 
-  void addOnNavigatedFrom(VoidCallback callback) => _navigatedFromCallback = callback;
-
   Future<void> onViewUserProfile() {
-    if (_navigatedFromCallback != null) _navigatedFromCallback();
     return navigationService.push(ViewNames.userProfileView);
   }
 }

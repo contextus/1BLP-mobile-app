@@ -4,10 +4,10 @@ import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 
 class GameCard extends StatelessWidget {
-  GameCard({Key key, @required this.game, this.actions = const []}) : super(key: key);
+  GameCard(this.game, {Key key, this.buttons = const []}) : super(key: key);
 
   final GameEntity game;
-  final List<GameCardAction> actions;
+  final List<GameCardButtonData> buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +108,10 @@ class GameCard extends StatelessWidget {
               ),
 
               // Footer
-              actions.isNotEmpty ? Divider() : SizedBox(),
+              buttons.isNotEmpty ? Divider() : SizedBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: actions.map((a) {
+                children: buttons.map((a) {
                   return Expanded(
                     flex: 1,
                     child: Center(
@@ -126,7 +126,7 @@ class GameCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onPressed: a.action,
+                        onPressed: () => a.action(game),
                       ),
                     ),
                   );
@@ -161,17 +161,10 @@ class GameCardSkeleton extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: ExtendedRow(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 24,
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32),
+              child: Row(
                 children: const <Widget>[
-                  LoadingContainer(width: 80, height: 80),
-                  LoadingContainer(width: 40, height: 40),
-                  LoadingContainer(width: 32, height: 32),
-                  LoadingContainer(width: 40, height: 40),
-                  LoadingContainer(width: 80, height: 80),
+                  Expanded(child: LoadingContainer(height: 56)),
                 ],
               ),
             ),
@@ -182,14 +175,10 @@ class GameCardSkeleton extends StatelessWidget {
   }
 }
 
-class GameCardAction {
-  GameCardAction(
-    this.text, {
-    this.icon,
-    this.action,
-  });
+class GameCardButtonData {
+  GameCardButtonData(this.text, this.icon, this.action);
 
   final String text;
   final IconData icon;
-  final void Function() action;
+  final void Function(GameEntity) action;
 }

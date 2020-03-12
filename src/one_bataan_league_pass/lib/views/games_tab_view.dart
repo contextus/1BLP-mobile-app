@@ -5,10 +5,11 @@ import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_common/utils.dart';
 
 class GamesTabView extends ModelBoundTabWidget<GamesTabViewModel> {
   GamesTabView(GamesTabViewModel viewModel)
-      : super(viewModel, TabData('Games', Icons.date_range, ViewNames.gamesTabView));
+      : super(viewModel, const TabData('Games', Icons.date_range, ViewNames.gamesTabView));
 
   @override
   _GamesTabViewState createState() => _GamesTabViewState();
@@ -33,17 +34,21 @@ class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewMo
                 child: CalendarStrip(
                   containerHeight: 96.0,
                   onDateSelected: viewModel.onDateSelected,
-                  dateTileBuilder: (date, selectedDate, rowIndex, dayName, isDayMarked, isDateOutOfRange) {
+                  dateTileBuilder: (
+                    DateTime date,
+                    DateTime selectedDate,
+                    int rowIndex,
+                    String dayName,
+                    bool isDayMarked,
+                    bool isDateOutOfRange,
+                  ) {
                     final defaultDateStyle = TextStyle(
                         fontWeight: FontWeight.bold, color: Theme.of(context).customTheme().tertiaryTextColor);
                     final selectedDateStyle = defaultDateStyle.copyWith(color: Theme.of(context).accentColor);
-                    final dateTimeNow = DateTime.now();
-                    final isSelectedDateToday =
-                        date.month == dateTimeNow.month && date.day == dateTimeNow.day && date.year == dateTimeNow.year;
 
                     return Container(
                       padding: const EdgeInsets.all(2),
-                      decoration: isSelectedDateToday
+                      decoration: date.isOnTheSameDay(DateTime.now())
                           ? BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4),
@@ -145,28 +150,28 @@ class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewMo
   }
 
   Widget _buildGameCard(GameEntity game) {
-    List<GameCardAction> actions = [];
+    List<GameCardButtonData> actions = [];
 
     if (game.isGameToday && game.isLive) {
       actions = [
-        GameCardAction(
+        GameCardButtonData(
           'WATCH LIVE',
-          icon: Icons.play_arrow,
-          action: viewModel.onWatchLive,
+          Icons.play_arrow,
+          viewModel.onWatchLive,
         )
       ];
     }
 
     if (game.isGameFinished) {
       actions = [
-        GameCardAction(
+        GameCardButtonData(
           'WATCH REPLAY',
-          icon: Icons.replay,
-          action: () => viewModel.onWatchReplay(game),
+          Icons.replay,
+          viewModel.onWatchReplay,
         )
       ];
     }
 
-    return GameCard(game: game, actions: actions);
+    return GameCard(game, buttons: actions);
   }
 }

@@ -38,7 +38,7 @@ abstract class ModelBoundTabState<TWidget extends ModelBoundTabWidget, TViewMode
 }
 
 class TabData {
-  TabData(this.tabButtonText, this.tabButtonIcon, this.tabViewName);
+  const TabData(this.tabButtonText, this.tabButtonIcon, this.tabViewName);
 
   final String tabButtonText;
   final IconData tabButtonIcon;

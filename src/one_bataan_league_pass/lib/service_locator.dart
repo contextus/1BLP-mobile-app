@@ -12,32 +12,41 @@ import 'package:get_it/get_it.dart';
 class ServiceLocator {
   static final _i = GetIt.I;
 
-  static void registerDependencies() {
+  T resolve<T>([String name]) {
+    if (name?.isNotEmpty ?? false == true)
+      return _i.get(instanceName: name) as T;
+    else
+      return _i.get<T>();
+  }
+
+  Future<void> registerDependencies() async {
+    _i.registerSingleton<ServiceLocator>(this);
+    await _registerData();
     _registerWebServices();
-    _registerData();
     _registerMappers();
     _registerManagers();
     _registerUiServices();
     _registerUi();
   }
 
-  static void _registerWebServices() {
+  void _registerWebServices() {
     _i..registerFactory<HttpHandler>(() => HttpHandler());
   }
 
-  static void _registerData() {
-    _i
-      ..registerLazySingleton<QueryExecutorProvider>(() => FlutterQueryExecutorProvider())
-      ..registerLazySingleton<AppDatabase>(() => AppDatabase(_i.get<QueryExecutorProvider>()));
+  Future<void> _registerData() async {
+    final queryExecutorProvider = FlutterQueryExecutorProvider();
+    await queryExecutorProvider.createDatabase();
+    final appDatabase = AppDatabase(queryExecutorProvider.queryExecutor);
 
     _i
+      ..registerSingleton<AppDatabase>(appDatabase)
       ..registerLazySingleton<SecureStorageService>(() => SecureStorageService())
       ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
   }
 
-  static void _registerMappers() {}
+  void _registerMappers() {}
 
-  static void _registerManagers() {
+  void _registerManagers() {
     _i
       ..registerLazySingleton<UserProfileManager>(() => UserProfileManager())
       ..registerLazySingleton<GameManager>(() => GameManager())
@@ -45,20 +54,26 @@ class ServiceLocator {
       ..registerLazySingleton<TeamManager>(() => TeamManager());
   }
 
-  static void _registerUiServices() {
+  void _registerUiServices() {
     _i
       ..registerLazySingleton<AnalyticsService>(() => AnalyticsService())
-      ..registerLazySingleton<NavigationService>(() => NavigationService())
+      ..registerLazySingleton<NavigationService>(() => NavigationService(_i.get<ServiceLocator>()))
       ..registerLazySingleton<DialogService>(() => DialogService())
       ..registerLazySingleton<SharingService>(() => SharingService());
   }
 
-  static void _registerUi() {
+  void _registerUi() {
     // Register view models
     _i
-      ..registerFactory<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
       ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel(_i.get<UserProfileManager>()))
-      ..registerFactory<MainTabViewModel>(() => MainTabViewModel(_i.get<NavigationService>()))
+      ..registerFactory<MainTabViewModel>(() => MainTabViewModel(
+            _i.get<NavigationService>(),
+            _i.get<HomeTabViewModel>(),
+            _i.get<GamesTabViewModel>(),
+            _i.get<StandingsTabViewModel>(),
+            _i.get<PlayersTabViewModel>(),
+            _i.get<TeamsTabViewModel>(),
+          ))
       ..registerFactory<HomeTabViewModel>(() => HomeTabViewModel(
             _i.get<NavigationService>(),
             _i.get<DialogService>(),
@@ -67,13 +82,15 @@ class ServiceLocator {
           ))
       ..registerFactory<GamesTabViewModel>(() => GamesTabViewModel(_i.get<NavigationService>(), _i.get<GameManager>()))
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
-      ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel(_i.get<TeamManager>()))
-      ..registerFactory<PlayersTabViewModel>(() => PlayersTabViewModel(_i.get<PlayerManager>()))
-      ..registerFactory<WatchReplayViewModel>(() => WatchReplayViewModel());
+      ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel(_i.get<TeamManager>(), _i.get<NavigationService>()))
+      ..registerFactory<PlayersTabViewModel>(
+          () => PlayersTabViewModel(_i.get<PlayerManager>(), _i.get<NavigationService>()))
+      ..registerFactory<WatchReplayViewModel>(() => WatchReplayViewModel())
+      ..registerFactory<PlayerProfileViewModel>(() => PlayerProfileViewModel())
+      ..registerFactory<TeamProfileViewModel>(() => TeamProfileViewModel());
 
     // Register views
     _i
-      ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
       ..registerFactory<Widget>(
         () => MainTabView(_i.get<MainTabViewModel>()),
         instanceName: ViewNames.mainTabView,
@@ -85,13 +102,14 @@ class ServiceLocator {
       ..registerFactory<WatchReplayView>(
         () => WatchReplayView(_i.get<WatchReplayViewModel>()),
         instanceName: ViewNames.watchReplayView,
+      )
+      ..registerFactory<PlayerProfileView>(
+        () => PlayerProfileView(_i.get<PlayerProfileViewModel>()),
+        instanceName: ViewNames.playerProfileView,
+      )
+      ..registerFactory<TeamProfileView>(
+        () => TeamProfileView(_i.get<TeamProfileViewModel>()),
+        instanceName: ViewNames.teamProfileView,
       );
-  }
-
-  static T resolve<T>([String name]) {
-    if (name?.isNotEmpty ?? false == true)
-      return _i.get(name) as T;
-    else
-      return _i.get<T>();
   }
 }

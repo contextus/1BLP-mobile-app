@@ -8,6 +8,7 @@ class TeamEntity extends EntityBase {
     this.totalWins,
     this.totalLose,
     this.gamesBehind,
+    this.place,
   });
 
   final String teamName;
@@ -16,6 +17,7 @@ class TeamEntity extends EntityBase {
   final int totalWins;
   final int totalLose;
   final int gamesBehind;
+  final String place;
 
   int get winPercentage => ((totalWins / (totalWins + totalLose)) * 100).round();
 }
