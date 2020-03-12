@@ -35,8 +35,8 @@ class ServiceLocator {
 
   Future<void> _registerData() async {
     final queryExecutorProvider = FlutterQueryExecutorProvider();
-    await queryExecutorProvider.createDatabase();
-    final appDatabase = AppDatabase(queryExecutorProvider.queryExecutor);
+    final queryExecutor = await queryExecutorProvider.createDatabase();
+    final appDatabase = AppDatabase(queryExecutor);
 
     _i
       ..registerSingleton<AppDatabase>(appDatabase)
