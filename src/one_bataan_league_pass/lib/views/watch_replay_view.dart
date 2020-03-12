@@ -46,6 +46,7 @@ class _WatchReplayViewState extends ModelBoundState<WatchReplayView, WatchReplay
           return Hero(
             tag: viewModel.gameToWatch.id,
             child: Scaffold(
+              extendBodyBehindAppBar: true,
               backgroundColor: Colors.black,
               appBar: AppBar(
                 brightness: Brightness.dark,

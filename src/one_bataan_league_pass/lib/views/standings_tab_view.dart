@@ -49,7 +49,7 @@ class _StandingsTabViewState extends ModelBoundTabState<StandingsTabView, Standi
                           spacing: 8.0,
                           children: <Widget>[
                             Text((viewModel.teams.indexOf(t) + 1).toString()),
-                            Image.network(t.teamImageUrl, width: 24),
+                            Image.network(t.logoUrl, width: 24),
                             Text(t.teamNameAcronym)
                           ],
                         ),

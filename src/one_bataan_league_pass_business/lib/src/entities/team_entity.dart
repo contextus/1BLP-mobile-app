@@ -2,22 +2,19 @@ import 'entity_base.dart';
 
 class TeamEntity extends EntityBase {
   TeamEntity({
-    this.teamName,
-    this.teamNameAcronym,
-    this.teamImageUrl,
-    this.totalWins,
-    this.totalLose,
-    this.gamesBehind,
-    this.place,
+    this.id,
+    this.name,
+    this.owner,
+    this.manager,
+    this.coach,
+    this.logoUrl,
   });
 
-  final String teamName;
-  final String teamNameAcronym;
-  final String teamImageUrl;
-  final int totalWins;
-  final int totalLose;
-  final int gamesBehind;
-  final String place;
+  final String id;
+  final String name;
 
-  int get winPercentage => ((totalWins / (totalWins + totalLose)) * 100).round();
+  final String owner;
+  final String manager;
+  final String coach;
+  final String logoUrl;
 }

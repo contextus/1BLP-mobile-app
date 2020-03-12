@@ -34,8 +34,8 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         _buildPlayerInfo(),
-                        Center(child: Image.network(viewModel.player.playerImageUrl, width: 224)),
-                        _buildPlayerStats()
+                        Center(child: Image.network(viewModel.player.imageUrl, width: 224)),
+                        // _buildPlayerStats()
                       ],
                     ),
                   ),
@@ -49,14 +49,16 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
   }
 
   Widget _buildPlayerInfo() {
+    final teamNameAcronym = viewModel.player.playerTeam.team.name.split(' ').map((n) => n[0]).join().toUpperCase();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: ExtendedRow(
         spacing: 8,
         children: <Widget>[
           Text(
-            viewModel.player.playerNumber,
-            style: Theme.of(context).textTheme.display1.copyWith(
+            viewModel.player.playerTeam.playerNum,
+            style: Theme.of(context).textTheme.display2.copyWith(
                   color: Theme.of(context).customTheme().primaryTextColor,
                   fontWeight: FontWeight.bold,
                 ),
@@ -68,21 +70,15 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(viewModel.player.playerName,
+                    Text('${viewModel.player.firstName} ${viewModel.player.lastName}',
                         style: Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold)),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: viewModel.player.playerTeam.teamNameAcronym),
-                          TextSpan(text: '    |    '),
-                          TextSpan(text: viewModel.player.formattedPositions),
-                        ],
-                        style: Theme.of(context).textTheme.body2,
-                      ),
-                    )
+                    Text(
+                      '$teamNameAcronym | ${viewModel.player.playerTeam.formattedPositions}',
+                      style: Theme.of(context).textTheme.body2,
+                    ),
                   ],
                 ),
-                Image.network(viewModel.player.playerTeam.teamImageUrl, width: 56),
+                Image.network(viewModel.player.playerTeam.team.logoUrl, width: 56),
               ],
             ),
           ),
@@ -91,89 +87,89 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
     );
   }
 
-  Widget _buildPlayerStats() {
-    return ExtendedRow(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Expanded(
-          child: Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: ExtendedColumn(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8.0,
-                children: <Widget>[
-                  Text(
-                    'PPG',
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                          color: Theme.of(context).customTheme().secondaryTextColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    viewModel.player.ppg.toString(),
-                    style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: ExtendedColumn(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8.0,
-                children: <Widget>[
-                  Text(
-                    'RPG',
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                          color: Theme.of(context).customTheme().secondaryTextColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    viewModel.player.rpg.toString(),
-                    style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              child: ExtendedColumn(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 8.0,
-                children: <Widget>[
-                  Text(
-                    'APG',
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                          color: Theme.of(context).customTheme().secondaryTextColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    viewModel.player.apg.toString(),
-                    style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildPlayerStats() {
+  //   return ExtendedRow(
+  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //     children: <Widget>[
+  //       Expanded(
+  //         child: Card(
+  //           elevation: 4,
+  //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+  //           child: Container(
+  //             padding: const EdgeInsets.all(16),
+  //             child: ExtendedColumn(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               spacing: 8.0,
+  //               children: <Widget>[
+  //                 Text(
+  //                   'PPG',
+  //                   style: Theme.of(context).textTheme.caption.copyWith(
+  //                         color: Theme.of(context).customTheme().secondaryTextColor,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                 ),
+  //                 Text(
+  //                   viewModel.player.ppg.toString(),
+  //                   style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: Card(
+  //           elevation: 4,
+  //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+  //           child: Container(
+  //             padding: const EdgeInsets.all(16),
+  //             child: ExtendedColumn(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               spacing: 8.0,
+  //               children: <Widget>[
+  //                 Text(
+  //                   'RPG',
+  //                   style: Theme.of(context).textTheme.caption.copyWith(
+  //                         color: Theme.of(context).customTheme().secondaryTextColor,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                 ),
+  //                 Text(
+  //                   viewModel.player.rpg.toString(),
+  //                   style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       Expanded(
+  //         child: Card(
+  //           elevation: 4,
+  //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+  //           child: Container(
+  //             padding: const EdgeInsets.all(16),
+  //             child: ExtendedColumn(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               spacing: 8.0,
+  //               children: <Widget>[
+  //                 Text(
+  //                   'APG',
+  //                   style: Theme.of(context).textTheme.caption.copyWith(
+  //                         color: Theme.of(context).customTheme().secondaryTextColor,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                 ),
+  //                 Text(
+  //                   viewModel.player.apg.toString(),
+  //                   style: Theme.of(context).textTheme.headline.copyWith(fontWeight: FontWeight.bold),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

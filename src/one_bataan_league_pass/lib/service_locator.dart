@@ -2,6 +2,7 @@ import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
+import 'package:one_bataan_league_pass_business/mappers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
@@ -30,7 +31,10 @@ class ServiceLocator {
   }
 
   void _registerWebServices() {
-    _i..registerFactory<HttpHandler>(() => HttpHandler());
+    _i
+      ..registerFactory<HttpHandler>(() => HttpHandler())
+      ..registerFactory<TeamWebService>(() => TeamWebServiceImpl(_i.get<HttpHandler>()))
+      ..registerFactory<PlayerWebService>(() => PlayerWebServiceImpl(_i.get<HttpHandler>()));
   }
 
   Future<void> _registerData() async {
@@ -44,14 +48,19 @@ class ServiceLocator {
       ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
   }
 
-  void _registerMappers() {}
+  void _registerMappers() {
+    _i
+      ..registerLazySingleton<TeamMapper>(() => TeamMapper())
+      ..registerLazySingleton<PlayerTeamMapper>(() => PlayerTeamMapper(_i.get<TeamMapper>()))
+      ..registerLazySingleton<PlayerMapper>(() => PlayerMapper(_i.get<PlayerTeamMapper>()));
+  }
 
   void _registerManagers() {
     _i
       ..registerLazySingleton<UserProfileManager>(() => UserProfileManager())
       ..registerLazySingleton<GameManager>(() => GameManager())
-      ..registerLazySingleton<PlayerManager>(() => PlayerManager())
-      ..registerLazySingleton<TeamManager>(() => TeamManager());
+      ..registerLazySingleton<PlayerManager>(() => PlayerManager(_i.get<PlayerWebService>(), _i.get<PlayerMapper>()))
+      ..registerLazySingleton<TeamManager>(() => TeamManager(_i.get<TeamWebService>(), _i.get<TeamMapper>()));
   }
 
   void _registerUiServices() {

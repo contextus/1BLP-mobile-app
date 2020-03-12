@@ -93,34 +93,35 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
       child: ListView.separated(
         itemCount: players.length,
         itemBuilder: (context, index) => _buildPlayerCard(players[index]),
-        separatorBuilder: (context, _snapshot) => SizedBox(height: 1),
+        separatorBuilder: (context, snapshot) => SizedBox(height: 1),
       ),
     );
   }
 
   Widget _buildPlayerCard(PlayerEntity player) {
+    final teamNameAcronym = player.playerTeam.team.name.split(' ').map((n) => n[0]).join().toUpperCase();
+
     return Hero(
       tag: player.id,
       child: Card(
         margin: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         child: ListTile(
-          title: Text(player.playerName, style: TextStyle(fontSize: 14.0)),
+          title: Text('${player.firstName} ${player.lastName}'),
           subtitle: RichText(
             text: TextSpan(
               children: [
-                TextSpan(text: player.playerTeam.teamNameAcronym),
+                TextSpan(text: teamNameAcronym),
                 TextSpan(text: '    |    '),
-                TextSpan(text: '#${player.playerNumber}'),
+                TextSpan(text: '#${player.playerTeam.playerNum}'),
                 TextSpan(text: '    |    '),
-                TextSpan(text: player.formattedPositions),
+                TextSpan(text: player.playerTeam.formattedPositions),
               ],
               style: Theme.of(context).textTheme.caption,
             ),
           ),
-          leading: CircleAvatar(
-              backgroundImage: NetworkImage(player.playerAvatarImageUrl), backgroundColor: Colors.transparent),
-          trailing: Image.network(player.playerTeam.teamImageUrl, width: 40),
+          leading: CircleAvatar(backgroundImage: NetworkImage(player.imageUrl), backgroundColor: Colors.transparent),
+          trailing: Image.network(player.playerTeam.team.logoUrl, width: 40),
           onTap: () => viewModel.onViewPlayerProfile(player),
         ),
       ),

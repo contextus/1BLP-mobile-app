@@ -53,9 +53,9 @@ class GameCard extends StatelessWidget {
                       child: ExtendedColumn(
                         spacing: 12.0,
                         children: <Widget>[
-                          Image.network(game.team1.teamImageUrl, width: 40.0),
+                          Image.network(game.team1.logoUrl, width: 40.0),
                           Text(
-                            game.team1.teamName,
+                            game.team1.name,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.caption,
                           ),
@@ -94,9 +94,9 @@ class GameCard extends StatelessWidget {
                       child: ExtendedColumn(
                         spacing: 12.0,
                         children: <Widget>[
-                          Image.network(game.team2.teamImageUrl, width: 40.0),
+                          Image.network(game.team2.logoUrl, width: 40.0),
                           Text(
-                            game.team2.teamName,
+                            game.team2.name,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.caption,
                           ),

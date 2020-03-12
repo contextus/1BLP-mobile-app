@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
@@ -5,7 +7,8 @@ import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
 class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
-  TeamsTabView(TeamsTabViewModel viewModel) : super(viewModel, const TabData('Teams', Icons.group, ViewNames.teamsTabView));
+  TeamsTabView(TeamsTabViewModel viewModel)
+      : super(viewModel, const TabData('Teams', Icons.group, ViewNames.teamsTabView));
 
   @override
   _TeamsTabViewState createState() => _TeamsTabViewState();
@@ -77,15 +80,19 @@ class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewMo
   }
 
   Widget _buildTeamCard(TeamEntity team) {
+    final random = Random();
+    final wins = random.nextInt(23);
+    final loses = random.nextInt(23);
+
     return Hero(
       tag: team.id,
       child: Card(
         margin: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         child: ListTile(
-          title: Text(team.teamName),
-          subtitle: Text('${team.totalWins}-${team.totalLose}',style: Theme.of(context).textTheme.caption),
-          leading: Image.network(team.teamImageUrl, width: 40),
+          title: Text(team.name),
+          subtitle: Text('$wins-$loses', style: Theme.of(context).textTheme.caption),
+          leading: Image.network(team.logoUrl, width: 40),
           onTap: () => viewModel.onViewTeamProfile(team),
         ),
       ),

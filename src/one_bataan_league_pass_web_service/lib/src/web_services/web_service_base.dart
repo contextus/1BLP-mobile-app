@@ -18,7 +18,7 @@ class WebServiceBase {
   Future<T> get<T>(
     String endpoint, {
     String accessToken,
-    T Function(Map<String, dynamic> json) decoder,
+    T Function(Map<String, Object> json) decoder,
   }) async {
     final response = await _internalSend(endpoint, HttpMethod.get, accessToken);
 
@@ -30,7 +30,7 @@ class WebServiceBase {
     String endpoint, {
     String accessToken,
     JsonSerializable parameter,
-    T Function(Map<String, dynamic> json) decoder,
+    T Function(Map<String, Object> json) decoder,
   }) async {
     final response = await _internalSendJson(endpoint, HttpMethod.post, parameter, accessToken);
 
@@ -42,7 +42,7 @@ class WebServiceBase {
     String endpoint, {
     String accessToken,
     JsonSerializable parameter,
-    T Function(Map<String, dynamic> json) decoder,
+    T Function(Map<String, Object> json) decoder,
   }) async {
     final response = await _internalSendJson(endpoint, HttpMethod.put, parameter, accessToken);
 
@@ -53,7 +53,7 @@ class WebServiceBase {
   Future<T> delete<T>(
     String endpoint, {
     String accessToken,
-    T Function(Map<String, dynamic> json) decoder,
+    T Function(Map<String, Object> json) decoder,
   }) async {
     final response = await _internalSend(endpoint, HttpMethod.delete, accessToken);
 
@@ -85,7 +85,7 @@ class WebServiceBase {
     return header;
   }
 
-  static T _decodeJsonResponseBody<T>(String json, T Function(Map<String, dynamic> json) decoder) {
+  static T _decodeJsonResponseBody<T>(String json, T Function(Map<String, Object> json) decoder) {
     if ((decoder != null) && (json?.isNotEmpty ?? false == true))
       return decoder(jsonDecode(json));
     else
