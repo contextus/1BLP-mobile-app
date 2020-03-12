@@ -11,6 +11,7 @@
         android:allowBackup="false" 
         android:fullBackupContent="false" 
         android:screenOrientation="portrait" 
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity" 
             android:launchMode="singleTop" 

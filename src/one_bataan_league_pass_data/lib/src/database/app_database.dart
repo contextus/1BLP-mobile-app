@@ -1,4 +1,4 @@
-import 'package:one_bataan_league_pass_data/src/database/query_executor_provider.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 import 'package:moor/moor.dart';
 
 part 'app_database.g.dart';
@@ -7,7 +7,7 @@ part 'app_database.g.dart';
 
 @UseMoor(tables: [])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase(QueryExecutorProvider databaseProvider) : super(databaseProvider.queryExecutor);
+  AppDatabase(QueryExecutor queryExecutor) : super(queryExecutor);
 
   @override
   int get schemaVersion => 1;

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
 
 class UserProfileView extends ModelBoundWidget<UserProfileViewModel> {
   UserProfileView(UserProfileViewModel viewModel) : super(viewModel);
@@ -24,15 +24,22 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               title: Text('User Profile'),
               actions: viewModel.userProfile != null ? [IconButton(icon: Icon(Icons.edit), onPressed: () {})] : [],
             ),
-            body: FutureBuilder(
-              future: viewModel.getUserProfileTask,
+            body: FutureBuilder<UserProfileEntity>(
+              future: viewModel.getUserProfile,
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting)
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return _buildUserProfileLoadingWidget();
-                else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError)
+                } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                  return Expanded(
+                    child: Center(
+                      child: Text('Could not retrieve use profile'),
+                    ),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
                   return _buildUserProfileWidget();
+                }
 
-                throw UnimplementedError('Snapshot condition not handled.');
+                throw UnimplementedError('Unhandled $snapshot state');
               },
             ),
           );
@@ -42,92 +49,101 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
   }
 
   Widget _buildUserProfileLoadingWidget() {
-    return ExtendedColumn(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 8,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          color: Theme.of(context).canvasColor,
-          child: Center(
-            child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
+    return SingleChildScrollView(
+      child: ExtendedColumn(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        spacing: 8,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            color: Theme.of(context).canvasColor,
+            child: Center(
               child: ExtendedColumn(
                 spacing: 12.0,
                 children: <Widget>[
-                  CircleAvatar(radius: 56),
-                  Container(width: 128, height: 16, color: Colors.grey[200]),
+                  LoadingContainer(child: CircleAvatar(radius: 56)),
+                  LoadingContainer(width: 128, height: 16),
                 ],
               ),
             ),
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
                 ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
                 ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
                 ),
               ),
-            ),
-            Card(
-              margin: const EdgeInsets.only(bottom: 1),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Shimmer.fromColors(
-              baseColor: Theme.of(context).customTheme().shimmerBaseColor,
-              highlightColor: Theme.of(context).customTheme().shimmerHighLightColor,
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: Container(height: 16, color: Colors.grey[200]),
-                  subtitle: Container(height: 16, color: Colors.grey[200]),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
+              ),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
+              ),
+              Card(
+                margin: const EdgeInsets.only(bottom: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                child: const ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                  title: LoadingContainer(height: 16),
+                  subtitle: LoadingContainer(height: 16),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildUserProfileWidget() {
     return RefreshIndicator(
-      onRefresh: () async => viewModel.getUserProfile(),
+      onRefresh: () async => viewModel.refetchUserProfile(),
       child: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 2),
         physics: const AlwaysScrollableScrollPhysics(),
@@ -172,7 +188,55 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                     title: Text('NATIONALITY', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
-                      viewModel.userProfile.nationality,
+                      viewModel.userProfile.nationality ?? 'N/A',
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
+                    ),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.only(bottom: 1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                    title: Text('STREET', style: Theme.of(context).textTheme.caption),
+                    subtitle: Text(
+                      viewModel.userProfile.street,
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
+                    ),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.only(bottom: 1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                    title: Text('BARANGAY/DISTRICT', style: Theme.of(context).textTheme.caption),
+                    subtitle: Text(
+                      viewModel.userProfile.barangayDistrict ?? 'N/A',
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
+                    ),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.only(bottom: 1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                    title: Text('CITY/MUNICIPALITY', style: Theme.of(context).textTheme.caption),
+                    subtitle: Text(
+                      viewModel.userProfile.cityOrMunicipality ?? 'N/A',
+                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
+                    ),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.only(bottom: 1),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                    title: Text('ZIP CODE', style: Theme.of(context).textTheme.caption),
+                    subtitle: Text(
+                      viewModel.userProfile.zipCode ?? 'N/A',
                       style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),
@@ -184,19 +248,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                     contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                     title: Text('PROVINCE', style: Theme.of(context).textTheme.caption),
                     subtitle: Text(
-                      viewModel.userProfile.province,
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('NATIONALITY', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.cityOrMunicipality,
+                      viewModel.userProfile.province ?? 'N/A',
                       style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
                     ),
                   ),

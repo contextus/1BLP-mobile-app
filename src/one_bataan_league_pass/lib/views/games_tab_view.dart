@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_common/utils.dart';
 
 class GamesTabView extends ModelBoundTabWidget<GamesTabViewModel> {
-  GamesTabView(GamesTabViewModel viewModel, String tabViewName)
-      : super(viewModel, tabButtonText: 'Games', tabButtonIcon: Icons.date_range, tabViewName: tabViewName);
+  GamesTabView(GamesTabViewModel viewModel)
+      : super(viewModel, const TabData('Games', Icons.date_range, ViewNames.gamesTabView));
 
   @override
   _GamesTabViewState createState() => _GamesTabViewState();
 }
 
-class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel>
-    with AutomaticKeepAliveClientMixin<GamesTabView> {
+class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewModel> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -32,17 +34,21 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
                 child: CalendarStrip(
                   containerHeight: 96.0,
                   onDateSelected: viewModel.onDateSelected,
-                  dateTileBuilder: (date, selectedDate, rowIndex, dayName, isDayMarked, isDateOutOfRange) {
+                  dateTileBuilder: (
+                    DateTime date,
+                    DateTime selectedDate,
+                    int rowIndex,
+                    String dayName,
+                    bool isDayMarked,
+                    bool isDateOutOfRange,
+                  ) {
                     final defaultDateStyle = TextStyle(
                         fontWeight: FontWeight.bold, color: Theme.of(context).customTheme().tertiaryTextColor);
                     final selectedDateStyle = defaultDateStyle.copyWith(color: Theme.of(context).accentColor);
-                    final dateTimeNow = DateTime.now();
-                    final isSelectedDateToday =
-                        date.month == dateTimeNow.month && date.day == dateTimeNow.day && date.year == dateTimeNow.year;
 
                     return Container(
                       padding: const EdgeInsets.all(2),
-                      decoration: isSelectedDateToday
+                      decoration: date.isOnTheSameDay(DateTime.now())
                           ? BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4),
@@ -103,9 +109,28 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
               ),
 
               // Games list
-              viewModel.selectedGames.isNotEmpty
-                  ? _buildGamesListView()
-                  : Expanded(child: Center(child: Text('No games for this date'))),
+              FutureBuilder<List<GameEntity>>(
+                future: viewModel.getGamesForDate,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return GameCardSkeleton();
+                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+                    return Expanded(
+                      child: snapshot.data.isNotEmpty
+                          ? _buildGamesListView(snapshot.data)
+                          : Center(child: Text('No games for this date')),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text('Could not retrieve games.'),
+                      ),
+                    );
+                  }
+
+                  throw UnimplementedError('Unhandled $snapshot state');
+                },
+              ),
             ],
           );
         },
@@ -113,39 +138,40 @@ class _GamesTabViewState extends ModelBoundState<GamesTabView, GamesTabViewModel
     );
   }
 
-  Widget _buildGamesListView() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: viewModel.selectedGames.length,
-      itemBuilder: (context, index) {
-        final game = viewModel.selectedGames[index];
-        List<GameCardAction> actions = [];
-
-        if (game.isGameToday) {
-          actions = [
-            GameCardAction(
-              'WATCH LIVE',
-              icon: Icons.play_arrow,
-              action: viewModel.onWatchLive,
-            ),
-          ];
-        }
-
-        if (game.isGameFinished) {
-          actions = [
-            GameCardAction(
-              'WATCH REPLAY',
-              icon: Icons.replay,
-              action: () {},
-            )
-          ];
-        }
-
-        return GameCard(game: game, actions: actions);
-      },
+  Widget _buildGamesListView(List<GameEntity> games) {
+    return RefreshIndicator(
+      onRefresh: () async => viewModel.refetchGamesForCurrentDate(),
+      child: ListView.separated(
+        itemCount: games.length,
+        separatorBuilder: (context, index) => SizedBox(height: 1),
+        itemBuilder: (context, index) => _buildGameCard(games[index]),
+      ),
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  Widget _buildGameCard(GameEntity game) {
+    List<GameCardButtonData> actions = [];
+
+    if (game.isGameToday && game.isLive) {
+      actions = [
+        GameCardButtonData(
+          'WATCH LIVE',
+          Icons.play_arrow,
+          viewModel.onWatchLive,
+        )
+      ];
+    }
+
+    if (game.isGameFinished) {
+      actions = [
+        GameCardButtonData(
+          'WATCH REPLAY',
+          Icons.replay,
+          viewModel.onWatchReplay,
+        )
+      ];
+    }
+
+    return GameCard(game, buttons: actions);
+  }
 }

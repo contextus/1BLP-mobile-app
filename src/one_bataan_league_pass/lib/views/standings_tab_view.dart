@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 
 class StandingsTabView extends ModelBoundTabWidget<StandingsTabViewModel> {
-  StandingsTabView(StandingsTabViewModel viewModel, String tabViewName)
-      : super(viewModel, tabButtonText: 'Standings', tabButtonIcon: Icons.insert_chart, tabViewName: tabViewName);
+  StandingsTabView(StandingsTabViewModel viewModel)
+      : super(viewModel, const TabData('Standings', Icons.insert_chart, ViewNames.standingsTabView));
 
   @override
   _StandingsTabViewState createState() => _StandingsTabViewState();
 }
 
-class _StandingsTabViewState extends ModelBoundState<StandingsTabView, StandingsTabViewModel>
-    with AutomaticKeepAliveClientMixin<StandingsTabView> {
+class _StandingsTabViewState extends ModelBoundTabState<StandingsTabView, StandingsTabViewModel> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -21,6 +21,7 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       child: ScopedModelDescendant<StandingsTabViewModel>(
         builder: (context, child, viewModel) {
           return Container(
+            color: Theme.of(context).canvasColor,
             child: DataTable(
               columnSpacing: 12.0,
               columns: [
@@ -66,7 +67,4 @@ class _StandingsTabViewState extends ModelBoundState<StandingsTabView, Standings
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

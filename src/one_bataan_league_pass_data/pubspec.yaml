@@ -9,6 +9,8 @@ dependencies:
   moor_flutter: ^2.1.0
   flutter_secure_storage: ^3.3.1+1
   shared_preferences: ^0.5.6+2
+  path_provider: ^1.6.5
+  path: ^1.6.4
 
   one_bataan_league_pass_common:
     path: "../one_bataan_league_pass_common"

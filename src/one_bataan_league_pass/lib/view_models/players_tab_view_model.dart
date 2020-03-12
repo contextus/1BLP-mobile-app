@@ -1,71 +1,57 @@
-import 'package:one_bataan_league_pass/models/models.dart';
+import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
+import 'package:one_bataan_league_pass_business/entities.dart';
+import 'package:one_bataan_league_pass_business/managers.dart';
+import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class PlayersTabViewModel extends TabViewModelBase {
-  final choices = ['All Players', 'By Team', 'By Position'];
-  final players = [
-    PlayerModel(
-      playerName: 'John Doe',
-      playerNumber: '01',
-      playerTeam: TeamModel(
-        teamName: '1Bataan Risers',
-        teamNameAcronym: '1BR',
-        teamImageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7JLYnYGcJ_BrfyF4KE8jq84p8M_LEbqbnx4zE82gXpyPK_gBE',
-      ),
-      playerImageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSAH12GEw7txHp8_ptb9oKFrBVdd3rwydr4QivK5j3mr8TlMA6V',
-      positions: ['C'],
-    ),
-    PlayerModel(
-      playerName: 'Juan Dela Cruz',
-      playerNumber: '18',
-      playerTeam: TeamModel(
-        teamName: 'Barangay Ginebra San Miguel',
-        teamNameAcronym: 'BGSM',
-        teamImageUrl: 'https://dashboard.pba.ph/assets/logo/GIN_web.png',
-      ),
-      playerImageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSc6bQQyf3SA05K66hZfUbd8zTjDuU76IlKawa1U5hquyfoXAca',
-      positions: ['G'],
-    ),
-    PlayerModel(
-      playerName: 'Jose Makabayan',
-      playerNumber: '23',
-      playerTeam: TeamModel(
-        teamName: 'Alska Aces',
-        teamNameAcronym: 'AA',
-        teamImageUrl: 'https://dashboard.pba.ph/assets/logo/ALA_web.png',
-      ),
-      playerImageUrl:
-          'https://www.proballers.com/media/cache/resize_300/ul/player/backup/24548-1-5db4c950184820190127-kings-v-clippers-081.jpg',
-      positions: ['C', 'F'],
-    ),
-  ];
+  PlayersTabViewModel(this._playerManager, NavigationService navigationService) : super(navigationService) {
+    getPlayers = _onGetPlayers();
+  }
 
-  int selectedChoiceIndex = 0;
+  final PlayerManager _playerManager;
 
-  void onSelectedChoiceIndexChanged(int index) {
-    selectedChoiceIndex = index;
+  final searchCriterias = ['All Players', 'By Team', 'By Position'];
 
-    debugInfo('Filter players by: ${choices[selectedChoiceIndex]}');
+  int selectedCriteriaIndex = 0;
 
-    // TODO: Fix sort
-    switch (selectedChoiceIndex) {
-      case 0:
-        players.sort((a, b) => a.playerName.compareTo(b.playerName));
-        break;
+  List<PlayerEntity> players;
 
-      case 1:
-        players.sort((a, b) => a.playerTeam.teamName.compareTo(b.playerTeam.teamName));
-        break;
+  Future<List<PlayerEntity>> getPlayers;
 
-      case 2:
-        players.sort((a, b) => a.formattedPositions.compareTo(b.formattedPositions));
-        break;
+  void onSelectedSearchCriteriaChanged(int index) {
+    selectedCriteriaIndex = index;
+
+    debugInfo('Search players by: ${searchCriterias[selectedCriteriaIndex]}');
+
+    notifyListeners();
+  }
+
+  void onSearchKeywordChanged(String keyword) {
+    notifyListeners();
+  }
+
+  void onViewPlayerProfile(PlayerEntity selectedPlayer) {
+    navigationService.push(
+      ViewNames.playerProfileView,
+      {NavigationParameterConstants.selectedPlayerProfileToView: selectedPlayer},
+    );
+  }
+
+  void refetchPlayers() {
+    getPlayers = _onGetPlayers();
+    notifyListeners();
+  }
+
+  Future<List<PlayerEntity>> _onGetPlayers() async {
+    debugInfo('Getting players...');
+
+    try {
+      return players = await _playerManager.getPlayers();
+    } on Exception catch (e) {
+      debugError('Failed to retrieve players', e);
+      rethrow;
     }
-
-    notifyListeners('selectedChoiceIndex');
   }
 }

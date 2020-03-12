@@ -6,3 +6,6 @@ export 'standings_tab_view.dart';
 export 'teams_tab_view.dart';
 export 'players_tab_view.dart';
 export 'user_profile_view.dart';
+export 'watch_replay_view.dart';
+export 'player_profile_view.dart';
+export 'team_profile_view.dart';
