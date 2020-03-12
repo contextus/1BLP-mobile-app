@@ -63,7 +63,9 @@ class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel
   }
 
   void _pauseVideo() {
-    _chewieController?.pause();
+    if (_chewieController != null && !_chewieController.isFullScreen) {
+      _chewieController.pause();
+    }
   }
 
   Widget _buildLoadingBody() {
