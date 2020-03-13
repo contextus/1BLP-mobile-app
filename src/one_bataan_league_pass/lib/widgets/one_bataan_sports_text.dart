@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OneBataanLeagueText extends StatelessWidget {
-  OneBataanLeagueText({Key key, this.fontSize = 14.0}) : super(key: key);
+class OneBataanSportsText extends StatelessWidget {
+  OneBataanSportsText({Key key, this.fontSize = 14.0}) : super(key: key);
 
   final double fontSize;
   final _primaryColorGreen = Color.fromARGB(255, 130, 203, 4);
@@ -15,7 +15,7 @@ class OneBataanLeagueText extends StatelessWidget {
         children: [
           TextSpan(text: '1', style: TextStyle(color: _primaryColorBlue)),
           TextSpan(text: 'Bataan ', style: TextStyle(color: _primaryColorGreen)),
-          TextSpan(text: 'League', style: TextStyle(color: _primaryColorRed)),
+          TextSpan(text: 'Sports', style: TextStyle(color: _primaryColorRed)),
         ],
         style: TextStyle(
           fontSize: fontSize,

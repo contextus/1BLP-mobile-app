@@ -88,7 +88,7 @@ class PlayerWebServiceImpl extends WebServiceBase implements PlayerWebService {
               'manager': 'Victory Liner, Inc.',
               'coach': 'John Kallos',
               'logo_url':
-                  'https://scontent.fmnl15-1.fna.fbcdn.net/v/t1.0-9/29572450_155909611772140_4374353873624635998_n.jpg?_nc_cat=103&_nc_sid=6e5ad9&_nc_ohc=4Zm3_u4Wjz0AX-ezd6I&_nc_ht=scontent.fmnl15-1.fna&oh=f6870b485cb9ec2c6d23953857a89061&oe=5E946E04',
+                  'https://scontent.fmnl15-1.fna.fbcdn.net/v/t1.0-9/29572450_155909611772140_4374353873624635998_n.jpg?_nc_cat=103&_nc_sid=7aed08&_nc_ohc=4Zm3_u4Wjz0AX-ezd6I&_nc_ht=scontent.fmnl15-1.fna&oh=fe75c463b645eb128018bd40385bf76e&oe=5E9045FC',
             },
             'player_num': '24',
             'positions': ['G', 'F'],

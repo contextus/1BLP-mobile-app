@@ -5,5 +5,5 @@ export 'extended_row.dart';
 export 'extended_column.dart';
 export 'loading_container.dart';
 export 'loading_indicator.dart';
-export 'one_bataan_league_text.dart';
+export 'one_bataan_sports_text.dart';
 export 'game_card.dart';
