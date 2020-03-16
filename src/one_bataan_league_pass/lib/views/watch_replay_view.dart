@@ -44,7 +44,7 @@ class _WatchReplayViewState extends ModelBoundState<WatchReplayView, WatchReplay
       child: ScopedModelDescendant<WatchReplayViewModel>(
         builder: (context, child, viewModel) {
           return Hero(
-            tag: viewModel.gameToWatch.id,
+            tag: viewModel.game.id,
             child: Scaffold(
               extendBodyBehindAppBar: true,
               backgroundColor: Colors.black,

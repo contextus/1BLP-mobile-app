@@ -10,5 +10,6 @@ export 'user_profile_view_model.dart';
 export 'watch_replay_view_model.dart';
 export 'player_profile_view_model.dart';
 export 'team_profile_view_model.dart';
+export 'game_recap_view_model.dart';
 
 export 'package:scoped_model/scoped_model.dart';

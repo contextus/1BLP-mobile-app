@@ -192,12 +192,12 @@ class AppTheme {
         letterSpacing: 0.25,
       ),
       button: GoogleFonts.sourceSansPro(
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: FontWeight.w500,
         letterSpacing: 1.25,
       ),
       caption: GoogleFonts.sourceSansPro(
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: FontWeight.w400,
         letterSpacing: 0.4,
         color: appLightColorTheme.tertiaryTextColor,

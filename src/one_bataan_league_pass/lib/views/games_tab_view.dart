@@ -166,12 +166,22 @@ class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewMo
       actions = [
         GameCardButtonData(
           'WATCH REPLAY',
-          Icons.replay,
+          Icons.play_arrow,
           viewModel.onWatchReplay,
+        ),
+        GameCardButtonData(
+          'GAME RECAP',
+          Icons.replay,
+          viewModel.onViewGameRecap,
+        ),
+        GameCardButtonData(
+          'BOX SCORE',
+          Icons.star,
+          (a) {},
         )
       ];
     }
 
-    return GameCard(game, buttons: actions);
+    return GameCard(game, buttons: actions, heroTag: game.id);
   }
 }
