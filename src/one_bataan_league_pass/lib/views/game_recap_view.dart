@@ -271,9 +271,20 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
         padding: const EdgeInsets.all(16.0),
         child: ExtendedColumn(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 8,
+          spacing: 12,
           children: [
             Text('Team Comparison', style: Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold)),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Image.network(viewModel.game.team1.logoUrl, width: 40),
+                  Image.network(viewModel.game.team2.logoUrl, width: 40),
+                ],
+              ),
+            ),
 
             // Field Goals
             ExtendedColumn(
@@ -423,7 +434,21 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
                   ],
                 )
               ],
-            )
+            ),
+            Divider(),
+            Center(
+              child: FlatButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                textColor: Theme.of(context).accentColor,
+                child: ExtendedRow(
+                  children: <Widget>[
+                    Text('See All'),
+                    Icon(Icons.keyboard_arrow_down),
+                  ],
+                ),
+                onPressed: () {},
+              ),
+            ),
           ],
         ),
       ),
