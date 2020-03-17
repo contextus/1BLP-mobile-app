@@ -42,3 +42,8 @@ lib/generated_plugin_registrant.dart
 test_driver_screenshots/
 test_result/
 coverage/
+
+# Desktop related
+windows
+macos
+linux
