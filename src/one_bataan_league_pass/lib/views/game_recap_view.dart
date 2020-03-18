@@ -47,7 +47,9 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
           return Hero(
             tag: viewModel.game.id,
             child: Scaffold(
-              appBar: AppBar(title: Text('Game Recap')),
+              appBar: AppBar(
+                title: Text('Game Recap'),
+              ),
               body: SingleChildScrollView(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: ExtendedColumn(
@@ -79,7 +81,7 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
 
   Widget _buildTeamsStat() {
     return StatTable(
-      columnData: const [
+      columns: const [
         StatTableColumnData(title: 'TEAMS', flex: 2),
         StatTableColumnData(title: 'Q1', flex: 1),
         StatTableColumnData(title: 'Q2', flex: 1),
@@ -87,15 +89,21 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
         StatTableColumnData(title: 'Q4', flex: 1),
         StatTableColumnData(title: 'TOTAL', flex: 1),
       ],
-      rowData: viewModel.gameResults.map((r) {
+      rows: viewModel.gameResults.map((r) {
         final teamNameAcronym = r.team.name.split(' ').map((n) => n[0]).join().toUpperCase();
         return StatTableRowData([
-          Text(teamNameAcronym, textAlign: TextAlign.center),
-          Text('${r.q1}', textAlign: TextAlign.center),
-          Text('${r.q2}', textAlign: TextAlign.center),
-          Text('${r.q3}', textAlign: TextAlign.center),
-          Text('${r.q4}', textAlign: TextAlign.center),
-          Text('${r.total}', textAlign: TextAlign.center),
+          StatTableCellData(
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(border: Border(right: BorderSide(color: Theme.of(context).dividerColor))),
+              child: Text(teamNameAcronym, textAlign: TextAlign.center),
+            ),
+          ),
+          StatTableCellData(Text('${r.q1}', textAlign: TextAlign.center)),
+          StatTableCellData(Text('${r.q2}', textAlign: TextAlign.center)),
+          StatTableCellData(Text('${r.q3}', textAlign: TextAlign.center)),
+          StatTableCellData(Text('${r.q4}', textAlign: TextAlign.center)),
+          StatTableCellData(Text('${r.total}', textAlign: TextAlign.center)),
         ]);
       }).toList(),
     );

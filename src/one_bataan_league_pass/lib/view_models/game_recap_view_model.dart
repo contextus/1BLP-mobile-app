@@ -45,7 +45,7 @@ class GameRecapViewModel extends ViewModelBase {
       ))
       ..add(team2GameResult = GameResultModel(
         team: game.team2,
-        q1: 26,
+        q1: 22,
         q2: 35,
         q3: 26,
         q4: 28,
