@@ -6,7 +6,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "DEBUG DEV",
+            "name": "DEBUG DEV1",
+            "flutterMode": "debug",
+            "program": "src/one_bataan_league_pass/lib/main_debug_dev.dart",
+            "request": "launch",
+            "type": "dart",
+        },
+        {
+            "name": "DEBUG DEV2",
             "flutterMode": "debug",
             "program": "src/one_bataan_league_pass/lib/main_debug_dev.dart",
             "request": "launch",
@@ -25,6 +32,15 @@
             "program": "src/one_bataan_league_pass/lib/main_release_dev.dart",
             "request": "launch",
             "type": "dart",
+        }
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": [
+                "DEBUG DEV1",
+                "DEBUG DEV2"
+            ],
         }
     ]
 }

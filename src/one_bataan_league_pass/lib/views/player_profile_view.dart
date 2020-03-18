@@ -187,7 +187,7 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
 
   Widget _buildPlayerStatTable() {
     return StatTable(
-      columnData: const [
+      columns: const [
         StatTableColumnData(title: 'BY YEAR', flex: 2),
         StatTableColumnData(title: 'GP', flex: 1),
         StatTableColumnData(title: 'MIN', flex: 1),
@@ -195,38 +195,38 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
         StatTableColumnData(title: 'FGM', flex: 1),
         StatTableColumnData(title: 'FG%', flex: 1),
       ],
-      rowData: [
+      rows: [
         StatTableRowData([
-          Text(
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.year}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
-          Text(
+          )),
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.gp}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
-          Text(
+          )),
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.min}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
-          Text(
+          )),
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.pts}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
-          Text(
+          )),
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.fgm}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
-          Text(
+          )),
+          StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.fgPercentage}',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          ),
+          )),
         ])
       ],
     );
