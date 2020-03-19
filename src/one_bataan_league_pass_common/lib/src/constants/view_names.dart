@@ -9,4 +9,5 @@ class ViewNames {
   static const watchReplayView = 'watchReplayView';
   static const playerProfileView = 'playerProfileView';
   static const teamProfileView = 'teamProfileView';
+  static const gameRecapView = 'gameRecapView';
 }

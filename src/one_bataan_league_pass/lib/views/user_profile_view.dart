@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
-import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 
 class UserProfileView extends ModelBoundWidget<UserProfileViewModel> {
@@ -39,7 +38,7 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
                   return _buildUserProfileWidget();
                 }
 
-                throw UnimplementedError('Unhandled $snapshot state');
+                return ErrorWidget('Unhandled $snapshot state');
               },
             ),
           );
@@ -68,73 +67,18 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
               ),
             ),
           ),
-          Column(
+          ExtendedColumn(
+            spacing: 1,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            children: List.generate(7, (_) {
+              return Card(
                 child: const ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
                   title: LoadingContainer(height: 16),
                   subtitle: LoadingContainer(height: 16),
                 ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-              Card(
-                margin: const EdgeInsets.only(bottom: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                child: const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                  title: LoadingContainer(height: 16),
-                  subtitle: LoadingContainer(height: 16),
-                ),
-              ),
-            ],
+              );
+            }),
           ),
         ],
       ),
@@ -150,111 +94,25 @@ class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfile
         child: ExtendedColumn(
           spacing: 8,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 32.0),
+            Card(
               color: Theme.of(context).canvasColor,
-              child: Center(
-                child: ExtendedColumn(
-                  spacing: 12.0,
-                  children: <Widget>[
-                    CircleAvatar(radius: 56, backgroundImage: NetworkImage(viewModel.userProfile.imageUrl)),
-                    Text(
-                      viewModel.userProfile.name,
-                      style: Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: ExtendedColumn(
+                    spacing: 12.0,
+                    children: <Widget>[
+                      CircleAvatar(radius: 56, backgroundImage: NetworkImage(viewModel.userProfile.imageUrl)),
+                      Text(
+                        viewModel.userProfile.name,
+                        style: Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('BIRTHDATE', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      DateFormat('MMMM dd, y').format(viewModel.userProfile.birthDate),
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('NATIONALITY', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.nationality ?? 'N/A',
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('STREET', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.street,
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('BARANGAY/DISTRICT', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.barangayDistrict ?? 'N/A',
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('CITY/MUNICIPALITY', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.cityOrMunicipality ?? 'N/A',
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('ZIP CODE', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.zipCode ?? 'N/A',
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text('PROVINCE', style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      viewModel.userProfile.province ?? 'N/A',
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            SingleDetailList(items: viewModel.userProfileDetails)
           ],
         ),
       ),

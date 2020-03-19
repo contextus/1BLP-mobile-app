@@ -9,3 +9,4 @@ export 'user_profile_view.dart';
 export 'watch_replay_view.dart';
 export 'player_profile_view.dart';
 export 'team_profile_view.dart';
+export 'game_recap_view.dart';

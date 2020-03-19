@@ -20,48 +20,46 @@ class _StandingsTabViewState extends ModelBoundTabState<StandingsTabView, Standi
       model: viewModel,
       child: ScopedModelDescendant<StandingsTabViewModel>(
         builder: (context, child, viewModel) {
-          return Container(
-            color: Theme.of(context).canvasColor,
-            child: DataTable(
-              columnSpacing: 12.0,
-              columns: [
-                DataColumn(label: Text('TEAMS')),
-                DataColumn(label: Text('WIN'), numeric: true),
-                DataColumn(label: Text('LOSE'), numeric: true),
-                DataColumn(label: Text('WIN %'), numeric: true),
-                DataColumn(label: Text('GB'), numeric: true),
-              ],
-              rows: [
-                DataRow(
-                  cells: [
-                    DataCell(Text('NORTH')),
-                    DataCell(SizedBox()),
-                    DataCell(SizedBox()),
-                    DataCell(SizedBox()),
-                    DataCell(SizedBox()),
-                  ],
+          return StatTable(
+            columns: [
+              StatTableColumnData(title: 'Teams', flex: 2),
+              StatTableColumnData(title: 'WIN', flex: 1),
+              StatTableColumnData(title: 'LOSE', flex: 1),
+              StatTableColumnData(title: 'WIN%', flex: 1),
+              StatTableColumnData(title: 'GB', flex: 1),
+            ],
+            rows: viewModel.teams.map((t) {
+              return StatTableRowData([
+                StatTableCellData(
+                  Container(
+                    padding: const EdgeInsets.only(left: 24, top: 8, bottom: 8),
+                    decoration: BoxDecoration(border: Border(right: BorderSide(color: Theme.of(context).dividerColor))),
+                    child: ExtendedRow(
+                      spacing: 8.0,
+                      children: <Widget>[
+                        Text((viewModel.teams.indexOf(t) + 1).toString()),
+                        Image.network(t.logoUrl, width: 24),
+                        Text(t.teamNameAcronym)
+                      ],
+                    ),
+                  ),
                 ),
-              ]..addAll(viewModel.teams.map((t) {
-                  return DataRow(
-                    cells: [
-                      DataCell(
-                        ExtendedRow(
-                          spacing: 8.0,
-                          children: <Widget>[
-                            Text((viewModel.teams.indexOf(t) + 1).toString()),
-                            Image.network(t.teamImageUrl, width: 24),
-                            Text(t.teamNameAcronym)
-                          ],
-                        ),
-                      ),
-                      DataCell(Text(t.totalWins.toString())),
-                      DataCell(Text(t.totalLose.toString())),
-                      DataCell(Text(t.winPercentage.toString())),
-                      DataCell(Text(t.gamesBehind.toString())),
-                    ],
-                  );
-                })),
-            ),
+                StatTableCellData(Container(child: Text(t.totalWins.toString(), textAlign: TextAlign.center))),
+                StatTableCellData(Text(t.totalLose.toString(), textAlign: TextAlign.center)),
+                StatTableCellData(Text(t.winPercentage.toString(), textAlign: TextAlign.center)),
+                StatTableCellData(Text(t.gamesBehind.toString(), textAlign: TextAlign.center))
+              ]);
+            }).toList(),
+            groupHeaderBuilder: (context, index) {
+              if (index == 0) {
+                return Container(
+                  padding: const EdgeInsets.only(left: 32, top: 8, bottom: 8),
+                  child: Text('NORTH', style: Theme.of(context).textTheme.caption),
+                  alignment: Alignment.centerLeft,
+                );
+              }
+              return null;
+            },
           );
         },
       ),

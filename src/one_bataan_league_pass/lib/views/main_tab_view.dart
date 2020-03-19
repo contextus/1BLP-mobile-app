@@ -67,7 +67,7 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: OneBataanLeagueText(),
+              title: OneBataanSportsText(),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.account_circle),

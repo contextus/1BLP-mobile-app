@@ -10,7 +10,7 @@
             "flutterMode": "debug",
             "program": "src/one_bataan_league_pass/lib/main_debug_dev.dart",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "PROFILE DEV",
@@ -26,5 +26,5 @@
             "request": "launch",
             "type": "dart",
         }
-    ]
+    ],
 }

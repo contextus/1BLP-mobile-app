@@ -34,7 +34,14 @@ class GamesTabViewModel extends TabViewModelBase {
   void onWatchReplay(GameEntity gameToWatch) {
     navigationService.push(
       ViewNames.watchReplayView,
-      {NavigationParameterConstants.selectedGameToWatch: gameToWatch},
+      {NavigationParameterConstants.selectedGameToWatchReplay: gameToWatch},
+    );
+  }
+
+  void onViewGameRecap(GameEntity gameToViewRecap) {
+    navigationService.push(
+      ViewNames.gameRecapView,
+      {NavigationParameterConstants.selectedGameToViewRecap: gameToViewRecap},
     );
   }
 

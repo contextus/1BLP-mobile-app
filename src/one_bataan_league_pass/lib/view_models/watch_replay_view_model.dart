@@ -3,12 +3,12 @@ import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
 class WatchReplayViewModel extends ViewModelBase {
-  GameEntity gameToWatch;
+  GameEntity game;
 
   @override
   Future<void> init([Map<String, Object> parameters]) async {
-    assert(parameters[NavigationParameterConstants.selectedGameToWatch] != null);
+    assert(parameters[NavigationParameterConstants.selectedGameToWatchReplay] != null);
 
-    gameToWatch = parameters[NavigationParameterConstants.selectedGameToWatch];
+    game = parameters[NavigationParameterConstants.selectedGameToWatchReplay];
   }
 }

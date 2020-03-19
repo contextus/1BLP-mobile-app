@@ -25,6 +25,8 @@ class GameEntity extends EntityBase {
   final int team2Score;
   final bool isLive;
 
+  String get id => hashCode.toString();
+
   bool get isGameToday => gameDate.isOnTheSameDay(DateTime.now());
 
   bool get isGameUpcoming => !isGameFinished && !isGameToday;

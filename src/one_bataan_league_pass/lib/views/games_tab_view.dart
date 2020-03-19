@@ -128,7 +128,7 @@ class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewMo
                     );
                   }
 
-                  throw UnimplementedError('Unhandled $snapshot state');
+                  return ErrorWidget('Unhandled $snapshot state');
                 },
               ),
             ],
@@ -166,12 +166,17 @@ class _GamesTabViewState extends ModelBoundTabState<GamesTabView, GamesTabViewMo
       actions = [
         GameCardButtonData(
           'WATCH REPLAY',
-          Icons.replay,
+          Icons.play_arrow,
           viewModel.onWatchReplay,
-        )
+        ),
+        GameCardButtonData(
+          'GAME RECAP',
+          Icons.replay,
+          viewModel.onViewGameRecap,
+        ),
       ];
     }
 
-    return GameCard(game, buttons: actions);
+    return GameCard(game, buttons: actions, heroTag: game.id);
   }
 }
