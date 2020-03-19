@@ -2,7 +2,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/models/models.dart';
-import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:video_player/video_player.dart';
@@ -94,7 +93,7 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
         return StatTableRowData([
           StatTableCellData(
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(border: Border(right: BorderSide(color: Theme.of(context).dividerColor))),
               child: Text(teamNameAcronym, textAlign: TextAlign.center),
             ),
@@ -111,8 +110,6 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
 
   Widget _buildGameSummary() {
     return Card(
-      margin: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ExtendedColumn(
@@ -133,8 +130,6 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
 
   Widget _buildGameLeaderBoard() {
     return Card(
-      margin: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -273,8 +268,6 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
 
   Widget _buildTeamComparison() {
     return Card(
-      margin: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ExtendedColumn(
@@ -478,27 +471,7 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
             ),
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              children: viewModel.gameDetails.map((p) {
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 1),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    title: Text(p.fieldName, style: Theme.of(context).textTheme.caption),
-                    subtitle: Text(
-                      p.fieldValue,
-                      style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-                    ),
-                  ),
-                );
-              }).toList(),
-            )
-          ],
-        ),
+        SingleDetailList(items: viewModel.gameDetails),
       ],
     );
   }

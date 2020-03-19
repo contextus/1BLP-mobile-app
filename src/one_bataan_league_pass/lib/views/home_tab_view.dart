@@ -54,7 +54,7 @@ class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel
                 );
               }
 
-              throw UnimplementedError('Unhandled $snapshot state');
+              return ErrorWidget('Unhandled $snapshot state');
             },
           );
         },

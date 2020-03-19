@@ -12,6 +12,7 @@ class TeamMapper implements EntityMapper<TeamEntity, TeamDataContract> {
       manager: source.manager,
       owner: source.owner,
       logoUrl: source.logoUrl,
+      foundingDate: source.foundingDate,
     );
   }
 }

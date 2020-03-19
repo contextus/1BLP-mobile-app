@@ -58,7 +58,7 @@ class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewMo
                     );
                   }
 
-                  throw UnimplementedError('Unhandled $snapshot state');
+                  return ErrorWidget('Unhandled $snapshot state');
                 },
               )
             ],
@@ -87,12 +87,11 @@ class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewMo
     return Hero(
       tag: team.id,
       child: Card(
-        margin: const EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         child: ListTile(
           title: Text(team.name),
           subtitle: Text('$wins-$loses', style: Theme.of(context).textTheme.caption),
           leading: Image.network(team.logoUrl, width: 40),
+          trailing: const Icon(Icons.chevron_right),
           onTap: () => viewModel.onViewTeamProfile(team),
         ),
       ),
@@ -101,8 +100,6 @@ class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewMo
 
   Widget _buildTeamLoadingCard() {
     return Card(
-      margin: const EdgeInsets.only(bottom: 1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: const ListTile(
         title: LoadingContainer(height: 12),
         subtitle: LoadingContainer(height: 12),

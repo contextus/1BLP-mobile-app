@@ -7,7 +7,7 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 class PlayerProfileViewModel extends ViewModelBase {
   PlayerEntity player;
 
-  List<ProfileDetailListModel> playerProfileDetails = [];
+  List<SingleDetailListItemModel> playerProfileDetails = [];
 
   List<PlayerSeasonModel> playerSeasons = [];
 
@@ -20,13 +20,13 @@ class PlayerProfileViewModel extends ViewModelBase {
 
     player = parameters[NavigationParameterConstants.selectedPlayerProfileToView];
     playerProfileDetails
-      ..add(ProfileDetailListModel('NAME', '${player.firstName} ${player.lastName}'))
-      ..add(ProfileDetailListModel('BIRTHDATE', DateFormat('MMMM dd, y').format(player.birthdate)))
-      ..add(ProfileDetailListModel('NATIONALITY', player.nationality))
-      ..add(ProfileDetailListModel('PROVINCE', player.province))
-      ..add(ProfileDetailListModel('CITY/MUNICIPALITY/TOWN', player.municipalityTown))
-      ..add(ProfileDetailListModel('POSITION', player.playerTeam.formattedPositions))
-      ..add(ProfileDetailListModel('NUMBER', player.playerTeam.playerNum));
+      ..add(SingleDetailListItemModel('NAME', '${player.firstName} ${player.lastName}'))
+      ..add(SingleDetailListItemModel('BIRTHDATE', DateFormat('MMMM dd, y').format(player.birthdate)))
+      ..add(SingleDetailListItemModel('NATIONALITY', player.nationality))
+      ..add(SingleDetailListItemModel('PROVINCE', player.province))
+      ..add(SingleDetailListItemModel('CITY/MUNICIPALITY/TOWN', player.municipalityTown))
+      ..add(SingleDetailListItemModel('POSITION', player.playerTeam.formattedPositions))
+      ..add(SingleDetailListItemModel('NUMBER', player.playerTeam.playerNum));
 
     playerSeasons
       ..add(PlayerSeasonModel(

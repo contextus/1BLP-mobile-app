@@ -8,6 +8,7 @@ class TeamDataContract extends DataContractBase {
     this.manager,
     this.coach,
     this.logoUrl,
+    this.foundingDate,
   });
 
   final String id;
@@ -16,6 +17,7 @@ class TeamDataContract extends DataContractBase {
   final String manager;
   final String coach;
   final String logoUrl;
+  final DateTime foundingDate;
 
   factory TeamDataContract.fromJson(Map<String, Object> json) {
     return TeamDataContract(
@@ -25,6 +27,7 @@ class TeamDataContract extends DataContractBase {
       manager: json['manager'],
       coach: json['coach'],
       logoUrl: json['logo_url'],
+      foundingDate: json['foundingDate'],
     );
   }
 }

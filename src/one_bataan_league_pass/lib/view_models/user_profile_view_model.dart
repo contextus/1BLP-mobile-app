@@ -14,7 +14,7 @@ class UserProfileViewModel extends ViewModelBase {
 
   UserProfileEntity userProfile;
 
-  List<ProfileDetailListModel> userProfileDetails = [];
+  List<SingleDetailListItemModel> userProfileDetails = [];
 
   Future<UserProfileEntity> getUserProfile;
 
@@ -30,13 +30,14 @@ class UserProfileViewModel extends ViewModelBase {
       userProfile = await _userProfileManager.getUserProfile();
 
       userProfileDetails
-        ..add(ProfileDetailListModel('BIRTHDATE', DateFormat('MMMM dd, y').format(userProfile.birthDate)))
-        ..add(ProfileDetailListModel('NATIONALITY', userProfile.nationality))
-        ..add(ProfileDetailListModel('STREET', userProfile.street))
-        ..add(ProfileDetailListModel('BARANGAY/DISTRICT', userProfile.barangayDistrict))
-        ..add(ProfileDetailListModel('CITY/MUNICIPALITY/TOWN', userProfile.cityOrMunicipality))
-        ..add(ProfileDetailListModel('ZIPCODE', userProfile.zipCode))
-        ..add(ProfileDetailListModel('PROVINCE', userProfile.province));
+        ..clear()
+        ..add(SingleDetailListItemModel('BIRTHDATE', DateFormat('MMMM dd, y').format(userProfile.birthDate)))
+        ..add(SingleDetailListItemModel('NATIONALITY', userProfile.nationality))
+        ..add(SingleDetailListItemModel('STREET', userProfile.street))
+        ..add(SingleDetailListItemModel('BARANGAY/DISTRICT', userProfile.barangayDistrict))
+        ..add(SingleDetailListItemModel('CITY/MUNICIPALITY/TOWN', userProfile.cityOrMunicipality))
+        ..add(SingleDetailListItemModel('ZIPCODE', userProfile.zipCode))
+        ..add(SingleDetailListItemModel('PROVINCE', userProfile.province));
 
       return userProfile;
     } on Exception catch (e) {

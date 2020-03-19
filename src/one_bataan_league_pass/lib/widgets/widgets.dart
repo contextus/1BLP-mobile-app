@@ -8,3 +8,4 @@ export 'loading_indicator.dart';
 export 'one_bataan_sports_text.dart';
 export 'game_card.dart';
 export 'stat_table.dart';
+export 'single_detail_list.dart';

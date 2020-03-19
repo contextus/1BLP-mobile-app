@@ -6,7 +6,7 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 class GameRecapViewModel extends ViewModelBase {
   GameEntity game;
 
-  List<ProfileDetailListModel> gameDetails = [];
+  List<SingleDetailListItemModel> gameDetails = [];
 
   List<GameResultModel> gameResults = [];
 
@@ -25,9 +25,9 @@ class GameRecapViewModel extends ViewModelBase {
     game = parameters[NavigationParameterConstants.selectedGameToViewRecap];
 
     gameDetails
-      ..add(ProfileDetailListModel('LOCATION', game.gameLocation))
-      ..add(ProfileDetailListModel('ATTENDANCE', '5,235'))
-      ..add(ProfileDetailListModel('OFFICIALS', 'John Doe, Tony Brown, Nate Green'));
+      ..add(SingleDetailListItemModel('LOCATION', game.gameLocation))
+      ..add(SingleDetailListItemModel('ATTENDANCE', '5,235'))
+      ..add(SingleDetailListItemModel('OFFICIALS', 'John Doe, Tony Brown, Nate Green'));
 
     gameResults
       ..add(team1GameResult = GameResultModel(

@@ -21,8 +21,14 @@ class StatTableCellData {
 }
 
 class StatTable extends StatelessWidget {
-  StatTable({Key key, @required this.columns, @required this.rows, this.groupHeaderBuilder})
-      : assert(columns?.isNotEmpty == true),
+  StatTable({
+    Key key,
+    @required this.columns,
+    @required this.rows,
+    this.groupHeaderBuilder,
+    this.horizontalPadding = 8,
+    this.headerVerticalPadding = 8,
+  })  : assert(columns?.isNotEmpty == true),
         assert(rows?.isNotEmpty == true),
         assert(rows.every((r) => r.cells.length == columns.length)),
         super(key: key);
@@ -30,13 +36,15 @@ class StatTable extends StatelessWidget {
   final List<StatTableColumnData> columns;
   final List<StatTableRowData> rows;
   final Widget Function(BuildContext, int) groupHeaderBuilder;
+  final double horizontalPadding;
+  final double headerVerticalPadding;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: headerVerticalPadding),
           child: Row(
             children: columns.map((h) {
               return Expanded(
@@ -54,8 +62,6 @@ class StatTable extends StatelessWidget {
           ),
         ),
         Card(
-          margin: const EdgeInsets.all(0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           child: Column(children: _buildChildren(context)),
         ),
       ],
@@ -66,11 +72,14 @@ class StatTable extends StatelessWidget {
     final children = rows.map<Widget>((r) {
       return Container(
         color: Theme.of(context).canvasColor,
-        child: Row(
-          children: r.cells.map((c) {
-            final flex = columns.elementAt(r.cells.indexOf(c)).flex;
-            return Expanded(flex: flex, child: c.cell);
-          }).toList(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Row(
+            children: r.cells.map((c) {
+              final flex = columns.elementAt(r.cells.indexOf(c)).flex;
+              return Expanded(flex: flex, child: c.cell);
+            }).toList(),
+          ),
         ),
       );
     }).toList();

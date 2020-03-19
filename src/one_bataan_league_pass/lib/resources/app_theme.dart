@@ -115,6 +115,10 @@ class AppTheme {
       fillColor: Color(0xff1a1a19),
       borderRadius: BorderRadius.circular(2),
     ),
+    cardTheme: CardTheme(
+      margin: const EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    ),
   );
 
   static final materialLightTheme = ThemeData(
@@ -213,6 +217,10 @@ class AppTheme {
       selectedBorderColor: Color(0xff82cb04),
       fillColor: Color(0xff82cb04),
       borderRadius: BorderRadius.circular(2),
+    ),
+    cardTheme: CardTheme(
+      margin: const EdgeInsets.all(0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
     ),
   );
 

@@ -93,10 +93,11 @@ class ServiceLocator {
       ..registerFactory<StandingsTabViewModel>(() => StandingsTabViewModel())
       ..registerFactory<TeamsTabViewModel>(() => TeamsTabViewModel(_i.get<TeamManager>(), _i.get<NavigationService>()))
       ..registerFactory<PlayersTabViewModel>(
-          () => PlayersTabViewModel(_i.get<PlayerManager>(), _i.get<NavigationService>()))
+          () => PlayersTabViewModel(_i.get<PlayerManager>(), _i.get<TeamManager>(), _i.get<NavigationService>()))
       ..registerFactory<WatchReplayViewModel>(() => WatchReplayViewModel())
       ..registerFactory<PlayerProfileViewModel>(() => PlayerProfileViewModel())
-      ..registerFactory<TeamProfileViewModel>(() => TeamProfileViewModel())
+      ..registerFactory<TeamProfileViewModel>(
+          () => TeamProfileViewModel(_i.get<NavigationService>(), _i.get<PlayerManager>()))
       ..registerFactory<GameRecapViewModel>(() => GameRecapViewModel());
 
     // Register views

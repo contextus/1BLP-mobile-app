@@ -21,10 +21,11 @@ class TeamWebServiceImpl extends WebServiceBase implements TeamWebService {
           'id': Random().nextInt(1000).hashCode.toString(),
           'name': '1Bataan Risers',
           'owner': 'Camaya Coast',
-          'manager': 'Camaya Coast',
+          'manager': null,
           'coach': 'Jonas Villanueva',
           'logo_url':
               'https://d1k5w7mbrh6vq5.cloudfront.net/images/cache/d6/29/6d/d6296dc34ee7874a4b4eaf741442cb76.png',
+          'foundingDate': DateTime.now(),
         },
       ),
       TeamDataContract.fromJson(
@@ -35,6 +36,7 @@ class TeamWebServiceImpl extends WebServiceBase implements TeamWebService {
           'manager': 'WEMSAP',
           'coach': 'Vis Valencia',
           'logo_url': 'https://i.redd.it/atvnpigchb811.jpg',
+          'foundingDate': DateTime.now(),
         },
       ),
       TeamDataContract.fromJson(
@@ -46,6 +48,7 @@ class TeamWebServiceImpl extends WebServiceBase implements TeamWebService {
           'coach': 'John Kallos',
           'logo_url':
               'https://scontent.fmnl15-1.fna.fbcdn.net/v/t1.0-9/29572450_155909611772140_4374353873624635998_n.jpg?_nc_cat=103&_nc_sid=7aed08&_nc_ohc=4Zm3_u4Wjz0AX-ezd6I&_nc_ht=scontent.fmnl15-1.fna&oh=fe75c463b645eb128018bd40385bf76e&oe=5E9045FC',
+          'foundingDate': DateTime.now(),
         },
       ),
     ];

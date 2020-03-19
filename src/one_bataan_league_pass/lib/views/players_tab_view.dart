@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
@@ -58,31 +60,114 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
                   ),
                 ),
               ),
-              FutureBuilder<List<PlayerEntity>>(
-                future: viewModel.getPlayers,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return _buildLoadingPlayerCard();
-                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-                    return Expanded(
-                      child: Center(
-                        child: Text('Could not retrieve players'),
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
-                    return Expanded(
-                      child: snapshot.data.isNotEmpty
-                          ? _buildPlayersListView(snapshot.data)
-                          : Center(child: Text('No players found')),
-                    );
-                  }
-
-                  throw UnimplementedError('Unhandled $snapshot state');
-                },
-              )
+              _buildFutureBuilder(),
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildFutureBuilder() {
+    switch (viewModel.selectedCriteriaIndex) {
+      case 0:
+        return FutureBuilder<List<PlayerEntity>>(
+          future: viewModel.getPlayers,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _buildLoadingPlayerCard();
+            } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+              return Expanded(
+                child: Center(
+                  child: Text('Could not retrieve players'),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+              return Expanded(
+                child: snapshot.data.isNotEmpty
+                    ? _buildPlayersListView(snapshot.data)
+                    : Center(child: Text('No players found')),
+              );
+            }
+
+            return ErrorWidget('Unhandled $snapshot state');
+          },
+        );
+
+      case 1:
+        return FutureBuilder<List<TeamEntity>>(
+          future: viewModel.getTeams,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _buildTeamLoadingCard();
+            } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+              return Expanded(
+                child: Center(
+                  child: Text('Could not retrieve teams'),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+              return Expanded(
+                child: _buildTeamsListView(snapshot.data),
+              );
+            }
+
+            return ErrorWidget('Unhandled $snapshot state');
+          },
+        );
+
+      case 2:
+        return ExtendedColumn(
+          spacing: 1,
+          children: ['Guard', 'Forward', 'Center'].map((p) {
+            return Card(
+              child: ListTile(
+                title: Text(p),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {},
+              ),
+            );
+          }).toList(),
+        );
+    }
+  }
+
+  Widget _buildTeamsListView(List<TeamEntity> teams) {
+    return RefreshIndicator(
+      onRefresh: () async => viewModel.refetchPlayers(),
+      child: ListView.separated(
+        itemCount: teams.length,
+        itemBuilder: (context, index) => _buildTeamCard(teams[index]),
+        separatorBuilder: (context, _snapshot) => SizedBox(height: 1),
+      ),
+    );
+  }
+
+  Widget _buildTeamCard(TeamEntity team) {
+    final random = Random();
+    final wins = random.nextInt(23);
+    final loses = random.nextInt(23);
+
+    return Hero(
+      tag: team.id,
+      child: Card(
+        child: ListTile(
+          title: Text(team.name),
+          subtitle: Text('$wins-$loses', style: Theme.of(context).textTheme.caption),
+          leading: Image.network(team.logoUrl, width: 40),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => viewModel.onViewTeamProfile(team),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTeamLoadingCard() {
+    return Card(
+      child: const ListTile(
+        title: LoadingContainer(height: 12),
+        subtitle: LoadingContainer(height: 12),
+        leading: LoadingContainer(child: CircleAvatar()),
       ),
     );
   }

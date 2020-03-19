@@ -51,7 +51,7 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     spacing: 8.0,
                     children: <Widget>[
-                      _buildPlayerInfo(),
+                      SingleDetailList(items: viewModel.playerProfileDetails),
                       _buildPlayerSeasonStatPicker(),
                       _buildPlayerStatTable(),
                     ],
@@ -112,25 +112,6 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
         ),
       ),
     ];
-  }
-
-  Widget _buildPlayerInfo() {
-    return Column(
-      children: viewModel.playerProfileDetails.map((p) {
-        return Card(
-          margin: const EdgeInsets.only(bottom: 1),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-            title: Text(p.fieldName, style: Theme.of(context).textTheme.caption),
-            subtitle: Text(
-              p.fieldValue,
-              style: TextStyle(color: Theme.of(context).customTheme().primaryTextColor),
-            ),
-          ),
-        );
-      }).toList(),
-    );
   }
 
   Widget _buildPlayerSeasonStatPicker() {
@@ -197,11 +178,18 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
       ],
       rows: [
         StatTableRowData([
-          StatTableCellData(Text(
-            '${viewModel.selectedPlayerSeason.stats.year}',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
-          )),
+          StatTableCellData(
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(border: Border(right: BorderSide(color: Theme.of(context).dividerColor))),
+              child: Text(
+                '${viewModel.selectedPlayerSeason.stats.year}',
+                textAlign: TextAlign.center,
+                style:
+                    Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).customTheme().primaryTextColor),
+              ),
+            ),
+          ),
           StatTableCellData(Text(
             '${viewModel.selectedPlayerSeason.stats.gp}',
             textAlign: TextAlign.center,

@@ -91,7 +91,7 @@ class PlayerWebServiceImpl extends WebServiceBase implements PlayerWebService {
                   'https://scontent.fmnl15-1.fna.fbcdn.net/v/t1.0-9/29572450_155909611772140_4374353873624635998_n.jpg?_nc_cat=103&_nc_sid=7aed08&_nc_ohc=4Zm3_u4Wjz0AX-ezd6I&_nc_ht=scontent.fmnl15-1.fna&oh=fe75c463b645eb128018bd40385bf76e&oe=5E9045FC',
             },
             'player_num': '24',
-            'positions': ['G', 'F'],
+            'positions': ['C', 'F'],
           },
         },
       ),

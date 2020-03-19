@@ -24,8 +24,6 @@ class GameCard extends StatelessWidget {
 
   Widget _buildCard(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Padding(
         padding: const EdgeInsets.only(top: 24.0),
         child: Column(
