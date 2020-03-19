@@ -1,5 +1,7 @@
 # `one_bataan_league_pass`
 
+[![Build status](https://contextustech.visualstudio.com/1BLP-mobile-app/_apis/build/status/Development-CI)](https://contextustech.visualstudio.com/1BLP-mobile-app/_build/latest?definitionId=1)
+
 A ready-made blueprint project that serves as a starting point for building Flutter apps.
 
 ## Getting Started
