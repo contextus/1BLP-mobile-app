@@ -25,7 +25,7 @@ class PlayerProfileViewModel extends ViewModelBase {
       ..add(SingleDetailListItemModel('NATIONALITY', player.nationality))
       ..add(SingleDetailListItemModel('PROVINCE', player.province))
       ..add(SingleDetailListItemModel('CITY/MUNICIPALITY/TOWN', player.municipalityTown))
-      ..add(SingleDetailListItemModel('POSITION', player.playerTeam.formattedPositions))
+      ..add(SingleDetailListItemModel('POSITION', player.playerTeam.positions.join(' ')))
       ..add(SingleDetailListItemModel('NUMBER', player.playerTeam.playerNum));
 
     playerSeasons

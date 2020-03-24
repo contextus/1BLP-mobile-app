@@ -10,7 +10,7 @@ class MainTabViewModel extends ViewModelBase {
     this.standingsTabViewModel,
     this.playersTabViewModel,
     this.teamsTabViewModel,
-  ) : super(navigationService);
+  ) : super(navigationService: navigationService);
 
   final HomeTabViewModel homeTabViewModel;
   final GamesTabViewModel gamesTabViewModel;

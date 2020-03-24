@@ -181,7 +181,7 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
                                     TextSpan(text: ' | '),
                                     TextSpan(text: '#${currentLeaderTeam1.player.playerTeam.playerNum}'),
                                     TextSpan(text: ' | '),
-                                    TextSpan(text: currentLeaderTeam1.player.playerTeam.formattedPositions),
+                                    TextSpan(text: currentLeaderTeam1.player.playerTeam.positions.join(' ')),
                                   ],
                                   style: Theme.of(context).textTheme.caption,
                                 ),
@@ -246,7 +246,7 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
                                     TextSpan(text: ' | '),
                                     TextSpan(text: '#${currentLeaderTeam2.player.playerTeam.playerNum}'),
                                     TextSpan(text: ' | '),
-                                    TextSpan(text: currentLeaderTeam2.player.playerTeam.formattedPositions),
+                                    TextSpan(text: currentLeaderTeam2.player.playerTeam.positions.join(' ')),
                                   ],
                                   style: Theme.of(context).textTheme.caption.copyWith(),
                                 ),
@@ -488,7 +488,8 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
         return 'STEALS';
       case GameLeaderCategory.blocks:
         return 'BLOCKS';
+      default:
+        throw UnimplementedError('$category not handled');
     }
-    throw UnimplementedError('');
   }
 }

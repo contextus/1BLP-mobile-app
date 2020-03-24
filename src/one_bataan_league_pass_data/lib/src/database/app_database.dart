@@ -1,5 +1,6 @@
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:moor/moor.dart';
+import 'package:one_bataan_league_pass_data/database.dart';
 
 part 'app_database.g.dart';
 
@@ -7,7 +8,7 @@ part 'app_database.g.dart';
 
 @UseMoor(tables: [])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase(QueryExecutor queryExecutor) : super(queryExecutor);
+  AppDatabase(QueryExecutorProvider provider) : super(provider.queryExecutor);
 
   @override
   int get schemaVersion => 1;

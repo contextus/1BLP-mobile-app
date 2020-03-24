@@ -12,7 +12,7 @@ class ExtendedRow extends StatelessWidget {
     this.verticalDirection = VerticalDirection.down,
     this.textBaseline,
     this.children = const <Widget>[],
-    this.spacing = 0.0,
+    this.spacing = 4.0,
   })  : assert(spacing != null),
         assert(spacing >= 0),
         super(key: key);

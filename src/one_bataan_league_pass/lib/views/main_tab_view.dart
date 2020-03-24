@@ -48,15 +48,10 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
   }
 
   @override
-  void didPushNext() {
-    _navigatedFrom();
-  }
+  void didPushNext() => _navigatedFrom();
 
   @override
-  void didPush() {
-    super.didPush();
-    _navigateTo();
-  }
+  void didPush() => _navigateTo();
 
   @override
   Widget build(BuildContext context) {

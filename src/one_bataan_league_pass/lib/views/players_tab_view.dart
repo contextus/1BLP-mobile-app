@@ -129,6 +129,9 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
             );
           }).toList(),
         );
+
+      default:
+        return ErrorWidget('Unhandled filtering case: ${viewModel.selectedCriteriaIndex}');
     }
   }
 
@@ -200,7 +203,7 @@ class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTab
                 TextSpan(text: '    |    '),
                 TextSpan(text: '#${player.playerTeam.playerNum}'),
                 TextSpan(text: '    |    '),
-                TextSpan(text: player.playerTeam.formattedPositions),
+                TextSpan(text: player.playerTeam.positions.join(' ')),
               ],
               style: Theme.of(context).textTheme.caption,
             ),

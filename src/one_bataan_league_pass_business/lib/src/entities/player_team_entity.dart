@@ -7,19 +7,4 @@ class PlayerTeamEntity extends EntityBase {
   final TeamEntity team;
   final String playerNum;
   final List<String> positions;
-
-  // TODO: Move to UI
-  String get formattedPositions {
-    String formattedPositions = '';
-
-    for (var i = 0; i < positions.length; i++) {
-      formattedPositions = formattedPositions + positions[i];
-
-      if (i < positions.length - 1) {
-        formattedPositions = formattedPositions + '-';
-      }
-    }
-
-    return formattedPositions;
-  }
 }

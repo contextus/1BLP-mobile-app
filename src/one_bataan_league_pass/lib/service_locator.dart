@@ -13,16 +13,15 @@ import 'package:get_it/get_it.dart';
 class ServiceLocator {
   static final _i = GetIt.I;
 
-  T resolve<T>([String name]) {
+  static T resolve<T>([String name]) {
     if (name?.isNotEmpty ?? false == true)
       return _i.get(instanceName: name) as T;
     else
       return _i.get<T>();
   }
 
-  Future<void> registerDependencies() async {
-    _i.registerSingleton<ServiceLocator>(this);
-    await _registerData();
+  static void registerDependencies() async {
+    _registerData();
     _registerWebServices();
     _registerMappers();
     _registerManagers();
@@ -30,32 +29,29 @@ class ServiceLocator {
     _registerUi();
   }
 
-  void _registerWebServices() {
+  static void _registerWebServices() {
     _i
       ..registerFactory<HttpHandler>(() => HttpHandler())
       ..registerFactory<TeamWebService>(() => TeamWebServiceImpl(_i.get<HttpHandler>()))
       ..registerFactory<PlayerWebService>(() => PlayerWebServiceImpl(_i.get<HttpHandler>()));
   }
 
-  Future<void> _registerData() async {
-    final queryExecutorProvider = FlutterQueryExecutorProvider();
-    final queryExecutor = await queryExecutorProvider.createDatabase();
-    final appDatabase = AppDatabase(queryExecutor);
-
+  static void _registerData() async {
     _i
-      ..registerSingleton<AppDatabase>(appDatabase)
+      ..registerSingleton<QueryExecutorProvider>(FlutterQueryExecutorProvider())
+      ..registerSingleton<AppDatabase>(AppDatabase(_i.get<QueryExecutorProvider>()))
       ..registerLazySingleton<SecureStorageService>(() => SecureStorageService())
       ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
   }
 
-  void _registerMappers() {
+  static void _registerMappers() {
     _i
       ..registerLazySingleton<TeamMapper>(() => TeamMapper())
       ..registerLazySingleton<PlayerTeamMapper>(() => PlayerTeamMapper(_i.get<TeamMapper>()))
       ..registerLazySingleton<PlayerMapper>(() => PlayerMapper(_i.get<PlayerTeamMapper>()));
   }
 
-  void _registerManagers() {
+  static void _registerManagers() {
     _i
       ..registerLazySingleton<UserProfileManager>(() => UserProfileManager())
       ..registerLazySingleton<GameManager>(() => GameManager())
@@ -63,17 +59,18 @@ class ServiceLocator {
       ..registerLazySingleton<TeamManager>(() => TeamManager(_i.get<TeamWebService>(), _i.get<TeamMapper>()));
   }
 
-  void _registerUiServices() {
+  static void _registerUiServices() {
     _i
       ..registerLazySingleton<AnalyticsService>(() => AnalyticsService())
-      ..registerLazySingleton<NavigationService>(() => NavigationService(_i.get<ServiceLocator>()))
+      ..registerLazySingleton<NavigationService>(() => NavigationService())
       ..registerLazySingleton<DialogService>(() => DialogService())
       ..registerLazySingleton<SharingService>(() => SharingService());
   }
 
-  void _registerUi() {
+  static void _registerUi() {
     // Register view models
     _i
+      ..registerLazySingleton<AppViewModel>(() => AppViewModel(_i.get<AnalyticsService>(), _i.get<NavigationService>()))
       ..registerFactory<UserProfileViewModel>(() => UserProfileViewModel(_i.get<UserProfileManager>()))
       ..registerFactory<MainTabViewModel>(() => MainTabViewModel(
             _i.get<NavigationService>(),
@@ -102,6 +99,7 @@ class ServiceLocator {
 
     // Register views
     _i
+      ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
       ..registerFactory<Widget>(
         () => MainTabView(_i.get<MainTabViewModel>()),
         instanceName: ViewNames.mainTabView,
