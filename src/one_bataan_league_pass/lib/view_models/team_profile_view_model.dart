@@ -7,7 +7,8 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class TeamProfileViewModel extends ViewModelBase {
-  TeamProfileViewModel(NavigationService navigationService, this._playerManager) : super(navigationService);
+  TeamProfileViewModel(NavigationService navigationService, this._playerManager)
+      : super(navigationService: navigationService);
 
   final PlayerManager _playerManager;
 
@@ -27,18 +28,9 @@ class TeamProfileViewModel extends ViewModelBase {
     getPlayers = _onGetPlayers();
 
     teamProfileDetails
-      ..add(SingleDetailListItemModel(
-        'COACH',
-        team.coach,
-      ))
-      ..add(SingleDetailListItemModel(
-        'TEAM MANAGER',
-        team.manager,
-      ))
-      ..add(SingleDetailListItemModel(
-        'OWNER',
-        team.owner,
-      ));
+      ..add(SingleDetailListItemModel('COACH', team.coach))
+      ..add(SingleDetailListItemModel('TEAM MANAGER', team.manager))
+      ..add(SingleDetailListItemModel('OWNER', team.owner));
   }
 
   void onViewPlayerProfile(PlayerEntity player) {

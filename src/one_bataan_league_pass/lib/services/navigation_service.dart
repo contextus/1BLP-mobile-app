@@ -3,11 +3,10 @@ import 'package:one_bataan_league_pass/service_locator.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass/widgets/model_bound_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class NavigationService {
-  NavigationService(this._serviceLocator);
-
-  final ServiceLocator _serviceLocator;
+  NavigationService();
 
   void goToTab(String tabViewName, [Map<String, Object> parameters]) => _tabNavigator.navigateToTab(tabViewName);
 
@@ -36,9 +35,11 @@ class NavigationService {
 
   Future pushToNewRoot(String viewName, [Map<String, Object> parameters]) {
     return _navigator.pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) => _getViewAndInitParam(viewName, parameters),
-        settings: RouteSettings(name: '/$viewName'),
+      PageTransition<void>(
+        type: PageTransitionType.fade,
+        curve: Curves.easeOutSine,
+        duration: Duration(milliseconds: 150),
+        child: _getViewAndInitParam(viewName, parameters),
       ),
       (_) => false,
     );
@@ -67,7 +68,7 @@ class NavigationService {
   MainTabViewState get _tabNavigator => MainTabViewKeys.tabNavigator.currentState;
 
   Widget _getViewAndInitParam(String name, [Map<String, Object> parameters]) {
-    final view = _serviceLocator.resolve<Widget>(name);
+    final view = ServiceLocator.resolve<Widget>(name);
 
     if (view is ModelBoundWidget) view.viewModel.init(parameters);
 

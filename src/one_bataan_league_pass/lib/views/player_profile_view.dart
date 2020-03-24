@@ -21,10 +21,9 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
     _controller = ScrollController();
     _controller.addListener(() {
       final shouldShowTitle = _controller.offset >= 200;
-      if (shouldShowTitle != _showTitle)
-        setState(() {
-          _showTitle = shouldShowTitle;
-        });
+      if (shouldShowTitle != _showTitle) {
+        setState(() => _showTitle = shouldShowTitle);
+      }
     });
   }
 
@@ -147,15 +146,13 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
                   isExpanded: true,
                   isDense: true,
                   value: viewModel.selectedPlayerSeason,
-                  items: viewModel.playerSeasons.map(
-                    (s) {
-                      return DropdownMenuItem<PlayerSeasonModel>(
-                        key: Key(s.seasonName),
-                        child: Text(s.seasonName),
-                        value: s,
-                      );
-                    },
-                  ).toList(),
+                  items: viewModel.playerSeasons.map((s) {
+                    return DropdownMenuItem<PlayerSeasonModel>(
+                      key: Key(s.seasonName),
+                      child: Text(s.seasonName),
+                      value: s,
+                    );
+                  }).toList(),
                   onChanged: viewModel.onSelectedSeasonChanged,
                 ),
               ),

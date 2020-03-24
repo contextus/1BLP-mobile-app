@@ -3,7 +3,10 @@ import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class ViewModelBase extends ListenableModel {
-  ViewModelBase([this.navigationService, this.dialogService]);
+  ViewModelBase({this.analyticsService, this.navigationService, this.dialogService});
+
+  @protected
+  final AnalyticsService analyticsService;
 
   @protected
   final NavigationService navigationService;
@@ -14,14 +17,12 @@ abstract class ViewModelBase extends ListenableModel {
   Future<void> init([Map<String, Object> parameters]) => Future<void>.value();
 
   @mustCallSuper
-  void dispose() {
-    removeAllOnModelChanged();
-  }
+  void dispose() => removeAllOnModelChanged();
 }
 
 abstract class TabViewModelBase extends ViewModelBase {
   TabViewModelBase([NavigationService navigationService, DialogService dialogService])
-      : super(navigationService, dialogService);
+      : super(navigationService: navigationService, dialogService: dialogService);
 
   void onTabNavigatedTo() {}
 

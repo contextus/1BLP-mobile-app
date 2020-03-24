@@ -5,7 +5,6 @@ import 'app_color_theme.dart';
 
 extension CustomColorExtension on ThemeData {
   /// Gets the custom theme depending on [ThemeData.brightness].
-
   AppColorTheme customTheme() {
     switch (brightness) {
       case Brightness.light:

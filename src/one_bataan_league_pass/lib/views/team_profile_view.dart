@@ -114,7 +114,7 @@ class _TeamProfileViewState extends ModelBoundState<TeamProfileView, TeamProfile
             children: [
               TextSpan(text: '#${player.playerTeam.playerNum}'),
               TextSpan(text: ' | '),
-              TextSpan(text: player.playerTeam.formattedPositions),
+              TextSpan(text: player.playerTeam.positions.join(' ')),
             ],
             style: Theme.of(context).textTheme.caption,
           ),
