@@ -26,33 +26,52 @@
 			"ArgumentError.checkNotNull($param, '$param');",
 		]
 	},
-	"Create a ModelBoundWidget and ModelBoundState": {
-		"prefix": "mbw",
+	"Stateful View": {
+		"prefix": "stflv",
 		"body": [
-			"class $ViewName extends ModelBoundWidget<${ViewModelName}> {",
-			"  ${ViewName}(${ViewModelName} viewModel) : super(viewModel);",
+			"class $ViewName extends StatefulWidget {",
+			"  ${ViewName}({Key key}) : super(key: key);",
 			"",
 			"  @override",
 			"  _${ViewName}State createState() => _${ViewName}State();",
 			"}",
 			"",
-			"class _${ViewName}State extends ModelBoundState<${ViewName}, ${ViewModelName}> {",
+			"class _${ViewName}State extends ViewStateBase<${ViewName}, ${ViewModelName}> {",
 			"  @override",
-			"  Widget build(BuildContext context) {",
-			"    return ScopedModel<${ViewModelName}>(",
-			"      model: viewModel,",
-			"      child: ScopedModelDescendant<${ViewModelName}>(",
-			"        builder: (context, child, viewModel) {",
-			"          return Scaffold(",
-			"            appBar: AppBar(",
-			"              title: Text('${ViewName}'),",
-			"            ),",
-			"          );",
-			"        },",
+			"  Widget buildView(BuildContext context) {",
+			"    return Scaffold(",
+			"      appBar: AppBar(",
+			"        title: Text('${ViewName}'),",
 			"      ),",
 			"    );",
 			"  }",
 			"}"
 		]
+	},
+	"Stateless View": {
+		"prefix": "stlsv",
+		"body": [
+			"class ${ViewName} extends ViewBase<${ViewModelName}> {",
+			"  ${ViewName}({Key key}) : super(key: key);",
+			"",
+			"  @override",
+			"  Widget buildView(BuildContext context, ${ViewModelName} viewModel) {",
+			"    return Scaffold(",
+			"      appBar: AppBar(",
+			"        title: Text('${ViewName}'),",
+			"      ),",
+			"    );",
+			"  }",
+			"}"
+		]
+	},
+	"Concrete/abstract class": {
+		"prefix": "cac",
+		"body": [
+			"abstract class $className {}",
+			"",
+			"class ${className}Impl implements $className {}",
+		],
+		"description": "Creates an abstract class and a class to implement it"
 	}
 }

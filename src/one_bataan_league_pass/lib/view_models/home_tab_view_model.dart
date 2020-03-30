@@ -15,13 +15,15 @@ class HomeTabViewModel extends TabViewModelBase {
   }
 
   final GameManager _gameManager;
+
   final SharingService _sharingService;
 
   GameEntity game;
 
   Future<GameEntity> getLiveGame;
 
-  Future<void> shareLiveGame(GameEntity gameToShare) => _sharingService.share('Watch this game ${gameToShare.gameVideoUrl}');
+  Future<void> shareLiveGame(GameEntity gameToShare) =>
+      _sharingService.share('Watch this game ${gameToShare.gameVideoUrl}');
 
   void refetchLiveGame() {
     getLiveGame = _onGetLiveGame();

@@ -1,3 +1,4 @@
+/// Application-wide constant values.
 library constants;
 
 export 'src/constants/app_center_constants.dart';

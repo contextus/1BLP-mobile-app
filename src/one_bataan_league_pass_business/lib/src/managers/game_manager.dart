@@ -30,7 +30,6 @@ class GameManager {
   Future<List<GameEntity>> getGames(DateTime selectedDate) async {
     final mockGames = [
       GameEntity(
-        
         gameDate: DateTime.now().subtract(Duration(days: 1)),
         gameLocation: 'Mariveles, Bataan',
         gameSeries: 'Playoffs Quarter Finals',

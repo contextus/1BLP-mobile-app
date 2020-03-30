@@ -1,70 +1,58 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
-class TeamsTabView extends ModelBoundTabWidget<TeamsTabViewModel> {
-  TeamsTabView(TeamsTabViewModel viewModel)
-      : super(viewModel, const TabData('Teams', Icons.group, ViewNames.teamsTabView));
+class TeamsTabView extends TabView {
+  TeamsTabView() : super(const TabData('Teams', Icons.group, ViewNames.teamsTabView));
 
   @override
   _TeamsTabViewState createState() => _TeamsTabViewState();
 }
 
-class _TeamsTabViewState extends ModelBoundTabState<TeamsTabView, TeamsTabViewModel> {
+class _TeamsTabViewState extends TabViewStateBase<TeamsTabView, TeamsTabViewModel> {
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-
-    return ScopedModel<TeamsTabViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<TeamsTabViewModel>(
-        builder: (context, child, viewModel) {
-          return ExtendedColumn(
-            spacing: 12,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Theme.of(context).canvasColor,
-                    hintText: 'Search teams',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
-                    enabledBorder:
-                        OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
-                  ),
+  Widget buildView(BuildContext context) {
+    return ExtendedColumn(
+      spacing: 12,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          child: TextField(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Theme.of(context).canvasColor,
+              hintText: 'Search teams',
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+            ),
+          ),
+        ),
+        FutureBuilder<List<TeamEntity>>(
+          future: viewModel.getTeams,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _buildTeamLoadingCard();
+            } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+              return Expanded(
+                child: Center(
+                  child: Text('Could not retrieve teams'),
                 ),
-              ),
-              FutureBuilder<List<TeamEntity>>(
-                future: viewModel.getTeams,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return _buildTeamLoadingCard();
-                  } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-                    return Expanded(
-                      child: Center(
-                        child: Text('Could not retrieve teams'),
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
-                    return Expanded(
-                      child: _buildTeamsListView(snapshot.data),
-                    );
-                  }
+              );
+            } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+              return Expanded(
+                child: _buildTeamsListView(snapshot.data),
+              );
+            }
 
-                  return ErrorWidget('Unhandled $snapshot state');
-                },
-              )
-            ],
-          );
-        },
-      ),
+            return ErrorWidget('Unhandled $snapshot state');
+          },
+        )
+      ],
     );
   }
 

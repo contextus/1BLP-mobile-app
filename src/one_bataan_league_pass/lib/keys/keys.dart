@@ -3,8 +3,8 @@ import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:flutter/material.dart';
 
 class AppViewKeys {
-  static final view = Key(AppViewKeyValues.view);
-  static final splashWidget = Key(AppViewKeyValues.splashWidget);
+  static const view = Key(AppViewKeyValues.view);
+  static const splashWidget = Key(AppViewKeyValues.splashWidget);
   static final navigator = GlobalKey<NavigatorState>();
 }
 

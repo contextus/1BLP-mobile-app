@@ -4,6 +4,7 @@ import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_business/mappers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
 import 'package:one_bataan_league_pass_web_service/web_services.dart';
@@ -100,29 +101,14 @@ class ServiceLocator {
     // Register views
     _i
       ..registerLazySingleton<AppView>(() => AppView(_i.get<AppViewModel>()))
-      ..registerFactory<Widget>(
-        () => MainTabView(_i.get<MainTabViewModel>()),
-        instanceName: ViewNames.mainTabView,
-      )
-      ..registerFactory<UserProfileView>(
-        () => UserProfileView(_i.get<UserProfileViewModel>()),
-        instanceName: ViewNames.userProfileView,
-      )
-      ..registerFactory<WatchReplayView>(
-        () => WatchReplayView(_i.get<WatchReplayViewModel>()),
-        instanceName: ViewNames.watchReplayView,
-      )
-      ..registerFactory<PlayerProfileView>(
-        () => PlayerProfileView(_i.get<PlayerProfileViewModel>()),
-        instanceName: ViewNames.playerProfileView,
-      )
+      ..registerFactory<Widget>(() => MainTabView(), instanceName: ViewNames.mainTabView)
+      ..registerFactory<UserProfileView>(() => UserProfileView(), instanceName: ViewNames.userProfileView)
+      ..registerFactory<WatchReplayView>(() => WatchReplayView(), instanceName: ViewNames.watchReplayView)
+      ..registerFactory<PlayerProfileView>(() => PlayerProfileView(), instanceName: ViewNames.playerProfileView)
       ..registerFactory<TeamProfileView>(
-        () => TeamProfileView(_i.get<TeamProfileViewModel>()),
+        () => TeamProfileView(),
         instanceName: ViewNames.teamProfileView,
       )
-      ..registerFactory<GameRecapView>(
-        () => GameRecapView(_i.get<GameRecapViewModel>()),
-        instanceName: ViewNames.gameRecapView,
-      );
+      ..registerFactory<GameRecapView>(() => GameRecapView(), instanceName: ViewNames.gameRecapView);
   }
 }
