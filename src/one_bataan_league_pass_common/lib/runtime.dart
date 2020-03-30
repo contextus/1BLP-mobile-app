@@ -1,3 +1,4 @@
+/// Provides runtime configurations and contracts.
 library runtime;
 
 export 'src/runtime/app_configuration.dart';

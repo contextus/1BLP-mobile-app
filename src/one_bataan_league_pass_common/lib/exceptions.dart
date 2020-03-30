@@ -1,3 +1,4 @@
+/// Application-specific custom exceptions.
 library exceptions;
 
 export 'src/exceptions/api_exception.dart';

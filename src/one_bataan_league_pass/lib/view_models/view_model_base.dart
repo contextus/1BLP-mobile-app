@@ -1,5 +1,6 @@
 import 'package:one_bataan_league_pass/models/listenable_model.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
+import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class ViewModelBase extends ListenableModel {

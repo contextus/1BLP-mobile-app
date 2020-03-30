@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:logging/logging.dart';
-import '../runtime/json_serializable.dart';
+import 'package:one_bataan_league_pass_common/src/runtime/json_serializable.dart';
 
 final _jsonEncoder = JsonEncoder.withIndent(' ');
 final _name = '1BATAAN-LEAGUE-PASS';

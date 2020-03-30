@@ -1,6 +1,7 @@
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_common/logging.dart';
 
 class AppViewModel extends ViewModelBase {
   AppViewModel(AnalyticsService analyticsService, NavigationService navigationService)

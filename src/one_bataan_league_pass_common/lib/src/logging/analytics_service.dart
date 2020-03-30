@@ -1,6 +1,6 @@
-import 'package:one_bataan_league_pass_common/constants.dart';
-import 'package:one_bataan_league_pass_common/runtime.dart';
 import 'package:flutter_appcenter_bundle/flutter_appcenter_bundle.dart';
+import 'package:one_bataan_league_pass_common/src/constants/app_center_constants.dart';
+import 'package:one_bataan_league_pass_common/src/runtime/app_configuration.dart';
 
 class AnalyticsService {
   Future<void> start() {

@@ -4,6 +4,7 @@ import 'package:one_bataan_league_pass/views/views.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_business/mappers.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
+import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:one_bataan_league_pass_data/cache.dart';
 import 'package:one_bataan_league_pass_data/database.dart';
 import 'package:one_bataan_league_pass_web_service/web_services.dart';
