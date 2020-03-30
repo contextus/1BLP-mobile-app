@@ -1,70 +1,58 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
-class PlayersTabView extends ModelBoundTabWidget<PlayersTabViewModel> {
-  PlayersTabView(PlayersTabViewModel viewModel)
-      : super(viewModel, const TabData('Players', Icons.person, ViewNames.playersTabView));
+class PlayersTabView extends TabView {
+  PlayersTabView() : super(const TabData('Players', Icons.person, ViewNames.playersTabView));
 
   @override
   _PlayersTabViewState createState() => _PlayersTabViewState();
 }
 
-class _PlayersTabViewState extends ModelBoundTabState<PlayersTabView, PlayersTabViewModel> {
+class _PlayersTabViewState extends TabViewStateBase<PlayersTabView, PlayersTabViewModel> {
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-
-    return ScopedModel<PlayersTabViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<PlayersTabViewModel>(
-        builder: (context, child, viewModel) {
-          return ExtendedColumn(
-            spacing: 12,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-                child: TextField(
-                  onChanged: viewModel.onSearchKeywordChanged,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Theme.of(context).canvasColor,
-                    hintText: 'Search player',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
-                    enabledBorder:
-                        OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  color: Theme.of(context).canvasColor,
-                  child: ToggleButtons(
-                    children: viewModel.searchCriterias.map((c) {
-                      return SizedBox(
-                        width: (MediaQuery.of(context).size.width - 36) / 3, // Hack to fill width
-                        child: Text(c, textAlign: TextAlign.center),
-                      );
-                    }).toList(),
-                    isSelected: viewModel.searchCriterias
-                        .map((c) => viewModel.selectedCriteriaIndex == viewModel.searchCriterias.indexOf(c))
-                        .toList(),
-                    onPressed: viewModel.onSelectedSearchCriteriaChanged,
-                  ),
-                ),
-              ),
-              _buildFutureBuilder(),
-            ],
-          );
-        },
-      ),
+  Widget buildView(BuildContext context) {
+    return ExtendedColumn(
+      spacing: 12,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+          child: TextField(
+            onChanged: viewModel.onSearchKeywordChanged,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Theme.of(context).canvasColor,
+              hintText: 'Search player',
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: BorderSide.none),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            color: Theme.of(context).canvasColor,
+            child: ToggleButtons(
+              children: viewModel.searchCriterias.map((c) {
+                return SizedBox(
+                  width: (MediaQuery.of(context).size.width - 36) / 3, // Hack to fill width
+                  child: Text(c, textAlign: TextAlign.center),
+                );
+              }).toList(),
+              isSelected: viewModel.searchCriterias
+                  .map((c) => viewModel.selectedCriteriaIndex == viewModel.searchCriterias.indexOf(c))
+                  .toList(),
+              onPressed: viewModel.onSelectedSearchCriteriaChanged,
+            ),
+          ),
+        ),
+        _buildFutureBuilder(),
+      ],
     );
   }
 

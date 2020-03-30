@@ -1,47 +1,36 @@
-import 'package:flutter/material.dart';
-
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 
-class UserProfileView extends ModelBoundWidget<UserProfileViewModel> {
-  UserProfileView(UserProfileViewModel viewModel) : super(viewModel);
-
+class UserProfileView extends StatefulWidget {
   @override
   _UserProfileViewState createState() => _UserProfileViewState();
 }
 
-class _UserProfileViewState extends ModelBoundState<UserProfileView, UserProfileViewModel> {
+class _UserProfileViewState extends ViewStateBase<UserProfileView, UserProfileViewModel> {
   @override
-  Widget build(BuildContext context) {
-    return ScopedModel<UserProfileViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<UserProfileViewModel>(
-        builder: (context, child, viewModel) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('User Profile'),
-              actions: viewModel.userProfile != null ? [IconButton(icon: Icon(Icons.edit), onPressed: () {})] : [],
-            ),
-            body: FutureBuilder<UserProfileEntity>(
-              future: viewModel.getUserProfile,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _buildUserProfileLoadingWidget();
-                } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-                  return Expanded(
-                    child: Center(
-                      child: Text('Could not retrieve use profile'),
-                    ),
-                  );
-                } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
-                  return _buildUserProfileWidget();
-                }
+  Widget buildView(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('User Profile'),
+        actions: viewModel.userProfile != null ? [IconButton(icon: Icon(Icons.edit), onPressed: () {})] : [],
+      ),
+      body: FutureBuilder<UserProfileEntity>(
+        future: viewModel.getUserProfile,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _buildUserProfileLoadingWidget();
+          } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+            return Expanded(
+              child: Center(
+                child: Text('Could not retrieve use profile'),
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+            return _buildUserProfileWidget();
+          }
 
-                return ErrorWidget('Unhandled $snapshot state');
-              },
-            ),
-          );
+          return ErrorWidget('Unhandled $snapshot state');
         },
       ),
     );

@@ -1,25 +1,21 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/models/models.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:video_player/video_player.dart';
 
-class GameRecapView extends ModelBoundWidget<GameRecapViewModel> {
-  GameRecapView(GameRecapViewModel viewModel) : super(viewModel);
-
+class GameRecapView extends StatefulWidget {
   @override
   _GameRecapViewState createState() => _GameRecapViewState();
 }
 
-class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewModel> {
+class _GameRecapViewState extends ViewStateBase<GameRecapView, GameRecapViewModel> {
   VideoPlayerController _controller;
   ChewieController _chewieController;
 
   @override
-  void initState() {
-    super.initState();
+  void didInitViewModel() {
     _controller =
         VideoPlayerController.asset('assets/1bl_video.mp4'); // TODO: Change to [viewModel.gameToWatch.gameVideoUrl].
     _chewieController = ChewieController(
@@ -38,42 +34,35 @@ class _GameRecapViewState extends ModelBoundState<GameRecapView, GameRecapViewMo
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ScopedModel<GameRecapViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<GameRecapViewModel>(
-        builder: (context, child, viewModel) {
-          return Hero(
-            tag: viewModel.game.id,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text('Game Recap'),
+  Widget buildView(BuildContext context) {
+    return Hero(
+      tag: viewModel.game.id,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Game Recap'),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: ExtendedColumn(
+            spacing: 8.0,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Chewie(controller: _chewieController),
+                  ),
+                  GameCard(viewModel.game),
+                  _buildTeamsStat(),
+                ],
               ),
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: ExtendedColumn(
-                  spacing: 8.0,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Chewie(controller: _chewieController),
-                        ),
-                        GameCard(viewModel.game),
-                        _buildTeamsStat(),
-                      ],
-                    ),
-                    _buildGameSummary(),
-                    _buildGameLeaderBoard(),
-                    _buildTeamComparison(),
-                    _buildGameInfo(),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+              _buildGameSummary(),
+              _buildGameLeaderBoard(),
+              _buildTeamComparison(),
+              _buildGameInfo(),
+            ],
+          ),
+        ),
       ),
     );
   }

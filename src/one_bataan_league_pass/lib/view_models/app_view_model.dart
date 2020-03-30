@@ -11,6 +11,6 @@ class AppViewModel extends ViewModelBase {
   Future<void> init([Map<String, Object> parameters]) async {
     await Future.delayed(Duration(seconds: 1));
     await analyticsService.start();
-    await navigationService.pushToNewRoot(ViewNames.mainTabView);
+    navigationService.pushToNewRoot(ViewNames.mainTabView);
   }
 }

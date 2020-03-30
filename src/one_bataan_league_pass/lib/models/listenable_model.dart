@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:scoped_model/scoped_model.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 typedef ModelChangedCallback = void Function(String name);
 
-abstract class ListenableModel extends Model {
+abstract class ListenableModel extends ChangeNotifier {
   final _callbacks = Set<ModelChangedCallback>();
   int _microtaskVersion = 0;
   int _version = 0;
@@ -34,4 +33,11 @@ abstract class ListenableModel extends Model {
 
   @protected
   void onModelChanged([String propertyName]) {}
+
+  @mustCallSuper
+  @override
+  void dispose() {
+    removeAllOnModelChanged();
+    super.dispose();
+  }
 }

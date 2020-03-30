@@ -1,5 +1,7 @@
 import 'package:one_bataan_league_pass/keys/keys.dart';
 import 'package:flutter/material.dart';
+import 'package:one_bataan_league_pass/service_locator.dart';
+import 'package:one_bataan_league_pass/widgets/views.dart';
 
 class DialogService {
   Future<void> alert(String message, {String title, String ok = 'Ok'}) {
@@ -41,6 +43,18 @@ class DialogService {
       },
     );
   }
+
+  Future<Map<String, Object>> showCustomDialog(String dialogName, [Map<String, Object> parameters]) {
+    return showDialog(
+      context: _context,
+      builder: (context) => DialogRoute(
+        child: ServiceLocator.resolve<Widget>(dialogName),
+        settings: RouteSettings(name: dialogName, arguments: parameters),
+      ),
+    );
+  }
+
+  void pop([Map<String, Object> result]) => Navigator.of(_context).pop(result);
 
   BuildContext get _context => AppViewKeys.navigator.currentState.overlay.context;
 }

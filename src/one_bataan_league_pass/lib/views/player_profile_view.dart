@@ -1,23 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/models/models.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
 
-class PlayerProfileView extends ModelBoundWidget<PlayerProfileViewModel> {
-  PlayerProfileView(PlayerProfileViewModel viewModel) : super(viewModel);
-
+class PlayerProfileView extends StatefulWidget {
   @override
   _PlayerProfileViewState createState() => _PlayerProfileViewState();
 }
 
-class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerProfileViewModel> {
+class _PlayerProfileViewState extends ViewStateBase<PlayerProfileView, PlayerProfileViewModel> {
   ScrollController _controller;
   bool _showTitle = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didInitViewModel() {
     _controller = ScrollController();
     _controller.addListener(() {
       final shouldShowTitle = _controller.offset >= 200;
@@ -34,32 +30,25 @@ class _PlayerProfileViewState extends ModelBoundState<PlayerProfileView, PlayerP
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ScopedModel<PlayerProfileViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<PlayerProfileViewModel>(
-        builder: (context, child, viewModel) {
-          return Hero(
-            tag: viewModel.player.id,
-            child: Scaffold(
-              body: NestedScrollView(
-                controller: _controller,
-                headerSliverBuilder: (context, innerBoxScrolled) => _buildHeaderSliver(),
-                body: SingleChildScrollView(
-                  child: ExtendedColumn(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    spacing: 8.0,
-                    children: <Widget>[
-                      SingleDetailList(items: viewModel.playerProfileDetails),
-                      _buildPlayerSeasonStatPicker(),
-                      _buildPlayerStatTable(),
-                    ],
-                  ),
-                ),
-              ),
+  Widget buildView(BuildContext context) {
+    return Hero(
+      tag: viewModel.player.id,
+      child: Scaffold(
+        body: NestedScrollView(
+          controller: _controller,
+          headerSliverBuilder: (context, innerBoxScrolled) => _buildHeaderSliver(),
+          body: SingleChildScrollView(
+            child: ExtendedColumn(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 8.0,
+              children: <Widget>[
+                SingleDetailList(items: viewModel.playerProfileDetails),
+                _buildPlayerSeasonStatPicker(),
+                _buildPlayerStatTable(),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

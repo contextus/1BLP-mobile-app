@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:one_bataan_league_pass/keys/keys.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
@@ -10,26 +9,25 @@ import 'package:one_bataan_league_pass/widgets/widgets.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
-class MainTabView extends ModelBoundWidget<MainTabViewModel> {
-  MainTabView(MainTabViewModel viewModel) : super(viewModel, key: MainTabViewKeys.tabNavigator);
+class MainTabView extends StatefulWidget {
+  MainTabView() : super(key: MainTabViewKeys.tabNavigator);
 
   @override
   MainTabViewState createState() => MainTabViewState();
 }
 
-class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> with RouteAware {
+class MainTabViewState extends ViewStateBase<MainTabView, MainTabViewModel> with RouteAware {
   PageController _controller;
-  List<ModelBoundTabWidget> _tabs;
+  List<TabView> _tabs;
 
   @override
-  void initState() {
-    super.initState();
+  void didInitViewModel() {
     _tabs = [
-      HomeTabView(viewModel.homeTabViewModel),
-      GamesTabView(viewModel.gamesTabViewModel),
-      StandingsTabView(viewModel.standingsTabViewModel),
-      PlayersTabView(viewModel.playersTabViewModel),
-      TeamsTabView(viewModel.teamsTabViewModel),
+      HomeTabView(),
+      GamesTabView(),
+      StandingsTabView(),
+      PlayersTabView(),
+      TeamsTabView(),
     ];
     _controller = PageController(initialPage: viewModel.currentTabIndex);
   }
@@ -54,39 +52,32 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
   void didPush() => _navigateTo();
 
   @override
-  Widget build(BuildContext context) {
-    return ScopedModel<MainTabViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<MainTabViewModel>(
-        builder: (context, child, viewModel) {
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: OneBataanSportsText(),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.account_circle),
-                  onPressed: viewModel.onViewUserProfile,
-                  tooltip: 'View your profile',
-                ),
-              ],
+  Widget buildView(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: OneBataanSportsText(),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: viewModel.onViewUserProfile,
+            tooltip: 'View your profile',
+          ),
+        ],
+      ),
+      body: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 56),
+            child: PageView.builder(
+              controller: _controller,
+              itemBuilder: (context, index) => _tabs.elementAt(index),
+              onPageChanged: _onNavigateToTab,
+              itemCount: _tabs.length,
             ),
-            body: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 56),
-                  child: PageView.builder(
-                    controller: _controller,
-                    itemBuilder: (context, index) => _tabs.elementAt(index),
-                    onPageChanged: _onNavigateToTab,
-                    itemCount: _tabs.length,
-                  ),
-                ),
-                Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar()),
-              ],
-            ),
-          );
-        },
+          ),
+          Align(alignment: Alignment.bottomCenter, child: _buildBottomNavigationBar()),
+        ],
       ),
     );
   }
@@ -120,7 +111,7 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
     );
   }
 
-  GButton _buildBottomNavigationBarButton(ModelBoundTabWidget tab) {
+  GButton _buildBottomNavigationBarButton(TabView tab) {
     final customTheme = Theme.of(context).customTheme();
 
     return GButton(
@@ -138,18 +129,18 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
   }
 
   void _navigatedFrom() {
-    GlobalKey<ModelBoundTabState> currenTabKey = _tabs[viewModel.currentTabIndex].key;
-    currenTabKey.currentState.onTabNavigatedFrom();
+    GlobalKey<TabViewStateBase> currenTabKey = _tabs?.elementAt(viewModel.currentTabIndex)?.key;
+    currenTabKey?.currentState?.onTabNavigatedFrom();
   }
 
   void _navigateTo() {
-    GlobalKey<ModelBoundTabState> currenTabKey = _tabs[viewModel.currentTabIndex].key;
-    currenTabKey.currentState?.onTabNavigatedTo();
+    GlobalKey<TabViewStateBase> currenTabKey = _tabs?.elementAt(viewModel.currentTabIndex)?.key;
+    currenTabKey?.currentState?.onTabNavigatedTo();
   }
 
   void _onNavigateToTab(int tabIndex, [Map<String, Object> parameters]) {
     if (viewModel.currentTabIndex != tabIndex) {
-      GlobalKey<ModelBoundTabState> currentTabKey = _tabs[viewModel.currentTabIndex].key;
+      GlobalKey<TabViewStateBase> currentTabKey = _tabs[viewModel.currentTabIndex].key;
       currentTabKey.currentState.onTabNavigatedFrom();
 
       setState(() => viewModel.currentTabIndex = tabIndex);
@@ -159,8 +150,8 @@ class MainTabViewState extends ModelBoundState<MainTabView, MainTabViewModel> wi
       // When navigating to tab for the first time, this ensures that
       // the tab's state is created before interacting with it
       Future.delayed(Duration(milliseconds: 100)).then((_) {
-        GlobalKey<ModelBoundTabState> nextTabKey = _tabs[viewModel.currentTabIndex].key;
-        nextTabKey.currentState.onTabNavigatedTo();
+        GlobalKey<TabViewStateBase> nextTabKey = _tabs[viewModel.currentTabIndex].key;
+        nextTabKey.currentState.onTabNavigatedTo(parameters);
       });
 
       debugInfo('Switched to tab: ${_tabs[tabIndex].tabData.tabButtonText}');

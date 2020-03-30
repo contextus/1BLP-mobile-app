@@ -1,5 +1,4 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
@@ -7,14 +6,14 @@ import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:video_player/video_player.dart';
 
-class HomeTabView extends ModelBoundTabWidget<HomeTabViewModel> {
-  HomeTabView(HomeTabViewModel viewModel) : super(viewModel, const TabData('Home', Icons.home, ViewNames.homeTabView));
+class HomeTabView extends TabView {
+  HomeTabView() : super(const TabData('Home', Icons.home, ViewNames.homeTabView));
 
   @override
   _HomeTabViewState createState() => _HomeTabViewState();
 }
 
-class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel> {
+class _HomeTabViewState extends TabViewStateBase<HomeTabView, HomeTabViewModel> {
   ChewieController _chewieController;
   VideoPlayerController _videoPlayerController;
 
@@ -32,33 +31,24 @@ class _HomeTabViewState extends ModelBoundTabState<HomeTabView, HomeTabViewModel
   }
 
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-
-    return ScopedModel<HomeTabViewModel>(
-      model: viewModel,
-      child: ScopedModelDescendant<HomeTabViewModel>(
-        builder: (context, child, viewModel) {
-          return FutureBuilder<GameEntity>(
-            future: viewModel.getLiveGame,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return _buildLoadingBody();
-              } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
-                return _buildBody(snapshot.data);
-              } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
-                return Expanded(
-                  child: Center(
-                    child: Text('Could not retrieve the current live game.'),
-                  ),
-                );
-              }
-
-              return ErrorWidget('Unhandled $snapshot state');
-            },
+  Widget buildView(BuildContext context) {
+    return FutureBuilder<GameEntity>(
+      future: viewModel.getLiveGame,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildLoadingBody();
+        } else if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+          return _buildBody(snapshot.data);
+        } else if (snapshot.connectionState == ConnectionState.done && snapshot.hasError) {
+          return Expanded(
+            child: Center(
+              child: Text('Could not retrieve the current live game.'),
+            ),
           );
-        },
-      ),
+        }
+
+        return ErrorWidget('Unhandled $snapshot state');
+      },
     );
   }
 
