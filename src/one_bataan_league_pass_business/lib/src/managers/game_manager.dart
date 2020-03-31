@@ -2,9 +2,16 @@ import 'package:one_bataan_league_pass_business/src/entities/game_entity.dart';
 import 'package:one_bataan_league_pass_business/src/entities/team_entity.dart';
 import 'package:one_bataan_league_pass_common/utils.dart';
 
-class GameManager {
+abstract class GameManager {
+  Future<GameEntity> getLiveGame();
+
+  Future<List<GameEntity>> getGames(DateTime selectedDate);
+}
+
+class GameManagerImpl implements GameManager {
+  @override
   Future<GameEntity> getLiveGame() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     return GameEntity(
       gameSeries: 'Playoffs Quarter Finals',
@@ -27,6 +34,7 @@ class GameManager {
     );
   }
 
+  @override
   Future<List<GameEntity>> getGames(DateTime selectedDate) async {
     final mockGames = [
       GameEntity(
@@ -222,7 +230,7 @@ class GameManager {
       )
     ];
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     return mockGames.where((g) => g.gameDate.isOnTheSameDay(selectedDate)).toList();
   }

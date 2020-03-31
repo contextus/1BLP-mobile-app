@@ -9,7 +9,7 @@ class AppViewModel extends ViewModelBase {
 
   @override
   Future<void> init([Map<String, Object> parameters]) async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
     await analyticsService.start();
     navigationService.pushToNewRoot(ViewNames.mainTabView);
   }

@@ -60,7 +60,7 @@ class _GamesTabViewState extends TabViewStateBase<GamesTabView, GamesTabViewMode
               );
             },
             addSwipeGesture: true,
-            monthNameWidget: (month) {
+            monthNameWidget: (String month) {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Row(

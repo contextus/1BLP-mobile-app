@@ -1,8 +1,15 @@
 import 'package:flutter_appcenter_bundle/flutter_appcenter_bundle.dart';
 import 'package:one_bataan_league_pass_common/src/constants/app_center_constants.dart';
-import 'package:one_bataan_league_pass_common/src/runtime/app_configuration.dart';
+import 'package:one_bataan_league_pass_common/src/app_configuration.dart';
 
-class AnalyticsService {
+abstract class AnalyticsService {
+  Future<void> start();
+
+  Future<void> trackEvent(String eventName, [Map<String, String> properties]);
+}
+
+class AppCenterAnalytics implements AnalyticsService {
+  @override
   Future<void> start() {
     return _runIfAnalyticsEnabled(
       () => AppCenter.startAsync(
@@ -12,6 +19,7 @@ class AnalyticsService {
     );
   }
 
+  @override
   Future<void> trackEvent(String eventName, [Map<String, String> properties]) {
     return _runIfAnalyticsEnabled(() => AppCenter.trackEventAsync(eventName, properties));
   }

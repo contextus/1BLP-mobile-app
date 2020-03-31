@@ -1,8 +1,13 @@
 import 'package:one_bataan_league_pass_business/src/entities/user_profile_entity.dart';
 
-class UserProfileManager {
+abstract class UserProfileManager {
+  Future<UserProfileEntity> getUserProfile();
+}
+
+class UserProfileManagerImpl implements UserProfileManager {
+  @override
   Future<UserProfileEntity> getUserProfile() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     return UserProfileEntity(
       name: 'Juan Dela Cruz',

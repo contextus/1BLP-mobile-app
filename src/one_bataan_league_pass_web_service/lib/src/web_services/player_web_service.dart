@@ -11,8 +11,9 @@ abstract class PlayerWebService {
 class PlayerWebServiceImpl extends WebServiceBase implements PlayerWebService {
   PlayerWebServiceImpl(HttpHandler httpHandler) : super(httpHandler);
 
+  @override
   Future<List<PlayerDataContract>> getPlayers() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     return [
       PlayerDataContract.fromJson(

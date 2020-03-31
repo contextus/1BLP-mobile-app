@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:one_bataan_league_pass/service_locator.dart';
 import 'package:one_bataan_league_pass/widgets/views.dart';
 
-class DialogService {
+abstract class DialogService {
+  Future<void> alert(String message, {String title, String ok = 'Ok'});
+
+  Future<bool> confirm(String message, {String title, String ok = 'Ok', String cancel = 'Cancel'});
+
+  Future<Map<String, Object>> showCustomDialog(String dialogName, [Map<String, Object> parameters]);
+
+  void pop([Map<String, Object> result]);
+}
+
+class DialogServiceImpl implements DialogService {
+  @override
   Future<void> alert(String message, {String title, String ok = 'Ok'}) {
     return showDialog(
       context: _context,
@@ -22,6 +33,7 @@ class DialogService {
     );
   }
 
+  @override
   Future<bool> confirm(String message, {String title, String ok = 'Ok', String cancel = 'Cancel'}) {
     return showDialog<bool>(
       context: _context,
@@ -44,6 +56,7 @@ class DialogService {
     );
   }
 
+  @override
   Future<Map<String, Object>> showCustomDialog(String dialogName, [Map<String, Object> parameters]) {
     return showDialog(
       context: _context,
@@ -54,7 +67,8 @@ class DialogService {
     );
   }
 
+  @override
   void pop([Map<String, Object> result]) => Navigator.of(_context).pop(result);
 
-  BuildContext get _context => AppViewKeys.navigator.currentState.overlay.context;
+  static BuildContext get _context => AppViewKeys.navigator.currentState.overlay.context;
 }

@@ -149,7 +149,7 @@ class MainTabViewState extends ViewStateBase<MainTabView, MainTabViewModel> with
 
       // When navigating to tab for the first time, this ensures that
       // the tab's state is created before interacting with it
-      Future.delayed(Duration(milliseconds: 100)).then((_) {
+      Future<void>.delayed(Duration(milliseconds: 100)).then((_) {
         GlobalKey<TabViewStateBase> nextTabKey = _tabs[viewModel.currentTabIndex].key;
         nextTabKey.currentState.onTabNavigatedTo(parameters);
       });

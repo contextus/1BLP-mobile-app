@@ -3,8 +3,10 @@ import 'package:one_bataan_league_pass_business/src/mappers/mapper_base.dart';
 import 'package:one_bataan_league_pass_business/src/mappers/player_team_mapper.dart';
 import 'package:one_bataan_league_pass_web_service/data_contracts.dart';
 
-class PlayerMapper implements EntityMapper<PlayerEntity, PlayerDataContract> {
-  PlayerMapper(this._playerTeamMapper);
+abstract class PlayerMapper implements EntityMapper<PlayerEntity, PlayerDataContract> {}
+
+class PlayerMapperImpl implements PlayerMapper {
+  PlayerMapperImpl(this._playerTeamMapper);
 
   final PlayerTeamMapper _playerTeamMapper;
 

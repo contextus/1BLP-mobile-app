@@ -1,4 +1,4 @@
-import 'package:one_bataan_league_pass_common/runtime.dart';
+import 'package:one_bataan_league_pass_common/common.dart';
 
 abstract class DataContractBase {}
 
