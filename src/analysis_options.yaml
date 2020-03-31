@@ -1,0 +1,7 @@
+analyzer:
+  strong-mode:
+    implicit-dynamic: false
+    
+linter:
+  rules:
+    - annotate_overrides

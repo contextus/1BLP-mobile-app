@@ -2,16 +2,27 @@ import 'dart:async';
 
 import 'package:one_bataan_league_pass_common/exceptions.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
-import 'package:one_bataan_league_pass_common/runtime.dart';
+import 'package:one_bataan_league_pass_common/common.dart';
 import 'package:one_bataan_league_pass_web_service/src/web_services/extensions/web_service_extensions.dart';
 import 'package:one_bataan_league_pass_web_service/src/web_services/http_method.dart';
 
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
-class HttpHandler {
+abstract class HttpHandler {
+  Future<Response> send(
+    String endpoint,
+    HttpMethod httpMethod, [
+    Map<String, String> headers,
+    dynamic body,
+  ]);
+
+  Client buildClient();
+}
+
+class HttpHandlerImpl implements HttpHandler {
   static const _timeOutDuration = Duration(seconds: 30);
 
+  @override
   Future<Response> send(
     String endpoint,
     HttpMethod httpMethod, [
@@ -65,5 +76,6 @@ class HttpHandler {
 
   @protected
   @visibleForTesting
+  @override
   Client buildClient() => Client();
 }

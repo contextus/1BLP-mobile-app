@@ -17,6 +17,7 @@ abstract class ListenableModel extends ChangeNotifier {
 
   @protected
   @mustCallSuper
+  @override
   void notifyListeners([String propertyName]) {
     super.notifyListeners();
 

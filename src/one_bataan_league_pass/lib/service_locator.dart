@@ -11,12 +11,13 @@ import 'package:one_bataan_league_pass_web_service/web_services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
+/// Registers and resolves application dependencies.
 class ServiceLocator {
   static final _i = GetIt.I;
 
   static T resolve<T>([String name]) {
     if (name?.isNotEmpty ?? false == true)
-      return _i.get(instanceName: name) as T;
+      return _i.get<Object>(instanceName: name) as T;
     else
       return _i.get<T>();
   }
@@ -32,7 +33,7 @@ class ServiceLocator {
 
   static void _registerWebServices() {
     _i
-      ..registerFactory<HttpHandler>(() => HttpHandler())
+      ..registerFactory<HttpHandler>(() => HttpHandlerImpl())
       ..registerFactory<TeamWebService>(() => TeamWebServiceImpl(_i.get<HttpHandler>()))
       ..registerFactory<PlayerWebService>(() => PlayerWebServiceImpl(_i.get<HttpHandler>()));
   }
@@ -41,31 +42,32 @@ class ServiceLocator {
     _i
       ..registerSingleton<QueryExecutorProvider>(FlutterQueryExecutorProvider())
       ..registerSingleton<AppDatabase>(AppDatabase(_i.get<QueryExecutorProvider>()))
-      ..registerLazySingleton<SecureStorageService>(() => SecureStorageService())
-      ..registerLazySingleton<SharedPrefsService>(() => SharedPrefsService());
+      ..registerLazySingleton<SecureStorageService>(() => FlutterSecureStorageService())
+      ..registerLazySingleton<SharedPrefsService>(() => FlutterSharedPrefsService());
   }
 
   static void _registerMappers() {
     _i
-      ..registerLazySingleton<TeamMapper>(() => TeamMapper())
-      ..registerLazySingleton<PlayerTeamMapper>(() => PlayerTeamMapper(_i.get<TeamMapper>()))
-      ..registerLazySingleton<PlayerMapper>(() => PlayerMapper(_i.get<PlayerTeamMapper>()));
+      ..registerLazySingleton<TeamMapper>(() => TeamMapperImpl())
+      ..registerLazySingleton<PlayerTeamMapper>(() => PlayerTeamMapperImpl(_i.get<TeamMapper>()))
+      ..registerLazySingleton<PlayerMapper>(() => PlayerMapperImpl(_i.get<PlayerTeamMapper>()));
   }
 
   static void _registerManagers() {
     _i
-      ..registerLazySingleton<UserProfileManager>(() => UserProfileManager())
-      ..registerLazySingleton<GameManager>(() => GameManager())
-      ..registerLazySingleton<PlayerManager>(() => PlayerManager(_i.get<PlayerWebService>(), _i.get<PlayerMapper>()))
-      ..registerLazySingleton<TeamManager>(() => TeamManager(_i.get<TeamWebService>(), _i.get<TeamMapper>()));
+      ..registerLazySingleton<UserProfileManager>(() => UserProfileManagerImpl())
+      ..registerLazySingleton<GameManager>(() => GameManagerImpl())
+      ..registerLazySingleton<PlayerManager>(
+          () => PlayerManagerImpl(_i.get<PlayerWebService>(), _i.get<PlayerMapper>()))
+      ..registerLazySingleton<TeamManager>(() => TeamManagerImpl(_i.get<TeamWebService>(), _i.get<TeamMapper>()));
   }
 
   static void _registerUiServices() {
     _i
-      ..registerLazySingleton<AnalyticsService>(() => AnalyticsService())
-      ..registerLazySingleton<NavigationService>(() => NavigationService())
-      ..registerLazySingleton<DialogService>(() => DialogService())
-      ..registerLazySingleton<SharingService>(() => SharingService());
+      ..registerLazySingleton<AnalyticsService>(() => AppCenterAnalytics())
+      ..registerLazySingleton<NavigationService>(() => NavigationServiceImpl())
+      ..registerLazySingleton<DialogService>(() => DialogServiceImpl())
+      ..registerLazySingleton<SharingService>(() => FlutterSharingService());
   }
 
   static void _registerUi() {

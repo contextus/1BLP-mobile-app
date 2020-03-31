@@ -1,7 +1,7 @@
 import 'package:one_bataan_league_pass/service_locator.dart';
 import 'package:one_bataan_league_pass/view_models/view_model_base.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:one_bataan_league_pass_common/common.dart';
 import 'package:provider/provider.dart';
 
 /// A view that is stateless and has a view model.

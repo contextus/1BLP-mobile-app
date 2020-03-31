@@ -13,7 +13,7 @@ class TeamWebServiceImpl extends WebServiceBase implements TeamWebService {
 
   @override
   Future<List<TeamDataContract>> getTeams() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     return [
       TeamDataContract.fromJson(
