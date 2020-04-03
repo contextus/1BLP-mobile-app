@@ -5,7 +5,7 @@ import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
-class UserProfileViewModel extends ViewModelBase {
+class UserProfileViewModel extends ViewModel {
   UserProfileViewModel(this._userProfileManager) {
     getUserProfile = _onGetUserProfile();
   }

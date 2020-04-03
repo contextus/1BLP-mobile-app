@@ -1,3 +1,4 @@
+/// Local data persistence using SQLite.
 library database;
 
 export 'src/database/app_database.dart' show AppDatabase;

@@ -1,3 +1,4 @@
+/// Object mappers from one layer to another.
 library mappers;
 
 export 'src/mappers/player_mapper.dart';

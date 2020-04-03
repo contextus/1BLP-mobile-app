@@ -1,3 +1,4 @@
+/// Business/domain entities.
 library entities;
 
 export 'src/entities/entity_base.dart';

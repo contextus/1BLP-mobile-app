@@ -1,3 +1,4 @@
+/// Business logic managers.
 library managers;
 
 export 'src/managers/game_manager.dart';
