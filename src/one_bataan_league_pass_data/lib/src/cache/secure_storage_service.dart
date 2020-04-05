@@ -1,10 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+/// Persist local data using the platform's keychain.
 abstract class SecureStorageService {
+  /// Deletes a value associated with [key].
   Future<void> delete(String key);
 
+  /// Gets a value associated with [key].
   Future<String> get(String key);
 
+  /// Sets a value associated with [key].
+  /// 
+  /// If an existing already exists, it will replace the current associated value with [value].
   Future<void> set(String key, String value);
 }
 

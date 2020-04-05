@@ -54,6 +54,9 @@ class AppInitializer implements Initializer {
   }
 
   void _registerUiServices(ServiceRegistry registry) {
+    // No need to register [NavigationService] and [DialogService].
+    // These are automatically registered in package:arch/arch.dart.
+
     registry
       ..registerLazySingleton<AnalyticsService>(() => AppCenterAnalytics())
       ..registerLazySingleton<TabNavigationService>(() => TabNavigationServiceImpl())

@@ -118,8 +118,8 @@ class _TeamProfileViewState extends ViewStateBase<TeamProfileView, TeamProfileVi
   }
 
   Widget _buildLoadingPlayerCard() {
-    return Card(
-      child: const ListTile(
+    return const Card(
+      child: ListTile(
         title: LoadingContainer(height: 12),
         subtitle: LoadingContainer(height: 12),
         leading: LoadingContainer(child: CircleAvatar()),

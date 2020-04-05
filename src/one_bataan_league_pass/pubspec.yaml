@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  arch: 0.0.1+7
+  arch: 0.0.1+8
   intl: any
   video_player: ^0.10.8+1
   share: ^0.6.3+6

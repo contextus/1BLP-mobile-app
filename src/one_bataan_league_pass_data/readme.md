@@ -1,4 +1,5 @@
 #### `Database and Data Objects`
+Persist local data using SQLite.
 
 For the database, we use [moor](pub.dev/packages/moor) to generate our database classes. Data object classes represents these database tables.
 
@@ -90,3 +91,9 @@ class TodoRepository extends RepositoryBase<Todos, TodoDataObject> {
 - You can also watch the repository by using `watchItems`, which emits a `Stream<List<TDataObject>>` whenever the database table changes (i.e. insert/update/delete).
 
 #### `Cache`
+Persist local data using shared preferences and keychain.
+
+If you want to store temporary data such as user settings, you can use `SharedPrefsService`. If you want to save sensitive information such as access tokens, you can use `SecureStorageService`.
+
+- `SharedPrefsService` - allows saving primitive types such as `String`, `int`, and `bool`.
+- `SecureStorageService` - saves only `String` values.

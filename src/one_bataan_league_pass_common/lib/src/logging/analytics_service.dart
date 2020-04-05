@@ -2,9 +2,14 @@ import 'package:flutter_appcenter_bundle/flutter_appcenter_bundle.dart';
 import 'package:one_bataan_league_pass_common/src/constants/app_center_constants.dart';
 import 'package:one_bataan_league_pass_common/src/app_configuration.dart';
 
+/// Application analytics service provider.
 abstract class AnalyticsService {
+  /// Starts the service.
   Future<void> start();
-
+  
+  /// Tracks an event by logging it to the analytics server.
+  /// 
+  /// You can pass [properties] to provide a more detailed info about the event.
   Future<void> trackEvent(String eventName, [Map<String, String> properties]);
 }
 

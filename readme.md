@@ -15,3 +15,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+Be sure also to read the individual readmes under `src` folder, preferrably in this order:
+- [`web_service`](src/one_bataan_league_pass_web_service/readme.md)
+- [`data`](src/one_bataan_league_pass_data/readme.md)
+- [`business`](src/one_bataan_league_pass_business/readme.md)
+- [`ui`](src/one_bataan_league_pass/readme.md)

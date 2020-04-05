@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
+/// Base view model class for all views (pages) that can be navigated.
 abstract class ViewModel extends ViewModelBase {
   ViewModel({
     NavigationService navigationService,
@@ -18,6 +19,7 @@ abstract class ViewModel extends ViewModelBase {
   final TabNavigationService tabNavigationService;
 }
 
+/// Base view model class for all tabs in [MainTabViewModel].
 abstract class TabViewModelBase extends ViewModel {
   TabViewModelBase({
     NavigationService navigationService,
@@ -29,7 +31,9 @@ abstract class TabViewModelBase extends ViewModel {
           tabNavigationService: tabNavigationService,
         );
 
+  /// Called when the tab was selected.
   void onTabNavigatedTo([Map<String, Object> parameters]) {}
 
+  /// Called when the tab was unselected.
   void onTabNavigatedFrom() {}
 }

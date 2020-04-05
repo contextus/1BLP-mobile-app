@@ -9,8 +9,12 @@ class AppViewModel extends ViewModel {
 
   @override
   Future<void> init([Map<String, Object> parameters]) async {
+    // Wait for initialization while the splash screen is shown.
     await Future<void>.delayed(Duration(seconds: 1));
     await analyticsService.start();
+
+    // Replace the current root of the navigation stack
+    // to the main tab view after initialization.
     navigationService.pushToNewRoot(ViewNames.mainTabView);
   }
 }
