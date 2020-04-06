@@ -4,4 +4,4 @@ import 'package:mockito/mockito.dart';
 
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
-class MockNavigationService extends Mock implements NavigationService {}
+class MockNavigationService extends Mock implements TabNavigationService {}

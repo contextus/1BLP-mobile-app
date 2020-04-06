@@ -3,7 +3,7 @@ import 'package:one_bataan_league_pass/view_models/view_model_base.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_common/constants.dart';
 
-class GameRecapViewModel extends ViewModelBase {
+class GameRecapViewModel extends ViewModel {
   GameEntity game;
 
   List<SingleDetailListItemModel> gameDetails = [];

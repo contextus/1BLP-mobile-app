@@ -1,38 +1,39 @@
-import 'package:one_bataan_league_pass/models/listenable_model.dart';
+import 'package:arch/arch.dart';
+import 'package:flutter/foundation.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
-import 'package:flutter/foundation.dart';
 
-abstract class ViewModelBase extends ListenableModel {
-  ViewModelBase({this.analyticsService, this.navigationService, this.dialogService});
+/// Base view model class for all views (pages) that can be navigated.
+abstract class ViewModel extends ViewModelBase {
+  ViewModel({
+    NavigationService navigationService,
+    DialogService dialogService,
+    this.analyticsService,
+    this.tabNavigationService,
+  }) : super(navigationService: navigationService, dialogService: dialogService);
 
   @protected
   final AnalyticsService analyticsService;
 
   @protected
-  final NavigationService navigationService;
-
-  @protected
-  final DialogService dialogService;
-
-  Future<void> init([Map<String, Object> parameters]) => Future<void>.value();
+  final TabNavigationService tabNavigationService;
 }
 
-abstract class TabViewModelBase extends ViewModelBase {
-  TabViewModelBase([NavigationService navigationService, DialogService dialogService])
-      : super(navigationService: navigationService, dialogService: dialogService);
+/// Base view model class for all tabs in [MainTabViewModel].
+abstract class TabViewModelBase extends ViewModel {
+  TabViewModelBase({
+    NavigationService navigationService,
+    DialogService dialogService,
+    TabNavigationService tabNavigationService,
+  }) : super(
+          navigationService: navigationService,
+          dialogService: dialogService,
+          tabNavigationService: tabNavigationService,
+        );
 
+  /// Called when the tab was selected.
   void onTabNavigatedTo([Map<String, Object> parameters]) {}
 
+  /// Called when the tab was unselected.
   void onTabNavigatedFrom() {}
-}
-
-abstract class DialogModelBase extends ListenableModel {
-  DialogModelBase(this._dialogService);
-
-  final DialogService _dialogService;
-
-  Future<void> init([Map<String, Object> parameters]) => Future<void>.value();
-
-  void pop([Map<String, Object> result]) => _dialogService.pop(result);
 }

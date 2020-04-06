@@ -5,12 +5,7 @@ import 'package:one_bataan_league_pass_business/managers.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class HomeTabViewModel extends TabViewModelBase {
-  HomeTabViewModel(
-    NavigationService navigationService,
-    DialogService dialogService,
-    this._gameManager,
-    this._sharingService,
-  ) : super(navigationService, dialogService) {
+  HomeTabViewModel(this._gameManager, this._sharingService) {
     getLiveGame = _onGetLiveGame();
   }
 

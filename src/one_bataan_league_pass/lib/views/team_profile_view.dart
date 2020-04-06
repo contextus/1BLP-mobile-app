@@ -1,3 +1,4 @@
+import 'package:arch/arch.dart';
 import 'package:intl/intl.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/widgets/widgets.dart';
@@ -117,8 +118,8 @@ class _TeamProfileViewState extends ViewStateBase<TeamProfileView, TeamProfileVi
   }
 
   Widget _buildLoadingPlayerCard() {
-    return Card(
-      child: const ListTile(
+    return const Card(
+      child: ListTile(
         title: LoadingContainer(height: 12),
         subtitle: LoadingContainer(height: 12),
         leading: LoadingContainer(child: CircleAvatar()),

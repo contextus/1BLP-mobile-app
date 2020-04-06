@@ -8,7 +8,9 @@ import 'package:one_bataan_league_pass_web_service/src/web_services/http_method.
 
 import 'package:http/http.dart';
 
+/// Handles HTTP requests.
 abstract class HttpHandler {
+  /// Sends a HTTP request.
   Future<Response> send(
     String endpoint,
     HttpMethod httpMethod, [
@@ -16,6 +18,9 @@ abstract class HttpHandler {
     dynamic body,
   ]);
 
+  /// Builds the client to be used for sending HTTP requests.
+  @protected
+  @visibleForTesting
   Client buildClient();
 }
 
@@ -63,8 +68,8 @@ class HttpHandlerImpl implements HttpHandler {
       debugInfo('Success $httpMethodTag (${response.statusCode} ${response.reasonPhrase}) $uri');
 
       return response;
-    } on ApiException catch (tex) {
-      debugError('Failed $httpMethodTag (${response.statusCode} ${response.reasonPhrase}) $uri', tex);
+    } on ApiException catch (e) {
+      debugError('Failed $httpMethodTag (${response.statusCode} ${response.reasonPhrase}) $uri', e);
       rethrow;
     } on TimeoutException {
       debugError('Request timed-out $httpMethodTag $uri');

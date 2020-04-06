@@ -1,3 +1,4 @@
+import 'package:arch/arch.dart';
 import 'package:intl/intl.dart';
 import 'package:one_bataan_league_pass/services/services.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
@@ -7,7 +8,11 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class GamesTabViewModel extends TabViewModelBase {
-  GamesTabViewModel(NavigationService navigationService, this._gameManager) : super(navigationService) {
+  GamesTabViewModel(
+    NavigationService navigationService,
+    TabNavigationService tabNavigationService,
+    this._gameManager,
+  ) : super(navigationService: navigationService, tabNavigationService: tabNavigationService) {
     getGamesForDate = _onGetGamesForDate(_currentlySelectedDate);
   }
 
@@ -29,7 +34,7 @@ class GamesTabViewModel extends TabViewModelBase {
     refetchGamesForCurrentDate();
   }
 
-  void onWatchLive(GameEntity gameToWatch) => navigationService.goToTab(ViewNames.homeTabView);
+  void onWatchLive(GameEntity gameToWatch) => tabNavigationService.goToTab(ViewNames.homeTabView);
 
   void onWatchReplay(GameEntity gameToWatch) {
     navigationService.push(

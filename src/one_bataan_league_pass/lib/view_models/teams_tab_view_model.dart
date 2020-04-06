@@ -1,4 +1,4 @@
-import 'package:one_bataan_league_pass/services/services.dart';
+import 'package:arch/arch.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass_business/entities.dart';
 import 'package:one_bataan_league_pass_business/managers.dart';
@@ -6,7 +6,8 @@ import 'package:one_bataan_league_pass_common/constants.dart';
 import 'package:one_bataan_league_pass_common/logging.dart';
 
 class TeamsTabViewModel extends TabViewModelBase {
-  TeamsTabViewModel(this._teamManager, NavigationService navigationService) : super(navigationService) {
+  TeamsTabViewModel(NavigationService navigationService, this._teamManager)
+      : super(navigationService: navigationService) {
     getTeams = _onGetTeams();
   }
 

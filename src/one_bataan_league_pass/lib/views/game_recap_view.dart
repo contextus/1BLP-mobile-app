@@ -1,3 +1,4 @@
+import 'package:arch/arch.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/services.dart';
 import 'package:one_bataan_league_pass/models/models.dart';

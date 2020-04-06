@@ -1,7 +1,6 @@
 import 'dart:async';
-
+import 'package:arch/arch.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:one_bataan_league_pass/keys/keys.dart';
 import 'package:one_bataan_league_pass/resources/resources.dart';
 import 'package:one_bataan_league_pass/view_models/view_models.dart';
 import 'package:one_bataan_league_pass/views/views.dart';
@@ -10,7 +9,9 @@ import 'package:one_bataan_league_pass_common/logging.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class MainTabView extends StatefulWidget {
-  MainTabView() : super(key: MainTabViewKeys.tabNavigator);
+  MainTabView() : super(key: mainTabViewKey);
+
+  static final mainTabViewKey = GlobalKey<MainTabViewState>();
 
   @override
   MainTabViewState createState() => MainTabViewState();
@@ -118,7 +119,7 @@ class MainTabViewState extends ViewStateBase<MainTabView, MainTabViewModel> with
       iconSize: 24,
       gap: 32.0,
       textStyle: Theme.of(context).textTheme.caption.apply(color: customTheme.activeIconColor),
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      padding: EdgeInsets.all(4),
       icon: tab.tabData.tabButtonIcon,
       color: Colors.transparent,
       text: tab.tabData.tabButtonText,
@@ -140,7 +141,7 @@ class MainTabViewState extends ViewStateBase<MainTabView, MainTabViewModel> with
 
   void _onNavigateToTab(int tabIndex, [Map<String, Object> parameters]) {
     if (viewModel.currentTabIndex != tabIndex) {
-      GlobalKey<TabViewStateBase> currentTabKey = _tabs[viewModel.currentTabIndex].key;
+      final currentTabKey = _tabs[viewModel.currentTabIndex].key as GlobalKey<TabViewStateBase>;
       currentTabKey.currentState.onTabNavigatedFrom();
 
       setState(() => viewModel.currentTabIndex = tabIndex);
