@@ -59,7 +59,7 @@ Describes the UI to be presented. Each view has a view model. There are no busin
 Below is the view showing a list of to-dos:
 
 ```dart
-class MyTodoView extends View<MyTodoViewModel> {
+class MyTodoView extends ViewBase<MyTodoViewModel> {
   MyTodoView({Key key}) : super(key: key);
 
   @override
@@ -116,7 +116,7 @@ class MyTodoView extends View<MyTodoViewModel> {
 }
 
 ```
-- Extends from the class `View<TViewModel>`. The view model is automatically assigned.
+- Extends from the class `ViewBase<TViewModel>`. The view model is automatically resolved.
 - `buildView()` is called to rebuild the UI whenever the view model calls `notifyListeners`.
 
 And here is our view model:
@@ -156,15 +156,21 @@ class MyTodoViewModel extends ViewModelBase {
     _todoStreamSubsc.cancel();
   }
 
+  @override
+  Future<void> init([Map<String, Object> parameters]) async {
+    print('Initialized');
+  }
+
   Future<void> onDeleteTodo(TodoEntity todoToDelete) async {
-    debugInfo('Deleting todo with id ${todoToDelete.id}...');
+    print('Deleting todo with id ${todoToDelete.id}...');
 
     try {
       todos.remove(todoToDelete);
       notifyListeners();
       await _todoManager.deleteTodo(todoToDelete);
     } on Exception catch (e) {
-      debugError('Failed to delete todo', e);
+      print('Failed to delete todo', e);
+      dialogService.alert('Failed to delete to-do.');
     }
   }
 
@@ -180,25 +186,32 @@ class MyTodoViewModel extends ViewModelBase {
   }
 
   Future<void> _onCreateTodo(TodoEntity todoToCreate) async {
-    debugInfo('Creating todo...');
+    print('Creating todo...');
 
     try {
       isBusy = true;
       await _todoManager.createTodo(todoToCreate);
     } on Exception catch (e) {
-      debugError('Failed to create todo', e);
+      print('Failed to create todo', e);
+      dialogService.alert('Failed to create to-do.');
     } finally {
       isBusy = false;
     }
   }
 }
 ```
+- `TodoManager.todoStream` allows us to listen to it. Everytime we create, delete, or update a to-do, this stream will emit the latest list of to-dos from our data layer.
+- The view model contains `try-catch` block that handles exceptions from the other layer, and provide a meaningful message if such instances occur to the user.
+- `init` is called whenever we navigate to our view using `NavigationService`.
+- `dispose` is called whenever our view is removed from the widget tree.
 
 ##### Tying all layers together using IoC and Dependency Injection
 
 All of our dependencies (views, view models, services, manager, web services, repositories, etc.) from each layer are registered in an IoC container.
 
 The `AppInitializer` class registers all required dependencies. This class will be passed to our root widget `AppView`, which extends the class `Application`.
+
+`AppInitializer.registerTypes` provides a `ServiceRegistry` in which we can use to register our dependencies, and resolve other dependencies in some registrations.
 
 Optionally, you can resolve a registered dependency by using `Application.serviceLocator.resolve<T>()`.
 

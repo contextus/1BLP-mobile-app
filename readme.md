@@ -2,7 +2,6 @@
 
 [![Build status](https://contextustech.visualstudio.com/1BLP-mobile-app/_apis/build/status/Development-CI)](https://contextustech.visualstudio.com/1BLP-mobile-app/_build/latest?definitionId=1) [![Install Android Dev Release](https://img.shields.io/badge/App%20Center-Android-<COLOR>.svg)](https://install.appcenter.ms/orgs/contextustech/apps/1Bataan-League-Pass-Android) [![Install iOS Dev Release](https://img.shields.io/badge/App%20Center-iOS-<COLOR>.svg)](https://install.appcenter.ms/orgs/contextustech/apps/1Bataan-League-Pass-iOS)
 
-A ready-made blueprint project that serves as a starting point for building Flutter apps.
 
 ## Getting Started
 

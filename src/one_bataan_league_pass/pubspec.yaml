@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  arch: 0.0.1+8
+  arch: 0.1.0+1
   intl: any
   video_player: ^0.10.8+1
   share: ^0.6.3+6
@@ -30,7 +30,6 @@ dependencies:
   calendar_strip: ^1.0.6
   shimmer: ^1.1.0
   chewie: ^0.9.10
-  page_transition: ^1.1.5
 
 
   one_bataan_league_pass_web_service:

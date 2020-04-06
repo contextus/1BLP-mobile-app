@@ -64,41 +64,33 @@ class AppInitializer implements Initializer {
   }
 
   void _registerUi(ServiceRegistry registry) {
-    // Register view models
     registry
-      ..registerForNavigation(
+      ..registerView(
         view: () => MainTabView(),
-        viewModel: () => MainTabViewModel(
-          registry.resolve<NavigationService>(),
-          registry.resolve<HomeTabViewModel>(),
-          registry.resolve<GamesTabViewModel>(),
-          registry.resolve<StandingsTabViewModel>(),
-          registry.resolve<PlayersTabViewModel>(),
-          registry.resolve<TeamsTabViewModel>(),
-        ),
+        viewModel: () => MainTabViewModel(registry.resolve<NavigationService>()),
         viewName: ViewNames.mainTabView,
       )
-      ..registerForNavigation(
+      ..registerView(
         view: () => UserProfileView(),
         viewModel: () => UserProfileViewModel(registry.resolve<UserProfileManager>()),
         viewName: ViewNames.userProfileView,
       )
-      ..registerForNavigation(
+      ..registerView(
         view: () => WatchReplayView(),
         viewModel: () => WatchReplayViewModel(),
         viewName: ViewNames.watchReplayView,
       )
-      ..registerForNavigation(
+      ..registerView(
         view: () => PlayerProfileView(),
         viewModel: () => PlayerProfileViewModel(),
         viewName: ViewNames.playerProfileView,
       )
-      ..registerForNavigation(
+      ..registerView(
         view: () => TeamProfileView(),
         viewModel: () => TeamProfileViewModel(registry.resolve<NavigationService>(), registry.resolve<PlayerManager>()),
         viewName: ViewNames.teamProfileView,
       )
-      ..registerForNavigation(
+      ..registerView(
         view: () => GameRecapView(),
         viewModel: () => GameRecapViewModel(),
         viewName: ViewNames.gameRecapView,
