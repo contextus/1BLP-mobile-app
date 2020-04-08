@@ -20,16 +20,20 @@ abstract class ViewModel extends ViewModelBase {
 }
 
 /// Base view model class for all tabs in [MainTabViewModel].
-abstract class TabViewModelBase extends ViewModel {
-  TabViewModelBase({
-    NavigationService navigationService,
-    DialogService dialogService,
-    TabNavigationService tabNavigationService,
-  }) : super(
-          navigationService: navigationService,
-          dialogService: dialogService,
-          tabNavigationService: tabNavigationService,
-        );
+abstract class TabViewModelBase extends ListenableModel with Initializable {
+  TabViewModelBase({this.navigationService, this.dialogService, this.tabNavigationService});
+
+  @protected
+  NavigationService navigationService;
+
+  @protected
+  TabNavigationService tabNavigationService;
+
+  @protected
+  DialogService dialogService;
+
+  @override
+  void init([Map<String, Object> parameters]) {}
 
   /// Called when the tab was selected.
   void onTabNavigatedTo([Map<String, Object> parameters]) {}

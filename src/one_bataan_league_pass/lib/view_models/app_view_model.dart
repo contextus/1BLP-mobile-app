@@ -8,7 +8,7 @@ class AppViewModel extends ViewModel {
       : super(analyticsService: analyticsService, navigationService: navigationService);
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) async {
     // Wait for initialization while the splash screen is shown.
     await Future<void>.delayed(Duration(seconds: 1));
     await analyticsService.start();

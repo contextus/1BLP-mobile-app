@@ -14,7 +14,7 @@ class PlayerProfileViewModel extends ViewModel {
   PlayerSeasonModel selectedPlayerSeason;
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) {
     assert(parameters.containsKey(NavigationParameterConstants.selectedPlayerProfileToView));
     assert(parameters[NavigationParameterConstants.selectedPlayerProfileToView] != null);
 

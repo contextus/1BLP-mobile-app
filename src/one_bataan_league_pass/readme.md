@@ -157,7 +157,7 @@ class MyTodoViewModel extends ViewModelBase {
   }
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) {
     print('Initialized');
   }
 

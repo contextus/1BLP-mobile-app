@@ -14,7 +14,7 @@ class PlayersTabView extends TabView {
 
 class _PlayersTabViewState extends TabViewStateBase<PlayersTabView, PlayersTabViewModel> {
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildTabView(BuildContext context) {
     return ExtendedColumn(
       spacing: 12,
       crossAxisAlignment: CrossAxisAlignment.stretch,

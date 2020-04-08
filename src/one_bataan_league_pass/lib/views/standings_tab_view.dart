@@ -11,7 +11,7 @@ class StandingsTabView extends TabView {
 
 class _StandingsTabViewState extends TabViewStateBase<StandingsTabView, StandingsTabViewModel> {
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildTabView(BuildContext context) {
     return StatTable(
       columns: [
         StatTableColumnData(title: 'Teams', flex: 2),

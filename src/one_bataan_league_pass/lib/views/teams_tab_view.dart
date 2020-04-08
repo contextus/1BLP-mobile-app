@@ -14,7 +14,7 @@ class TeamsTabView extends TabView {
 
 class _TeamsTabViewState extends TabViewStateBase<TeamsTabView, TeamsTabViewModel> {
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildTabView(BuildContext context) {
     return ExtendedColumn(
       spacing: 12,
       crossAxisAlignment: CrossAxisAlignment.stretch,
