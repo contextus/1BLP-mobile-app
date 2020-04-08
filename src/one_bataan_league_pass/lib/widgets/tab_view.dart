@@ -9,13 +9,34 @@ abstract class TabView extends StatefulWidget {
   final TabData tabData;
 }
 
-abstract class TabViewStateBase<TWidget extends TabView, TViewModel extends TabViewModelBase>
-    extends AutomaticKeepAliveViewStateBase<TWidget, TViewModel> {
+abstract class TabViewStateBase<TWidget extends TabView, TTabViewModel extends TabViewModelBase>
+    extends ViewModelBoundState<TWidget, TTabViewModel>
+    with AutomaticKeepAliveClientMixin, ViewModelAutoResolver, ViewModelInitializer {
+  @override
+  @nonVirtual
+  bool get wantKeepAlive => true;
+
   @mustCallSuper
   void onTabNavigatedTo([Map<String, Object> parameters]) => viewModel.onTabNavigatedTo(parameters);
 
   @mustCallSuper
   void onTabNavigatedFrom() => viewModel.onTabNavigatedFrom();
+
+  /// Called whenever [viewModel] calls [ChangeNotifier.notifyListeners].
+  ///
+  /// Build the tab view's UI here.
+  Widget buildTabView(BuildContext context);
+
+  @override
+  @nonVirtual
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return ChangeNotifierBuilder<TTabViewModel>(
+      create: () => viewModel,
+      builder: (context, _, __) => buildTabView(context),
+    );
+  }
 }
 
 class TabData {

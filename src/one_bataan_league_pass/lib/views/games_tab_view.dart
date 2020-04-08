@@ -15,7 +15,7 @@ class GamesTabView extends TabView {
 
 class _GamesTabViewState extends TabViewStateBase<GamesTabView, GamesTabViewModel> {
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildTabView(BuildContext context) {
     return ExtendedColumn(
       spacing: 8,
       children: <Widget>[

@@ -19,7 +19,7 @@ class TeamProfileViewModel extends ViewModel {
   List<SingleDetailListItemModel> teamProfileDetails = [];
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) {
     assert(parameters.containsKey(NavigationParameterConstants.selectedTeamProfileToView));
     assert(parameters[NavigationParameterConstants.selectedTeamProfileToView] != null);
 

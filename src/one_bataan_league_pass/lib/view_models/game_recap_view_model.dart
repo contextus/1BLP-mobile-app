@@ -19,7 +19,7 @@ class GameRecapViewModel extends ViewModel {
   List<PlayerGameStatsModel> team2GameLeaders = [];
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) {
     assert(parameters[NavigationParameterConstants.selectedGameToViewRecap] != null);
 
     game = parameters[NavigationParameterConstants.selectedGameToViewRecap];

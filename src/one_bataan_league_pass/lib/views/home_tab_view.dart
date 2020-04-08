@@ -31,7 +31,7 @@ class _HomeTabViewState extends TabViewStateBase<HomeTabView, HomeTabViewModel> 
   }
 
   @override
-  Widget buildView(BuildContext context) {
+  Widget buildTabView(BuildContext context) {
     return FutureBuilder<GameEntity>(
       future: viewModel.getLiveGame,
       builder: (context, snapshot) {

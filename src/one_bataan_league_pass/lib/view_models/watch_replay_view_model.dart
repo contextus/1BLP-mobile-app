@@ -6,7 +6,7 @@ class WatchReplayViewModel extends ViewModel {
   GameEntity game;
 
   @override
-  Future<void> init([Map<String, Object> parameters]) async {
+  void init([Map<String, Object> parameters]) {
     assert(parameters[NavigationParameterConstants.selectedGameToWatchReplay] != null);
 
     game = parameters[NavigationParameterConstants.selectedGameToWatchReplay];
